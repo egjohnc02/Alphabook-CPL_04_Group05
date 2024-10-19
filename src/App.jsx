@@ -1,10 +1,13 @@
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import NavbarHeader from './components/NavbarHeader';
+import Footer from './components/Footer';
 
 function App() {
   return (
     <>
-      <button className='btn btn-primary'>HIHI</button>
+      <NavbarHeader />
+      <Footer />
     </>
   )
 }
