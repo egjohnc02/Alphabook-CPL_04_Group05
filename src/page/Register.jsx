@@ -1,3 +1,6 @@
+import { Link } from 'react-router-dom';
+
+
 export default function Register(){
     return (
         <div>
@@ -18,7 +21,7 @@ export default function Register(){
                     <input type="email" name="" id="" placeholder='Email' className='w-100 border border-opacity-10 p-2 rounded' required/>
                     <h6 className='pt-3 text-body-secondary'>Mật khẩu<i style={{color:'red'}}>*</i></h6>
                     <input type="password" name="" id="" placeholder='Mật khẩu' className='w-100 border border-opacity-10 p-2 rounded' required/>
-                    <button className='my-3 text-center w-100 py-1 bg-orange border-0 text-light rounded'>Đăng ký</button>
+                    <button className='my-3 text-center w-100 p-2 bg-orange border-0 text-light rounded'>Đăng ký</button>
                     <p className="text-center">Hoặc đăng nhập bằng</p>
                     <div className="d-flex gap-1 justify-content-center">
                         <button className="text-light border-0 bg-primary d-flex gap-2 p-2 align-items-center">
@@ -43,7 +46,9 @@ export default function Register(){
                         <p>Đổi trả dễ dàng</p>
                         <p>Tích điểm đổi quà</p>
                         <p>Được giảm giá cho lần mua tiếp theo lên đến 10%</p>
-                        <button className="bg-orange border border-light text-light fw-bold py-2 px-5 btn rounded">Đăng nhập</button>
+                        <Link to="/login">
+                            <button className="bg-orange border border-light text-light fw-bold py-2 px-5 btn">Đăng nhập</button>
+                        </Link>
                     </div>
                 </div>
             </div>
