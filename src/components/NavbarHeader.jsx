@@ -1,10 +1,8 @@
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
-import { Link, BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import logo from '../assets/logo.webp';
-import Login from '../page/Login';
-import Home from '../page/Home'
 
-function NavbarHeader() {
+export default function NavbarHeader() {
   return (
     <Navbar expand="lg" className="bg-light sticky-top border-bottom">
       <Container className='d-flex justify-content-center'>
@@ -14,8 +12,8 @@ function NavbarHeader() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link as={Link} to="/">Trang chủ</Nav.Link>
-            <Nav.Link as={Link} to="/about">Về Alpha Books</Nav.Link>
+            <Nav.Link as={Link} to="/home">Trang chủ</Nav.Link>
+            <Nav.Link as={Link} to="/introduce">Về Alpha Books</Nav.Link>
 
             <NavDropdown title="Tủ sách" id="basic-nav-dropdown">
               <NavDropdown.Item as={Link} to="/category/harvard-business-review">Harvard Business Review</NavDropdown.Item>
@@ -59,17 +57,5 @@ function NavbarHeader() {
         </Navbar.Collapse>
       </Container>
     </Navbar>
-  );
-}
-
-export default function App() {
-  return (
-    <Router>
-      <NavbarHeader />
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/home" element={<Home />} />
-      </Routes>
-    </Router>
   );
 }
