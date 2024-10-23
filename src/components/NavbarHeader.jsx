@@ -13,7 +13,7 @@ export default function NavbarHeader() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/home">Trang chủ</Nav.Link>
-            <Nav.Link as={Link} to="/about">Về Alpha Books</Nav.Link>
+            <Nav.Link as={Link} to="/introduce">Về Alpha Books</Nav.Link>
 
             <NavDropdown title="Tủ sách" id="basic-nav-dropdown">
               <NavDropdown.Item as={Link} to="/category/harvard-business-review">Harvard Business Review</NavDropdown.Item>
