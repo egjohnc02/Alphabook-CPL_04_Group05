@@ -1,5 +1,7 @@
-import logo from '../assets/logo_footer.webp'
-import logoBct from '../assets/logo_bct.webp'
+import logo from '../assets/footer/logo_footer.webp'
+import logoBct from '../assets/footer/logo_bct.webp'
+import { Link } from 'react-router-dom';
+
 
 export default function Footer(){
     return (
@@ -21,9 +23,13 @@ export default function Footer(){
                     </div>
                 </div>
 
-                <ul className='w-25 py-3'>
+                <ul className='w-25 py-4'>
                     <p className='fw-bold'>THÔNG TIN</p>
-                    <li><a href="#" className='nav-link'>Giới thiệu</a></li>
+                    <li>
+                        <Link to="/introduce" className='text-decoration-none text-light'>
+                            <nav>Giới thiệu</nav>
+                        </Link>
+                    </li>
                     <li><a href="#" className='nav-link'>Hệ thống nhà sách</a></li>
                     <li><a href="#" className='nav-link'>Hệ thống phát hành</a></li>
                     <li><a href="#" className='nav-link'>Tuyển dụng</a></li>
