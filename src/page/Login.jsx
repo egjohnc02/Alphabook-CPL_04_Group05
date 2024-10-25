@@ -7,12 +7,6 @@ function Login() {
     }, []);
     return (
         <div>
-            <div className='login-head text-center py-4 bg-cover'>
-                <Link to="/home">
-                    <nav>Trang chủ</nav>
-                </Link>
-                <h2 className=''>Đăng nhập tài khoản</h2>
-            </div>
             <div className='container mt-5 d-flex justify-content-center w-50'>
                 <form className='container py-3 border-orange'>
                     <h4>Đăng nhập tài khoản</h4>
