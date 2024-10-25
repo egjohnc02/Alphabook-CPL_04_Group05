@@ -1,0 +1,129 @@
+{
+    "regions": [
+      {
+        "area": "Toàn miền Bắc",
+        "customers": [
+          {
+            "company": "Công ty CP phát hành sách TP Hồ Chí Minh (FAHASA)_Trung tâm Hà Nội",
+            "bookstores": [
+              {
+                "name": "Nhà sách Fahasa Xã Đàn",
+                "address": "338 Xã Đàn – Đống Đa – Hà Nội"
+              },
+              {
+                "name": "Nhà sách Fahasa Hà Đông",
+                "address": "Tầng 3 – Siêu thị Sài Gòn Co.op Mart – Km10 Nguyễn Trãi – Hà Đông – Hà Nội"
+              },
+              {
+                "name": "Nhà sách Fahasa Long Biên",
+                "address": "Tầng 2 TTTM MiPec Số 2, Long Biên II, Ngọc Lâm, Long Biên, Hà Nội"
+              },
+              {
+                "name": "Nhà sách Fahasa Đống Đa",
+                "address": "Tầng 2 – Siêu thị Lotte Mart – 229 Tây Sơn – Đống Đa – Hà Nội"
+              },
+              {
+                "name": "Nhà sách Fahasa Vĩnh Phúc",
+                "address": "Tòa nhà Soiva Plaza – đường Mê Linh – TX. Vĩnh Yên – Vĩnh Phúc"
+              },
+              {
+                "name": "Nhà sách Fahasa Hải Phòng",
+                "address": "Tầng 3 – TTTM Cát Bi Plaza – 1 Lê Hồng Phong – Q. Ngô Quyền – Hải Phòng"
+              },
+              {
+                "name": "Nhà sách Fahasa Bắc Giang",
+                "address": "Tầng 1 – TTTM Big C – P. Tân Tiến – TP. Bắc Giang – Bắc Giang"
+              },
+              {
+                "name": "Nhà sách Fahasa Phú Thọ",
+                "address": "Big C Việt Trì – đường Nguyễn Tất Thành – TP. Việt Trì – Phú Thọ"
+              },
+              {
+                "name": "Nhà sách Fahasa Ninh Bình",
+                "address": "Tầng 1 – TTTM Big C Ninh Bình – đường Trần Nhân Tông – xã Ninh Phúc – Ninh Bình"
+              },
+              {
+                "name": "Nhà sách Fahasa Thanh Hóa",
+                "address": "18 Phan Chu Trinh – P. Điện Biên – TP. Thanh Hóa – Thanh Hóa"
+              },
+              {
+                "name": "Nhà sách Fahasa Hà Tĩnh",
+                "address": "Tầng trệt Siêu thị Sài Gòn Co.op Mart – 2 Phan Đình Phùng – TP. Hà Tĩnh – Hà Tĩnh"
+              },
+              {
+                "name": "Nhà sách Fahasa Nam Định",
+                "address": "TTTM Big C – Quốc lộ 10 – xã Lộc Hòa – TP. Nam Định"
+              },
+              {
+                "name": "Nhà sách Fahasa Thái Bình",
+                "address": "Tầng 4 – TTTM Vincom Thái Bình – 460 Lý Bôn"
+              }
+            ]
+          },
+          {
+            "company": "Công ty TNHH bán lẻ Phương Nam (PNR)_Chi nhánh Hà Nội",
+            "bookstores": [
+              {
+                "name": "Nhà sách Phương Nam Garden",
+                "address": "Tầng 3 – TTTM The Garden – Nam Từ Liêm – Hà Nội"
+              },
+              {
+                "name": "Nhà sách Phương Nam Lotte",
+                "address": "Tầng 4 – TTTM Lotte Center – Tòa nhà Lotte Center Hà Nội"
+              },
+              {
+                "name": "Nhà sách Phương Nam Vincom",
+                "address": "Tầng 4 – TTTM Vincom Center Bà Triệu – 191 Bà Triệu – Q. Hai Bà Trưng – Hà Nội"
+              },
+              {
+                "name": "Nhà sách Phương Nam Nguyễn Chí Thanh",
+                "address": "TTTM Vincom Nguyễn Chí Thanh – 56A Nguyễn Chí Thanh – Q. Đống Đa – Hà Nội"
+              },
+              {
+                "name": "Nhà sách Phương Nam Phạm Ngọc Thạch",
+                "address": "TTTM Vincom Phạm Ngọc Thạch – 02 Phạm Ngọc Thạch, Trung Tự, Đống Đa, Hà Nội"
+              },
+              {
+                "name": "Nhà sách Phương Nam Hải Phòng",
+                "address": "Tầng 3 – TD Plaza – Ngã 5 sân bay Cát Bi – Q. Ngô Quyền – Hải Phòng"
+              },
+              {
+                "name": "Nhà sách Phương Nam Quảng Ninh",
+                "address": "TT Văn hóa điện ảnh Quảng Ninh – Phố Nhà Hát – P. Hồng Gai – TP. Hạ Long – Quảng Ninh"
+              }
+            ]
+          },
+          {
+            "company": "Công ty CP Tiền Phong_Hệ thống nhà sách Tiền Phong",
+            "bookstores": [
+              {
+                "name": "Nhà sách Tiền Phong Ngọc Hà",
+                "address": "17B Ngọc Hà – Ba Đình – Hà Nội"
+              },
+              {
+                "name": "Nhà sách Tiền Phong Thái Thịnh",
+                "address": "Tầng 2 – Tòa nhà Hà Thành Plaza – 102 Thái Thịnh – Đống Đa – Hà Nội"
+              },
+              {
+                "name": "Nhà sách Tiền Phong Nguyễn Thái Học",
+                "address": "175 Nguyễn Thái Học – Ba Đình – Hà Nội"
+              },
+              {
+                "name": "Nhà sách Tiền Phong Tây Sơn",
+                "address": "Cổng trường Đại học Thủy Lợi – 175 Tây Sơn – Đống Đa – Hà Nội"
+              },
+              {
+                "name": "Nhà sách Tiền Phong Hải Dương",
+                "address": "326 Nguyễn Lương Bằng – TP. Hải Dương – Hải Dương"
+              },
+              {
+                "name": "Nhà sách Tiền Phong Hải Phòng",
+                "address": "5 Lạch Tray – Q. Ngô Quyền – Hải Phòng"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+  

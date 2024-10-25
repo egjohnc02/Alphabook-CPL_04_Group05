@@ -25,7 +25,7 @@ export default function Footer(){
                     <p className='fw-bold'>THÔNG TIN</p>
                     <li><a href="/gioi-thieu" className='nav-link'>Giới thiệu</a></li>
                     <li><a href="/he-thong-nha-sach" className='nav-link'>Hệ thống nhà sách</a></li>
-                    <li><a href="#" className='nav-link'>Hệ thống phát hành</a></li>
+                    <li><a href="/he-thong-phat-hanh" className='nav-link'>Hệ thống phát hành</a></li>
                     <li><a href="#" className='nav-link'>Tuyển dụng</a></li>
                     <li><a href="#" className='nav-link'>Hợp tác xuất bản</a></li>
                     <li><a href="#" className='nav-link'>Hợp tác kinh doanh</a></li>
