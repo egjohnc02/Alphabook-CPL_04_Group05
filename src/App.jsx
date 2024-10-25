@@ -7,11 +7,13 @@ import Login from './page/Login';
 import Home from './page/Home'
 import Register from './page/Register';
 import Introduce from './page/Introduce';
+import Header from './components/Header';
 
 export default function App() {
   return (
     <Router>
       <NavbarHeader />
+      <Header />
       <Routes>
       <Route index element={<Home />} />
       <Route path="/home" element={<Home />} />

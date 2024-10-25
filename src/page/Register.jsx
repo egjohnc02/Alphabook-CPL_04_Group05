@@ -5,14 +5,9 @@ export default function Register(){
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
+    
     return (
         <div>
-            <div className='login-head text-center py-5 bg-cover'>
-                <Link to="/home" className='text-secondary link-underline link-underline-opacity-0'>
-                    <nav>Trang chủ</nav>
-                </Link>
-                <h2 className=''>Đăng ký tài khoản</h2>
-            </div>
             <div className='container mt-5 d-flex justify-content-center w-50'>
                 <form className='container py-3 border-orange pe-4'>
                     <h4>Đăng ký tài khoản</h4>
