@@ -27,8 +27,8 @@ export default function Footer(){
                     <li><a href="/he-thong-nha-sach" className='nav-link'>Hệ thống nhà sách</a></li>
                     <li><a href="/he-thong-phat-hanh" className='nav-link'>Hệ thống phát hành</a></li>
                     <li><a href="#" className='nav-link'>Tuyển dụng</a></li>
-                    <li><a href="#" className='nav-link'>Hợp tác xuất bản</a></li>
-                    <li><a href="#" className='nav-link'>Hợp tác kinh doanh</a></li>
+                    <li><a href="/dich-vu" className='nav-link'>Hợp tác xuất bản</a></li>
+                    <li><a href="/hop-tac-kinh-doanh" className='nav-link'>Hợp tác kinh doanh</a></li>
                     <li><a href="#" className='nav-link'>Tích điểm đổi quà</a></li>
                 </ul>
 
