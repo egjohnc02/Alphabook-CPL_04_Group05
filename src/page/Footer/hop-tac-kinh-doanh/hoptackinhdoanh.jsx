@@ -1,4 +1,4 @@
-import bgLogin from "../gioi-thieu/img/bg_login.webp";
+import bgLogin from "../../../assets/bg_login.webp";
 import "./hoptackinhdoanh.css";
 function hoptackinhdoanh() {
   return (

@@ -1,8 +1,8 @@
-import bgLogin from "./img/bg_login.webp";
+import bgLogin from "../../../assets/bg_login.webp";
 import "./dichvu.css";
-import anh1 from './img/1-1484664962.jpg';
-import anh2 from './img/8a.jpg';
-import anh3 from './img/How-to-Publish-a-Book-scaled.jpg';
+import anh1 from '../../../assets/img-dich-vu/1-1484664962.jpg';
+import anh2 from '../../../assets/img-dich-vu/8a.jpg';
+import anh3 from '../../../assets/img-dich-vu/How-to-Publish-a-Book-scaled.jpg';
 function DichVu() {
   return (
     <div>

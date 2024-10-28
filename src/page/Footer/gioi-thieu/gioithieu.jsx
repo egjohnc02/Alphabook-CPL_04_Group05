@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import bgLogin from "../gioi-thieu/img/bg_login.webp";
-import book1 from "../gioi-thieu/img/book1.webp";
-import book2 from "../gioi-thieu/img/book2.webp";
-import book3 from "../gioi-thieu/img/book3.webp";
+import bgLogin from "../../../assets/bg_login.webp";
+import book1 from "../../../assets/img-gioi-thieu/book1.webp";
+import book2 from "../../../assets/img-gioi-thieu/book2.webp";
+import book3 from "../../../assets/img-gioi-thieu/book3.webp";
 import "./gioithieu.css";
 function Introduce() {
   return (

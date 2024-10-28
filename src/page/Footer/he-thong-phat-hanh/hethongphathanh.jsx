@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-import bgLogin from "../gioi-thieu/img/bg_login.webp";
+import bgLogin from "../../../assets/bg_login.webp";
 function HeThongPhatHanh() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,7 +11,7 @@ function HeThongPhatHanh() {
     axios
       .get("http://localhost:9999/regions")
       .then((response) => {
-        setData(response.data); 
+        setData(response.data); // Lấy dữ liệu từ API và set vào state
         setLoading(false);
       })
       .catch((error) => {
@@ -20,6 +20,7 @@ function HeThongPhatHanh() {
       });
   }, []);
 
+  // Hiển thị loading hoặc error nếu có
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import bgLogin from "../gioi-thieu/img/bg_login.webp";
+import bgLogin from "../../../assets/bg_login.webp";
 import "./hethongnhasach.css";
 
 function hethongnhasach() {
