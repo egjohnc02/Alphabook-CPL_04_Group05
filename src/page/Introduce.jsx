@@ -18,9 +18,9 @@ function Introduce() {
           className="position-absolute top-50 start-50 translate-middle"
           
         >
-      <a href="/home">
-    <span >Trang chủ</span>
-</a>
+     <Link to="/home" style={{ textDecoration: 'none', color: 'inherit' }}>
+      <p>Trang chủ</p>
+    </Link>
         <h1 style={{ color: 'orange'}}>Giới thiệu</h1>
         </div>
       </div>
