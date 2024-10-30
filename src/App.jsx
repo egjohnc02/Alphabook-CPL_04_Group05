@@ -7,6 +7,8 @@ import Login from './page/Login';
 import Home from './page/Home'
 import Register from './page/Register';
 import Introduce from './page/Introduce';
+import Service from './page/service';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import Header from './components/Header';
 
 export default function App() {
@@ -20,6 +22,7 @@ export default function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/introduce" element={<Introduce />} />
+        <Route path="/service" element={<Service />} />
       </Routes>
       <Footer />
     </Router>

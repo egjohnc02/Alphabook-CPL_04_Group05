@@ -10,6 +10,25 @@ function Introduce() {
   }, []);
     return ( 
       <>
+      <div>
+      <div className="position-relative text-center">
+        <img
+          src={bgLogin}
+          alt="Example"
+          className="img-fluid"
+          style={{ maxwidth: '100%' }}
+        />
+        <div
+          className="position-absolute top-50 start-50 translate-middle"
+          
+        >
+     <Link to="/home" style={{ textDecoration: 'none', color: 'inherit' }}>
+      <p>Trang chủ</p>
+    </Link>
+        <h1 style={{ color: 'orange'}}>Giới thiệu</h1>
+        </div>
+      </div>
+    </div>
     <div className="container">
     <h1 style={{ marginTop: '50px'}}>Giới thiệu</h1>
       <h4 style={{ color: 'orange',textAlign: 'center' }}>ALPHA BOOKS - HÀNH TRÌNH VƯƠN TẦM TRI THỨC</h4>
