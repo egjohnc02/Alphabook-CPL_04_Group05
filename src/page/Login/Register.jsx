@@ -1,13 +1,10 @@
 import { Link } from 'react-router-dom';
-
+import AutoScrollToTop from '../../utils/AutoScollToTop';
 
 export default function Register(){
+    AutoScrollToTop()
     return (
         <div>
-            <div className='login-head text-center py-4 bg-cover'>
-                <nav>Trang chủ</nav>
-                <h2 className=''>Đăng ký tài khoản</h2>
-            </div>
             <div className='container mt-5 d-flex justify-content-center w-50'>
                 <form className='container py-3 border-orange pe-4'>
                     <h4>Đăng ký tài khoản</h4>
