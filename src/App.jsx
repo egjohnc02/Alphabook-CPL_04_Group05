@@ -9,10 +9,13 @@ import Register from './page/Register';
 import Introduce from './page/Introduce';
 import Service from './page/service';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import Header from './components/Header';
+
 export default function App() {
   return (
     <Router>
       <NavbarHeader />
+      <Header />
       <Routes>
       <Route index element={<Home />} />
       <Route path="/home" element={<Home />} />

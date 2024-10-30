@@ -1,9 +1,13 @@
-import { Link } from 'react-router-dom';
-import bgLogin from '../assets/bg_login.webp';
-import book1 from '../assets/book1.webp';
-import book2 from '../assets/book2.webp';
- import book3 from '../assets/book3.webp';
+import book1 from '../assets/introduce/book1.webp';
+import book2 from '../assets/introduce/book2.webp';
+import book3 from '../assets/introduce/book3.webp';
+import { useEffect } from 'react';
+
+
 function Introduce() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
     return ( 
       <>
       <div>
@@ -25,7 +29,6 @@ function Introduce() {
         </div>
       </div>
     </div>
-    
     <div className="container">
     <h1 style={{ marginTop: '50px'}}>Giới thiệu</h1>
       <h4 style={{ color: 'orange',textAlign: 'center' }}>ALPHA BOOKS - HÀNH TRÌNH VƯƠN TẦM TRI THỨC</h4>

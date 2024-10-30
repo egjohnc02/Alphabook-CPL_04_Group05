@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 function Login() {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
     return (
         <div>
-            <div className='login-head text-center py-4 bg-cover'>
-                <nav>Trang chủ</nav>
-                <h2 className=''>Đăng nhập tài khoản</h2>
-            </div>
             <div className='container mt-5 d-flex justify-content-center w-50'>
                 <form className='container py-3 border-orange'>
                     <h4>Đăng nhập tài khoản</h4>
