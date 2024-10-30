@@ -1,14 +1,11 @@
-import book1 from '../assets/introduce/book1.webp';
-import book2 from '../assets/introduce/book2.webp';
-import book3 from '../assets/introduce/book3.webp';
-import { useEffect } from 'react';
-
+import book1 from '../../assets/introduce/book1.webp'
+import book2 from '../../assets/introduce/book2.webp'
+import book3 from '../../assets/introduce/book3.webp'
+import AutoScrollToTop from '../../utils/AutoScollToTop';
 
 function Introduce() {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-    return ( 
+  AutoScrollToTop()
+    return (
       <>
     <div className="container">
     <h1 style={{ marginTop: '50px'}}>Giới thiệu</h1>
@@ -28,7 +25,7 @@ function Introduce() {
         <p>Tiếp nối thành công, với mong muốn xây dựng một thế hệ các nhà lãnh đạo và quản lý mới có năng lực lãnh đạo, tầm nhìn chiến lược và khả năng giải quyết vấn đề sáng tạo, Alpha Books đã ra mắt dòng sách cao cấp <strong>Harvard Business Review</strong> tại Việt Nam với thiết kế hiện đại, đa dạng chủ đề, bắt kịp tư duy kinh doanh của thời đại nhằm đưa ra những giải pháp triệt để và kiến thức quản trị nâng cao giúp nhà lãnh đạo - quản lý đối phó với biến động của nền kinh tế toàn cầu.</p>
         <p><strong>Harvard Business Review (HBR)</strong> thuộc top đầu sách Quản trị Kinh doanh trên khắp thế giới, đã và đang đồng hành cùng với nhiều doanh nghiệp, doanh nhân và người lao động Việt Nam. Kể từ khi xuất bản ấn phẩm đầu tiên năm 1922 tại Mỹ, HBR luôn mang tới những kỹ năng và kiến thức được đúc kết thực tế từ góc nhìn mới mẻ và đầy sức thuyết phục của các chuyên gia uy tín hàng đầu giúp con đường sự nghiệp của mỗi cá nhân được thăng hoa hơn, cung cấp nhiều giải pháp hữu ích cho mỗi doanh nghiệp. </p>
         <p>Alpha Books kỳ vọng những tri thức quản trị tinh tuyển và cập nhật sẽ đóng góp vào tư duy quản trị của các doanh nghiệp Việt Nam, khai phóng tiềm năng lãnh đạo của mỗi doanh nhân và góp phần vào sự phát triển kinh tế chung của quốc gia.</p>
-        <p>Bộ ấn phẩm <strong>Harvard Business Review (HBR) </strong>danh tiếng toàn cầu được Alpha Books “bản địa hoá" thành công và ra mắt tại Việt Nam với những bộ sách chất lượng hàng đầu, nhận được rất nhiều sự yêu thích và đón chờ từ độc giả, đặc biệt bởi Shark Nguyễn Thanh Việt, Bà Nguyễn Phương Thảo – Tổng Giám đốc Vietjet Air, Bà Hà Thu Thanh – Chủ tịch Deloitte Việt Nam, Ông Hồ Quang Minh – Chủ tịch BNI Việt Nam….</p>
+        <p>Bộ ấn phẩm <strong>Harvard Business Review (HBR) </strong>danh tiếng toàn cầu được Alpha Books “bản địa hoá&quot; thành công và ra mắt tại Việt Nam với những bộ sách chất lượng hàng đầu, nhận được rất nhiều sự yêu thích và đón chờ từ độc giả, đặc biệt bởi Shark Nguyễn Thanh Việt, Bà Nguyễn Phương Thảo – Tổng Giám đốc Vietjet Air, Bà Hà Thu Thanh – Chủ tịch Deloitte Việt Nam, Ông Hồ Quang Minh – Chủ tịch BNI Việt Nam….</p>
         <img
           src={ book2}
           alt="Example"
@@ -42,7 +39,7 @@ function Introduce() {
           className="img-fluid"
           style={{ maxwidth: '100%' }}
         />
-    <p style={{textAlign:'center', marginTop:'50px'}}><em>"Alpha Books không bán sách, chúng tôi bán những kinh nghiệm quản trị, những tri thức và tư duy kinh doanh mới, hiện đại, giá trị của những doanh nhân hàng đầu thế giới và cả Việt Nam."</em></p>
+    <p style={{textAlign:'center', marginTop:'50px'}}><em>&quot;Alpha Books không bán sách, chúng tôi bán những kinh nghiệm quản trị, những tri thức và tư duy kinh doanh mới, hiện đại, giá trị của những doanh nhân hàng đầu thế giới và cả Việt Nam.&quot;</em></p>
     </div>
  
     </>
