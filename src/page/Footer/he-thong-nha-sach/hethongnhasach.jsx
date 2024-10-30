@@ -1,8 +1,29 @@
 import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import bgLogin from "../../../assets/bg_login.webp";
+import axios from "axios";
 import "./hethongnhasach.css";
 
 function hethongnhasach() {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:9999/DiemBanHang")
+      .then((response) => {
+        setData(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
   return (
     <div>
       <div>
@@ -22,10 +43,10 @@ function hethongnhasach() {
         </div>
         <div className="content-page rte">
           <table
+            className="display dataTable no-footer"
             border="1"
             cellPadding="1"
             cellSpacing="1"
-            className="display dataTable no-footer"
           >
             <thead>
               <tr role="row">
@@ -45,44 +66,18 @@ function hethongnhasach() {
               </tr>
             </thead>
             <tbody>
-              <tr className="even" role="row">
-                <td className="sorting_1">1</td>
-                <td className="sorting_1">Gian Hàng Alpha Books HN</td>
-                <td>Đường sách 19/12, Trần Hưng Đạo, Hoàn Kiếm</td>
-                <td className="sorting_1">Hà Nội</td>
-                <td>(02) 432668036</td>
-              </tr>
-              <tr className="even" role="row">
-                <td className="sorting_1">2</td>
-                <td className="sorting_1">Nhà sách Vinh</td>
-                <td>211 Lê Duẩn, Tp Vinh</td>
-                <td className="sorting_1">Nghệ An</td>
-                <td>(02) 383 555 468</td>
-              </tr>
-              <tr className="even" role="row">
-                <td className="sorting_1">3</td>
-                <td className="sorting_1">Gian Hàng Alpha Books HCM</td>
-                <td>Đường sách Nguyễn Văn Bình, Q.1</td>
-                <td className="sorting_1">HCM</td>
-                <td>(08) 38 251 789</td>
-              </tr>
-              <tr>
-                <td className="sorting_1">4</td>
-                <td className="sorting_1">Alpha Books Online SG</td>
-                <td>252/18D Phan Anh, Hiệp Tân, Tân Phú</td>
-                <td className="sorting_1">HCM</td>
-                <td>0886319009</td>
-              </tr>
-              <tr>
-                <td className="sorting_1">5</td>
-                <td className="sorting_1">Alpha Books Online HN</td>
-                <td>
-                  <p>44 P. Ba La, Phú Lương, Hà Đông</p>
-                </td>
-                <td className="sorting_1">Hà Nội</td>
-                <td>0932329959</td>
-              </tr>
-            </tbody>
+
+                
+                    {data.map((item, index) => (
+                        <tr key={index} className="even" role="row">
+                            <td className="sorting_1">{item.DiemBanHang}</td>
+                            <td className="sorting_1">{item.NhaSach}</td>
+                            <td>{item.DiaChi}</td>
+                            <td className="sorting_1">{item.ThanhPho}</td>
+                            <td>{item.SDT}</td>
+                        </tr>
+                    ))}
+                </tbody>
           </table>
         </div>
       </div>
