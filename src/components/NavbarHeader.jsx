@@ -27,7 +27,7 @@ export default function NavbarHeader() {
 
             <Nav.Link as={Link} to="/service">Dịch vụ HTXB</Nav.Link>
 
-            <NavDropdown title="Tin tức - Sự kiện" id="basic-nav-dropdown">
+            <NavDropdown Link to="/news" title="Tin tức - Sự kiện" id="basic-nav-dropdown">
               <NavDropdown.Item as={Link} to="/news">Tin tức</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/events">Sự kiện</NavDropdown.Item>
             </NavDropdown>
