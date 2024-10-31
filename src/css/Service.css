@@ -1,3 +1,4 @@
+@ -0,0 +1,78 @@
 .swing-button {
   animation: swing 1.5s ease-in-out infinite;
   width: 150px;
@@ -75,4 +76,9 @@
   content: "✔️";
   color: #ff6a00; /* Màu cam cho dấu check */
   margin-right: 8px;
+}
+.thumbnail{
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
 }
