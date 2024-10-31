@@ -1,9 +1,11 @@
 import logo from '../assets/footer/logo_footer.webp'
 import logoBct from '../assets/footer/logo_bct.webp'
 import { Link } from 'react-router-dom';
+import AutoScrollToTop from '../utils/AutoScrollToTop';
 
 
 export default function Footer(){
+    AutoScrollToTop()
     return (
         <div className='bg-orange text-light mt-5 footer'>
             <div className='container d-flex py-3 gap-3 justify-content-between'>
@@ -28,22 +30,22 @@ export default function Footer(){
                 <div className='w-25 pt-3 d-flex flex-column gap-3'>
                     <p className='fw-bold fs-5'>THÔNG TIN</p>
 
-                    <Link to="/gioi-thieu" className='text-decoration-none text-light'>
+                    <Link to="introduce" className='text-decoration-none text-light'>
                         <nav>&gt; <span>Giới thiệu</span></nav>
                     </Link>
-                    <Link to="/he-thong-nha-sach" className='text-decoration-none text-light'>
+                    <Link to="/hethongnhasach" className='text-decoration-none text-light'>
                         <nav>&gt; <span>Hệ thống nhà sách</span></nav>
                     </Link>
-                    <Link to="/he-thong-phat-hanh" className='text-decoration-none text-light'>
+                    <Link to="/hethongphathanh" className='text-decoration-none text-light'>
                         <nav>&gt; <span>Hệ thống phát hành</span></nav>
                     </Link>
                     <Link to="/a" className='text-decoration-none text-light'>
                         <nav>&gt; <span>Tuyển dụng</span></nav>
                     </Link>
-                    <Link to="/dich-vu" className='text-decoration-none text-light'>
+                    <Link to="/dichvu" className='text-decoration-none text-light'>
                         <nav>&gt; <span>Hợp tác xuất bản</span></nav>
                     </Link>
-                    <Link to="/hop-tac-kinh-doanh" className='text-decoration-none text-light'>
+                    <Link to="/hoptackinhdoanh" className='text-decoration-none text-light'>
                         <nav>&gt; <span>Hợp tác kinh doanh</span></nav>
                     </Link>
                     <Link to="/a" className='text-decoration-none text-light'>
@@ -54,16 +56,16 @@ export default function Footer(){
                 <div className='w-25 pt-3 d-flex flex-column gap-3'>
                     <p className='fw-bold  fs-5'>CHÍNH SÁCH</p>
 
-                    <Link to="/chinh-sach-thanh-toan" className='text-decoration-none text-light'>
+                    <Link to="/chinhsachthanhtoan" className='text-decoration-none text-light'>
                         <nav>&gt; <span>Chính sách thanh toán</span></nav>
                     </Link>
-                    <Link to="/chinh-sach-van-chuyen" className='text-decoration-none text-light'>
+                    <Link to="/chinhsachvanchuyen" className='text-decoration-none text-light'>
                         <nav>&gt; <span>Chính sách vận chuyển</span></nav>
                     </Link>
-                    <Link to="/chinh-sach-bao-mat" className='text-decoration-none text-light'>
+                    <Link to="/chinhsachbaomat" className='text-decoration-none text-light'>
                         <nav>&gt; <span>Chính sách bảo mật</span></nav>
                     </Link>
-                    <Link to="/chinh-sach-doi-tra-hoan-tien" className='text-decoration-none text-light'>
+                    <Link to="/chinhsachdoitrahoantien" className='text-decoration-none text-light'>
                         <nav>&gt; <span>Chính sách đổi trả hoàn tiền</span></nav>
                     </Link>
                 </div>
