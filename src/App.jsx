@@ -4,7 +4,7 @@ import NavbarHeader from './components/NavbarHeader';
 import Footer from './components/Footer';
 import {BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Login from './page/Login';
-import Home from './page/Home'
+import Home from './page/Home/Home'
 import Register from './page/Register';
 import Introduce from './page/Introduce';
 import '@fortawesome/fontawesome-free/css/all.min.css';
@@ -17,6 +17,7 @@ import ChinhSachThanhToan from './page/Footer/chinh-sach-thanh-toan/chinhsachtha
 import ChinhSachVanChuyen from './page/Footer/chinh-sach-van-chuyen/chinhsachvanchuyen'
 import ChinhSachBaoMat from './page/Footer/chinh-sach-bao-mat/chinhsachbaomat'
 import ChinhSachDoiTraHoanTien from './page/Footer/chinh-sach-doi-tra-hoan-tien/chinhsachhoantratien'
+import Service from './page/Service';
 
 
 function AppContent() {
@@ -25,13 +26,14 @@ function AppContent() {
   return (
     <>
       <NavbarHeader />
-      {location.pathname !== '/home' && location.pathname !== '/' && <Header />}
+      {location.pathname !== '/home' && location.pathname !== '/' && location.pathname !== '/service' && <Header />}
       <Routes>
         <Route index element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/introduce" element={<Introduce />} />
+        <Route path="/service" element={<Service />} />
         <Route path="/hethongnhasach" element={<HeThongNhaSach />} />
         <Route path="/hethongphathanh" element={<HeThongPhatHanh />} />
         <Route path="/dichvu" element={<DichVu />} />
@@ -42,27 +44,16 @@ function AppContent() {
         <Route path="/chinhsachdoitrahoantien" element={<ChinhSachDoiTraHoanTien />} />
       </Routes>
       <Footer />
-      <ContactButton />
-      <BackToTop />
     </>
   );
 }
+
 export default function App() {
 
 
   return (
     <Router>
-      <NavbarHeader />
-      <Header />
-      <Routes>
-      <Route index element={<Home />} />
-      <Route path="/home" element={<Home />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/introduce" element={<Introduce />} />
-        <Route path="/service" element={<Service />} />
-      </Routes>
-      <Footer />
+      <AppContent />
     </Router>
   );
 }
