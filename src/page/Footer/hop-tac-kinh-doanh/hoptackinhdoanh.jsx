@@ -1,6 +1,7 @@
 // import bgLogin from "../../../assets/bg_login.webp";
 import AutoScrollToTop from "../../../utils/AutoScollToTop";
 import "./hoptackinhdoanh.css";
+
 function hoptackinhdoanh() {
   AutoScrollToTop();
   return (

@@ -4,8 +4,12 @@ import book1 from "../../../assets/footer/img-gioi-thieu/book1.webp";
 import book2 from "../../../assets/footer/img-gioi-thieu/book2.webp";
 import book3 from "../../../assets/footer/img-gioi-thieu/book3.webp";
 import "./gioithieu.css";
+import AutoScrollToTop from "../../../utils/AutoScollToTop";
+
 function Introduce() {
+  AutoScrollToTop();
   return (
+
     <div>
       {/* <div className="position-relative text-center">
         <img src={bgLogin} alt="Example" className="img-fluid" />

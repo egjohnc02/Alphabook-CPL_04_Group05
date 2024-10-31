@@ -1,5 +1,8 @@
 // import bgLogin from "../../../assets/bg_login.webp";
+import AutoScrollToTop from "../../../utils/AutoScollToTop";
+
 function ChinhSachVanChuyen() {
+  AutoScrollToTop();
   return (
     <div>
       <div>

@@ -3,7 +3,10 @@ import "./dichvu.css";
 import anh1 from '../../../assets/footer/img-dich-vu/1-1484664962.jpg';
 import anh2 from '../../../assets/footer/img-dich-vu/8a.jpg';
 import anh3 from '../../../assets/footer/img-dich-vu/How-to-Publish-a-Book-scaled.jpg';
+import AutoScrollToTop from "../../../utils/AutoScollToTop";
+
 function DichVu() {
+  AutoScrollToTop();
   return (
     <div>
       <div>
