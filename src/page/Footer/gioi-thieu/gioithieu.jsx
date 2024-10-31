@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-// import bgLogin from "../../../assets/bg_login.webp";
 import book1 from "../../../assets/footer/img-gioi-thieu/book1.webp";
 import book2 from "../../../assets/footer/img-gioi-thieu/book2.webp";
 import book3 from "../../../assets/footer/img-gioi-thieu/book3.webp";
@@ -11,15 +10,7 @@ function Introduce() {
   return (
 
     <div>
-      {/* <div className="position-relative text-center">
-        <img src={bgLogin} alt="Example" className="img-fluid" />
-        <div className="position-absolute top-50 start-50 translate-middle">
-          <a href="/home">
-            <span>Trang chủ</span>
-          </a>
-          <h1>Giới thiệu</h1>
-        </div>
-      </div> */}
+      
 
       <div className="container">
         <h1>Giới thiệu</h1>
