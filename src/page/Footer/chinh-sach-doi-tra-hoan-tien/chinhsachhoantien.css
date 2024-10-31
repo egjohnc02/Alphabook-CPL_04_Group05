@@ -1,0 +1,49 @@
+body {
+    font-family: Calibri, sans-serif;
+}
+
+p {
+    font-size: 11pt;
+    line-height: 107%;
+    color: black;
+}
+
+p span {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+span[style*="color:red"] {
+    color: red;
+}
+.Table {
+    width: 922.2pt;
+    margin-left: 0;
+    background: white;
+    border-collapse: collapse;
+    border: solid #000001 1.0pt;
+}
+
+.Table td {
+    border: solid #000001 1.0pt;
+    background: white;
+    padding: 7.5pt;
+}
+
+.Table td:nth-child(2),
+.Table td:nth-child(3) {
+    border-left: none;
+}
+
+.Table td:nth-child(1) {
+    width: 275.65pt;
+}
+
+.Table td:nth-child(2) {
+    width: 266.45pt;
+}
+
+.Table td:nth-child(3) {
+    width: 380.1pt;
+}

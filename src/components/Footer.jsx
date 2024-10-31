@@ -28,42 +28,42 @@ export default function Footer(){
                 <div className='w-25 pt-3 d-flex flex-column gap-3'>
                     <p className='fw-bold fs-5'>THÔNG TIN</p>
 
-                    <Link to="/introduce" className='text-decoration-none text-light'>
+                    <Link to="/gioi-thieu" className='text-decoration-none text-light'>
                         <nav>&gt; <span>Giới thiệu</span></nav>
                     </Link>
-                    <Link to="/a" className='text-decoration-none text-light'>
+                    <Link to="/he-thong-nha-sach" className='text-decoration-none text-light'>
                         <nav>&gt; <span>Hệ thống nhà sách</span></nav>
                     </Link>
-                    <Link to="/a" className='text-decoration-none text-light'>
+                    <Link to="/he-thong-phat-hanh" className='text-decoration-none text-light'>
                         <nav>&gt; <span>Hệ thống phát hành</span></nav>
                     </Link>
                     <Link to="/a" className='text-decoration-none text-light'>
                         <nav>&gt; <span>Tuyển dụng</span></nav>
                     </Link>
-                    <Link to="/a" className='text-decoration-none text-light'>
+                    <Link to="/dich-vu" className='text-decoration-none text-light'>
                         <nav>&gt; <span>Hợp tác xuất bản</span></nav>
                     </Link>
-                    <Link to="/a" className='text-decoration-none text-light'>
+                    <Link to="/hop-tac-kinh-doanh" className='text-decoration-none text-light'>
                         <nav>&gt; <span>Hợp tác kinh doanh</span></nav>
                     </Link>
                     <Link to="/a" className='text-decoration-none text-light'>
                         <nav>&gt; <span>Tích điểm đổi quà</span></nav>
                     </Link>
                 </div>
-
+                
                 <div className='w-25 pt-3 d-flex flex-column gap-3'>
                     <p className='fw-bold  fs-5'>CHÍNH SÁCH</p>
 
-                    <Link to="/a" className='text-decoration-none text-light'>
+                    <Link to="/chinh-sach-thanh-toan" className='text-decoration-none text-light'>
                         <nav>&gt; <span>Chính sách thanh toán</span></nav>
                     </Link>
-                    <Link to="/a" className='text-decoration-none text-light'>
+                    <Link to="/chinh-sach-van-chuyen" className='text-decoration-none text-light'>
                         <nav>&gt; <span>Chính sách vận chuyển</span></nav>
                     </Link>
-                    <Link to="/a" className='text-decoration-none text-light'>
+                    <Link to="/chinh-sach-bao-mat" className='text-decoration-none text-light'>
                         <nav>&gt; <span>Chính sách bảo mật</span></nav>
                     </Link>
-                    <Link to="/a" className='text-decoration-none text-light'>
+                    <Link to="/chinh-sach-doi-tra-hoan-tien" className='text-decoration-none text-light'>
                         <nav>&gt; <span>Chính sách đổi trả hoàn tiền</span></nav>
                     </Link>
                 </div>
