@@ -1,0 +1,48 @@
+.page {
+    padding: 20px;
+  }
+  
+  .wrap-background-aside {
+    background-color: #f9f9f9;
+    padding-top: 15px;
+    margin-bottom: 40px;
+  }
+  
+  .title-block-page {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .intro-text {
+    font-size: 16px;
+    line-height: 1.6;
+    text-align: justify;
+  }
+  
+  .section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+  
+  .contact-list {
+    list-style-type: decimal;
+    padding-left: 20px;
+  }
+  
+  .contact-item {
+    font-size: 16px;
+    line-height: 1.8;
+  }
+  
+  .contact-item a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .contact-item a:hover {
+    text-decoration: underline;
+  }
+  
