@@ -3,7 +3,7 @@
 
 // import bgLogin from "../../../assets/bg_login.webp";
 
-import AutoScrollToTop from "../../../utils/AutoScollToTop";
+import AutoScrollToTop from "../../../utils/AutoScrollToTop"
 
 function HeThongPhatHanh() {
   // const [data, setData] = useState([]);
