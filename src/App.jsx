@@ -42,16 +42,27 @@ function AppContent() {
         <Route path="/chinhsachdoitrahoantien" element={<ChinhSachDoiTraHoanTien />} />
       </Routes>
       <Footer />
+      <ContactButton />
+      <BackToTop />
     </>
   );
 }
-
 export default function App() {
 
 
   return (
     <Router>
-      <AppContent />
+      <NavbarHeader />
+      <Header />
+      <Routes>
+      <Route index element={<Home />} />
+      <Route path="/home" element={<Home />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/introduce" element={<Introduce />} />
+        <Route path="/service" element={<Service />} />
+      </Routes>
+      <Footer />
     </Router>
   );
 }
