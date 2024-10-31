@@ -17,6 +17,8 @@ import ChinhSachThanhToan from './page/Footer/chinh-sach-thanh-toan/chinhsachtha
 import ChinhSachVanChuyen from './page/Footer/chinh-sach-van-chuyen/chinhsachvanchuyen';
 import Chinhsachbaomat from './page/Footer/chinh-sach-bao-mat/chinhsachbaomat';
 import ChinhSachHoanTraTien from './page/Footer/chinh-sach-doi-tra-hoan-tien/chinhsachhoantratien';
+import BackToTop from './components/Backtop';
+import ContactButton from './components/ContactButton';
 
 function AppContent() {
   const location = useLocation();
@@ -43,6 +45,8 @@ function AppContent() {
 
       </Routes>
       <Footer />
+      <ContactButton />
+      <BackToTop />
     </>
   );
 }
