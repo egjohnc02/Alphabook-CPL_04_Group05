@@ -1,8 +1,6 @@
-import { Link } from 'react-router-dom';
-import bgLogin from '../assets/bg_login.webp';
 import htxb from '../assets/duy/htxb.jpg';
 import '../css/service.css';
-import React, { useRef } from 'react';
+import  { useRef } from 'react';
 import htbx2 from '../assets/duy/shit1.png';
 import htbx3 from '../assets/duy/shit2.png';
 import htbx4 from '../assets/duy/shit3.png';
@@ -84,14 +82,14 @@ function Service() {
 <h1 style={{ textAlign: 'center'}}>DÀNH CHO MỌI CÁ NHÂN, TỔ CHỨC, DOANH NGHIỆP, HIỆP HỘI</h1>
 <h1 style={{ textAlign: 'center',marginTop: '150px'}}>TRIỂN KHAI DỊCH VỤ HỢP TÁC XUẤT BẢN</h1>
     {/* code ở đây*/}
-    <div class="container my-4" >
-  <div class="row">
-    <div class="col-md-6 mb-4">
-      <div class="info-card p-4 shadow-sm">
-        <h4 class="info-title text-uppercase " style={{ color: 'orange' }}>
-          <i class="fas fa-check-circle"></i> Dịch vụ sản xuất đa dạng
+    <div className="container my-4" >
+  <div className="row">
+    <div className="col-md-6 mb-4">
+      <div className="info-card p-4 shadow-sm">
+        <h4 className="info-title text-uppercase " style={{ color: 'orange' }}>
+          <i className="fas fa-check-circle"></i> Dịch vụ sản xuất đa dạng
         </h4>
-        <ul class="info-list mt-3">
+        <ul className="info-list mt-3">
           <li>Mua bản quyền (đối với sách nước ngoài)</li>
           <li>Chấp bút (hồi ký, tự truyện, sổ tay doanh nghiệp,...)</li>
           <li>Biên tập, biên dịch bản thảo</li>
@@ -99,23 +97,23 @@ function Service() {
         </ul>
       </div>
     </div>
-    <div class="col-md-6 mb-4">
-      <div class="info-card p-4 shadow-sm">
-        <h4 class="info-title text-uppercase " style={{ color: 'orange' }}>
-          <i class="fas fa-check-circle"></i> Đăng ký giấy phép xuất bản
+    <div className="col-md-6 mb-4">
+      <div className="info-card p-4 shadow-sm">
+        <h4 className="info-title text-uppercase " style={{ color: 'orange' }}>
+          <i className="fas fa-check-circle"></i> Đăng ký giấy phép xuất bản
         </h4>
-        <ul class="info-list mt-3">
+        <ul className="info-list mt-3">
           <li>Đàm phán bản quyền sách in, quyền sử dụng một số phần trong sách (sách dịch).</li>
           <li>Kí kết hợp đồng bản quyền.</li>
         </ul>
       </div>
     </div>
-    <div class="col-md-6 mb-4">
-      <div class="info-card p-4 shadow-sm">
-        <h4 class="info-title text-uppercase " style={{ color: 'orange' }}>
-          <i class="fas fa-check-circle"></i> Marketing, Truyền thông
+    <div className="col-md-6 mb-4">
+      <div className="info-card p-4 shadow-sm">
+        <h4 className="info-title text-uppercase " style={{ color: 'orange' }}>
+          <i className="fas fa-check-circle"></i> Marketing, Truyền thông
         </h4>
-        <ul class="info-list mt-3">
+        <ul className="info-list mt-3">
           <li>Cung cấp các gói quảng cáo, ra mắt sách theo nhu cầu.</li>
           <li>Tổ chức sự kiện ra mắt sách.</li>
           <li>Xây dựng các gói quà tặng kèm.</li>
@@ -123,12 +121,12 @@ function Service() {
         </ul>
       </div>
     </div>
-    <div class="col-md-6 mb-4">
-      <div class="info-card p-4 shadow-sm">
-        <h4 class="info-title text-uppercase " style={{ color: 'orange' }}>
-          <i class="fas fa-check-circle"></i> phân phối, bán hàng
+    <div className="col-md-6 mb-4">
+      <div className="info-card p-4 shadow-sm">
+        <h4 className="info-title text-uppercase " style={{ color: 'orange' }}>
+          <i className="fas fa-check-circle"></i> phân phối, bán hàng
         </h4>
-        <ul class="info-list mt-3">
+        <ul className="info-list mt-3">
           <li>Tư vấn, xây dựng gói bán hàng phù hợp.</li>
           <li>Đem đến giải pháp phân phối đa dạng trên các kênh online, offline.</li>
           <li>Hỗ trợ lưu kho, giảm thiểu chi phí.</li>
@@ -136,12 +134,12 @@ function Service() {
         </ul>
       </div>
     </div>
-    <div class="col-md-6 mb-4">
-      <div class="info-card p-4 shadow-sm">
-        <h4 class="info-title text-uppercase" style={{ color: 'orange' }}>
-          <i class="fas fa-check-circle"></i> sản xuất các ấn phẩm số
+    <div className="col-md-6 mb-4">
+      <div className="info-card p-4 shadow-sm">
+        <h4 className="info-title text-uppercase" style={{ color: 'orange' }}>
+          <i className="fas fa-check-circle"></i> sản xuất các ấn phẩm số
         </h4>
-        <ul class="info-list mt-3">
+        <ul className="info-list mt-3">
           <li>Ebook: Sản phẩm sách thời đại mới, có thể truy cập và đọc trực tiếp trên các thiết bị thông minh với nhiều định dạng theo nhu cầu</li>
           <li>Audio book: Cuốn sách của bạn được chuyển sang định dạng âm thanh, thông qua giọng người đọc hoặc công nghệ trí tuệ nhân tạo AI, có thể tiếp cận rộng rãi trên đa phương tiện.</li>
           <li>Media service: Sản xuất highlight video, TVC quảng cáo, các khóa học trực tuyến (E-learning).</li>
