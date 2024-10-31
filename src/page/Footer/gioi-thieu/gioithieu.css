@@ -1,0 +1,70 @@
+/* Định dạng chung cho ảnh */
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Định dạng cho các phần tử trong layout */
+  .position-relative {
+    position: relative;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .position-absolute {
+    position: absolute;
+  }
+  
+  .top-50 {
+    top: 50%;
+  }
+  
+  .start-50 {
+    left: 50%;
+  }
+  
+  .translate-middle {
+    transform: translate(-50%, -50%);
+  }
+  
+  /* Định dạng cho phần giới thiệu */
+  .container {
+    margin-top: 50px;
+  }
+  
+  h1 {
+    color: orange;
+  }
+  
+  h4 {
+    color: orange;
+    text-align: center;
+  }
+  
+  p em {
+    display: block;
+    font-style: italic;
+   text-align: center;
+  }
+  p {
+    text-align: left;
+  }
+  
+ 
+  
+  p strong {
+    font-weight: bold;
+  }
+  
+  p img {
+    margin-top: 50px;
+  }
+  
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
