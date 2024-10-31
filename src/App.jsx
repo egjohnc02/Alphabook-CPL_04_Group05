@@ -1,16 +1,16 @@
-import './App.css';
+import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavbarHeader from './components/NavbarHeader';
 import Footer from './components/Footer';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import Login from './page/Login/Login'
-import Home from './page/home/Home';
-import Register from './page/Login/Register'
-import Introduce from './page/Introduce/Introduce';
+import {BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './page/Login';
+import Home from './page/Home'
+import Register from './page/Register';
+import Introduce from './page/Introduce';
+import Service from './page/service';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import Header from './components/Header';
-<<<<<<< HEAD
 import Service from './page/Introduce/Service';
-=======
 import Gioithieu from './page/Footer/gioi-thieu/gioithieu';
 import Hethongnhasach from './page/Footer/he-thong-nha-sach/hethongnhasach';
 import Hethongphathanh from './page/Footer/he-thong-phat-hanh/hethongphathanh';
@@ -20,7 +20,8 @@ import ChinhSachThanhToan from './page/Footer/chinh-sach-thanh-toan/chinhsachtha
 import ChinhSachVanChuyen from './page/Footer/chinh-sach-van-chuyen/chinhsachvanchuyen';
 import Chinhsachbaomat from './page/Footer/chinh-sach-bao-mat/chinhsachbaomat';
 import ChinhSachHoanTraTien from './page/Footer/chinh-sach-doi-tra-hoan-tien/chinhsachhoantratien';
->>>>>>> b8695b5f8196bb1392bf649d26baafa427ffefd4
+import BackToTop from './components/Backtop';
+import ContactButton from './components/ContactButton';
 
 function AppContent() {
   const location = useLocation();
@@ -35,9 +36,7 @@ function AppContent() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/introduce" element={<Introduce />} />
-<<<<<<< HEAD
         <Route path="/service" element={<Service />} />
-=======
         <Route path="/gioi-thieu" element={<Gioithieu />} />
         <Route path="/he-thong-nha-sach" element={<Hethongnhasach />} />
         <Route path="/he-thong-phat-hanh" element={<Hethongphathanh />} />
@@ -48,17 +47,27 @@ function AppContent() {
         <Route path="/chinh-sach-bao-mat" element={<Chinhsachbaomat />} />
         <Route path="/chinh-sach-doi-tra-hoan-tien" element={<ChinhSachHoanTraTien />} />
 
->>>>>>> b8695b5f8196bb1392bf649d26baafa427ffefd4
       </Routes>
       <Footer />
+      <ContactButton />
+      <BackToTop />
     </>
   );
 }
-
 export default function App() {
   return (
     <Router>
-      <AppContent />
+      <NavbarHeader />
+      <Header />
+      <Routes>
+      <Route index element={<Home />} />
+      <Route path="/home" element={<Home />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/introduce" element={<Introduce />} />
+        <Route path="/service" element={<Service />} />
+      </Routes>
+      <Footer />
     </Router>
   );
 }
