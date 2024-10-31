@@ -1,0 +1,117 @@
+html,
+body,
+table,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  vertical-align: baseline;
+  background: transparent;
+  color: #5e5d5d;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  background-color: transparent;
+}
+
+table.dataTable {
+  width: 100%;
+  margin: 0 auto;
+  clear: both;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+table.dataTable,
+table.dataTable th,
+table.dataTable td {
+  box-sizing: content-box;
+}
+
+table.dataTable.no-footer {
+  border-bottom: 1px solid #111;
+}
+
+thead {
+  display: table-header-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+tr {
+  display: table-row;
+  vertical-align: inherit;
+  border-color: inherit;
+}
+
+th {
+  font-style: normal;
+  font-weight: normal;
+}
+
+caption,
+th {
+  text-align: left;
+}
+
+table.dataTable thead th,
+table.dataTable tfoot th {
+  font-weight: bold;
+}
+
+table.dataTable thead th,
+table.dataTable thead td {
+  padding: 10px 18px;
+  border-bottom: 1px solid #111;
+}
+
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_desc,
+table.dataTable thead .sorting_asc_disabled,
+table.dataTable thead .sorting_desc_disabled {
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: center right;
+}
+
+table.dataTable.stripe tbody tr.odd,
+table.dataTable.display tbody tr.odd {
+  background-color: #f9f9f9;
+}
+
+table.dataTable tbody tr {
+  background-color: #ffffff;
+}
+
+table.dataTable.display tbody tr.odd>.sorting_1,
+table.dataTable.order-column.stripe tbody tr.odd>.sorting_1 {
+  background-color: #f1f1f1;
+}
+
+table.dataTable.row-border tbody tr:first-child th,
+table.dataTable.row-border tbody tr:first-child td,
+table.dataTable.display tbody tr:first-child th,
+table.dataTable.display tbody tr:first-child td {
+  border-top: none;
+}
+
+table.dataTable.row-border tbody th,
+table.dataTable.row-border tbody td,
+table.dataTable.display tbody th,
+table.dataTable.display tbody td {
+  border-top: 1px solid #ddd;
+}
+
+table.dataTable tbody th,
+table.dataTable tbody td {
+  padding: 8px 10px;
+}
