@@ -1,0 +1,77 @@
+/* Shake animation using the provided keyframes */
+@keyframes iconSkew {
+    0% {
+        transform: rotate(0deg) scale(1) skew(1deg);
+    }
+    10% {
+        transform: rotate(-25deg) scale(1) skew(1deg);
+    }
+    20% {
+        transform: rotate(25deg) scale(1) skew(1deg);
+    }
+    30% {
+        transform: rotate(-25deg) scale(1) skew(1deg);
+    }
+    40% {
+        transform: rotate(25deg) scale(1) skew(1deg);
+    }
+    50% {
+        transform: rotate(0deg) scale(1) skew(1deg);
+    }
+    100% {
+        transform: rotate(0deg) scale(1) skew(1deg);
+    }
+}
+
+.shake-text {
+    animation: iconSkew 1s ease-out infinite;
+}
+
+.icon-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 16px;
+}
+
+.contact-list a {
+    text-decoration: none;
+    color: black;
+}
+
+.contact-list .list-group-item {
+    border-bottom: 1px solid #ecedf1;
+    box-shadow: 0 1px 0 0 #fff;
+    background-color: #f5f6fa;
+}
+
+@keyframes growing-circle {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: scale(1.4);
+        opacity: 0;
+    }
+}
+
+.growing-animation .growing-item:before,
+.growing-animation .growing-item:after {
+    position: absolute;
+    content: '';
+    height: 50px;
+    width: 50px;
+    left: 0;
+    top: 0;
+    background: #f47920;
+    border-radius: 50%;
+    animation: growing-circle 2s infinite ease-out;
+    z-index: -1;
+}
