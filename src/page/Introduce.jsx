@@ -1,13 +1,11 @@
 import book1 from '../assets/introduce/book1.webp';
 import book2 from '../assets/introduce/book2.webp';
 import book3 from '../assets/introduce/book3.webp';
-import { useEffect } from 'react';
+import AutoScrollToTop from '../utils/AutoScrollToTop';
 
 
 function Introduce() {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  AutoScrollToTop()
     return ( 
       <>
     <div className="container">
