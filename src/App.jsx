@@ -8,6 +8,7 @@ import Home from './page/home/Home';
 import Register from './page/Login/Register'
 import Introduce from './page/Introduce/Introduce';
 import Header from './components/Header';
+import Service from './page/Introduce/Service';
 
 function AppContent() {
   const location = useLocation();
@@ -22,6 +23,7 @@ function AppContent() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/introduce" element={<Introduce />} />
+        <Route path="/service" element={<Service />} />
       </Routes>
       <Footer />
     </>
