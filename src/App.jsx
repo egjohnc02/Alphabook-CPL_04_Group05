@@ -10,6 +10,7 @@ import Introduce from './page/Introduce';
 import Service from './page/service';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Header from './components/Header';
+import Service from './page/Introduce/Service';
 import Gioithieu from './page/Footer/gioi-thieu/gioithieu';
 import Hethongnhasach from './page/Footer/he-thong-nha-sach/hethongnhasach';
 import Hethongphathanh from './page/Footer/he-thong-phat-hanh/hethongphathanh';
@@ -22,7 +23,6 @@ import ChinhSachHoanTraTien from './page/Footer/chinh-sach-doi-tra-hoan-tien/chi
 import BackToTop from './components/Backtop';
 import ContactButton from './components/ContactButton';
 
-<<<<<<< HEAD
 function AppContent() {
   const location = useLocation();
 
@@ -36,6 +36,7 @@ function AppContent() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/introduce" element={<Introduce />} />
+        <Route path="/service" element={<Service />} />
         <Route path="/gioi-thieu" element={<Gioithieu />} />
         <Route path="/he-thong-nha-sach" element={<Hethongnhasach />} />
         <Route path="/he-thong-phat-hanh" element={<Hethongphathanh />} />
@@ -53,9 +54,6 @@ function AppContent() {
     </>
   );
 }
-
-=======
->>>>>>> parent of dc2de34 (Restructured folder, add utils, fixed header)
 export default function App() {
   return (
     <Router>
