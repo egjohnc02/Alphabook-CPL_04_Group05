@@ -1,12 +1,14 @@
-import './App.css';
+import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavbarHeader from './components/NavbarHeader';
 import Footer from './components/Footer';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import Login from './page/Login/Login'
-import Home from './page/home/Home';
-import Register from './page/Login/Register'
-import Introduce from './page/Introduce/Introduce';
+import {BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './page/Login';
+import Home from './page/Home'
+import Register from './page/Register';
+import Introduce from './page/Introduce';
+import Service from './page/service';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import Header from './components/Header';
 import Gioithieu from './page/Footer/gioi-thieu/gioithieu';
 import Hethongnhasach from './page/Footer/he-thong-nha-sach/hethongnhasach';
@@ -20,6 +22,7 @@ import ChinhSachHoanTraTien from './page/Footer/chinh-sach-doi-tra-hoan-tien/chi
 import BackToTop from './components/Backtop';
 import ContactButton from './components/ContactButton';
 
+<<<<<<< HEAD
 function AppContent() {
   const location = useLocation();
 
@@ -51,10 +54,22 @@ function AppContent() {
   );
 }
 
+=======
+>>>>>>> parent of dc2de34 (Restructured folder, add utils, fixed header)
 export default function App() {
   return (
     <Router>
-      <AppContent />
+      <NavbarHeader />
+      <Header />
+      <Routes>
+      <Route index element={<Home />} />
+      <Route path="/home" element={<Home />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/introduce" element={<Introduce />} />
+        <Route path="/service" element={<Service />} />
+      </Routes>
+      <Footer />
     </Router>
   );
 }
