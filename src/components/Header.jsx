@@ -17,6 +17,38 @@ export default function Header(){
         case '/register':
             pageName = 'Đăng ký tài khoản';
             break;
+        case '/hethongnhasach':
+            pageName = 'Hệ thống nhà sách';
+            break;
+
+        case '/hethongphathanh':
+            pageName = 'Hệ Thống Phát Hành Miền Bắc';
+            break;
+
+        case '/dichvu':
+            pageName = 'Dịch vụ';
+            break;
+
+        case '/hoptackinhdoanh':
+            pageName = 'Hợp tác kinh doanh - Alpha Books';
+            break;
+
+        case '/chinhsachthanhtoan':
+            pageName = 'Chính sách thanh toán';
+            break;
+
+        case '/ChinhSachVanChuyen':
+            pageName = 'Chính sách vận chuyển';
+            break;
+
+        case '/chinhsachbaomat':
+            pageName = 'Chính sách bảo mật';
+            break;
+
+        case '/chinhsachdoitrahoantien':
+            pageName = 'CHÍNH SÁCH ĐỔI / TRẢ / HOÀN TIỀN';
+            break;
+
         default:
             pageName = 'Trang không tồn tại';
     }
