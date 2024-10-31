@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
 
 export default function AutoScrollToTop(){
-    return useEffect(() => {
-        window.scrollTo(0, 0);
-    }, []);
+        useEffect(() => {
+            window.scrollTo(0, 0);
+          }, []);
 }
-

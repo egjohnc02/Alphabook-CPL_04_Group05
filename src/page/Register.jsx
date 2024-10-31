@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
-import AutoScrollToTop from '../../utils/AutoScollToTop';
+import { useEffect } from 'react';
 
 export default function Register(){
-    AutoScrollToTop()
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+    
     return (
         <div>
             <div className='container mt-5 d-flex justify-content-center w-50'>
