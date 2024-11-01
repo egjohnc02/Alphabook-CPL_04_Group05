@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 const BackToTop = () => {
@@ -27,7 +27,7 @@ const BackToTop = () => {
                     zIndex: 1000
                 }}
             >
-                <i class="bi bi-caret-up-fill"></i>
+                <i className="bi bi-caret-up-fill"></i>
             </button>
         )
     );
