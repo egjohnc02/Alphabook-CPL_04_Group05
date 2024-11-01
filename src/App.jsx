@@ -3,9 +3,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import NavbarHeader from './components/NavbarHeader';
 import Footer from './components/Footer';
 import {BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import Login from './page/Login';
+import Login from './page/Login/Login';
 import Home from './page/Home/Home'
-import Register from './page/Register';
+import Register from './page/Login/Register';
 import Introduce from './page/Introduce';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Header from './components/Header';
@@ -18,6 +18,8 @@ import ChinhSachVanChuyen from './page/Footer/chinh-sach-van-chuyen/chinhsachvan
 import ChinhSachBaoMat from './page/Footer/chinh-sach-bao-mat/chinhsachbaomat'
 import ChinhSachDoiTraHoanTien from './page/Footer/chinh-sach-doi-tra-hoan-tien/chinhsachhoantratien'
 import Service from './page/Service';
+import BackToTop from './components/Backtop/Backtop';
+import ContactButton from './components/ContactButton/ContactButton';
 
 
 function AppContent() {
@@ -43,6 +45,8 @@ function AppContent() {
         <Route path="/chinhsachbaomat" element={<ChinhSachBaoMat />} />
         <Route path="/chinhsachdoitrahoantien" element={<ChinhSachDoiTraHoanTien />} />
       </Routes>
+      <BackToTop />
+      <ContactButton />
       <Footer />
     </>
   );
