@@ -11,7 +11,7 @@ const ContactButton = () => {
     };
 
     return (
-        <div className="growing-animation" style={{ position: 'fixed', bottom: '110px', right: '30px', zIndex: 1000 }}>
+        <div className="growing-animation" style={{ position: 'fixed', bottom: '110px', right: '30px', zIndex: 1000}}>
             <button
                 onClick={toggleList}
                 className="bt shadow growing-item"
@@ -21,7 +21,7 @@ const ContactButton = () => {
             </button>
 
             {isOpen && (
-                <div className="mt-2 bg-white rounded shadow">
+                <div className="mt-2 bg-white rounded shadow"  style={{position: 'fixed', bottom:'150px', right:'80px'}}>
                     <ul className="list-group mb-0 contact-list">
                         <li class="list-group-item">
                             <a
