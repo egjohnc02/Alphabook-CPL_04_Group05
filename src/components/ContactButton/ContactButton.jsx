@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './ContactButton.css'
-import contactImage from '../assets/contact/contact.png';
+import contactImage from '../../assets/contact/contact.png';
 
 const ContactButton = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -23,7 +23,7 @@ const ContactButton = () => {
             {isOpen && (
                 <div className="mt-2 bg-white rounded shadow">
                     <ul className="list-group mb-0 contact-list">
-                        <li class="list-group-item">
+                        <li className="list-group-item">
                             <a
                                 href="tel:0123456789"
                                 className="d-flex align-items-center py-2 px-3"
@@ -34,7 +34,7 @@ const ContactButton = () => {
                                 Gọi ngay cho chúng tôi
                             </a>
                         </li>
-                        <li class="list-group-item">
+                        <li className="list-group-item">
                             <a
                                 href="#"
                                 target="_blank"
@@ -42,12 +42,12 @@ const ContactButton = () => {
                                 className="d-flex align-items-center py-2 px-3"
                             >
                                 <span className="icon-circle bg-primary text-white me-2">
-                                    <i class="bi bi-messenger"></i>
+                                    <i className="bi bi-messenger"></i>
                                 </span>
                                 Chat với chúng tôi qua Messenger
                             </a>
                         </li>
-                        <li class="list-group-item">
+                        <li className="list-group-item">
                             <a
                                 href="#"
                                 target="_blank"

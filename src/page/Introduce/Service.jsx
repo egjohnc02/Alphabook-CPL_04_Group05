@@ -1,6 +1,6 @@
 import htxb from "/src/assets/introduce/htxb.jpg";
 import '/src/css/service.css';
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import htbx2 from '/src/assets/introduce/shit1.png';
 import htbx3 from '/src/assets/introduce/shit2.png';
 import htbx4 from '/src/assets/introduce/shit3.png';

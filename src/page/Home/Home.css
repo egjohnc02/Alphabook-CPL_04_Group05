@@ -1,0 +1,31 @@
+.hover-border-orange:hover, 
+.hover-border-orange:focus,
+.hover-border-orange:active{
+  border: #f47920 solid !important;
+  color: #f47920 !important;
+}
+
+.bg-title{
+  background: url(../../assets/home/bg_title.webp) bottom center no-repeat;
+  padding-bottom: 35px;
+  margin-bottom: 25px;
+}
+
+.image-container {
+    overflow: hidden;
+}
+  
+.zoom-effect {
+    transition: transform 0.3s ease;
+}
+  
+.zoom-effect:hover {
+    transform: scale(1.1);
+}
+  
+.content{
+  background: url(../../assets/home/quote.svg) no-repeat center #EFEFEF;
+  background-position: 15px 15px;
+  background-size: 50px;
+}
+
