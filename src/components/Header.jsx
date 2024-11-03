@@ -48,6 +48,9 @@ export default function Header(){
         case '/chinhsachdoitrahoantien':
             pageName = 'CHÍNH SÁCH ĐỔI / TRẢ / HOÀN TIỀN';
             break;
+            case '/contact':
+                pageName = 'Liên hệ';
+                break;
 
         default:
             pageName = 'Trang không tồn tại';
