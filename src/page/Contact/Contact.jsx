@@ -24,7 +24,7 @@ const Contact = () => {
         <Row className="google-map responsive-order m-0 p-0 order-sm-last order-md-2">
           <iframe
             className="iframe-google-map"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.506341942514!2d105.52271427503096!3d21.012416680632853!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135abc60e7d3f19%3A0x2be9d7d0b5abcbf4!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBGUFQgSMOgIE7hu5lp!5e0!3m2!1svi!2s!4v1730544701504!5m2!1svi!2s"
+            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14899.670390339543!2d105.80218600000002!3d20.99594!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135adf4c2c2b139%3A0xa86172a8679d0606!2zQ8O0bmcgdHkgY-G7lSBwaOG6p24gc8OhY2ggQWxwaGEgLSBBbHBoYWJvb2tz!5e0!3m2!1svi!2sus!4v1730626383273!5m2!1svi!2sus"
             allowfullscreen=""
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
@@ -110,7 +110,7 @@ const Contact = () => {
                   rows={6}
                 />
               </Form.Group>
-              <Button variant="" className="bg-orange mt-3 mb-3">Gửi liên hệ</Button>
+              <Button variant="" className="bg-orange mt-3 mb-3 text-light">Gửi liên hệ</Button>
             </div>
           </Col>
         </Row>
