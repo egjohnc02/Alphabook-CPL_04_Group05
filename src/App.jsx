@@ -1,6 +1,6 @@
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import NavbarHeader from './components/NavbarHeader';
+import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer';
 import {BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Login from './page/Login/Login';
@@ -17,7 +17,7 @@ import ChinhSachThanhToan from './page/Footer/chinh-sach-thanh-toan/chinhsachtha
 import ChinhSachVanChuyen from './page/Footer/chinh-sach-van-chuyen/chinhsachvanchuyen'
 import ChinhSachBaoMat from './page/Footer/chinh-sach-bao-mat/chinhsachbaomat'
 import ChinhSachDoiTraHoanTien from './page/Footer/chinh-sach-doi-tra-hoan-tien/chinhsachhoantratien'
-import Service from './page/Service';
+import Service from './page/HTXB/Service';
 import BackToTop from './components/Backtop/Backtop';
 import ContactButton from './components/ContactButton/ContactButton';
 
@@ -27,7 +27,7 @@ function AppContent() {
 
   return (
     <>
-      <NavbarHeader />
+      <Navbar />
       {location.pathname !== '/home' && location.pathname !== '/' && location.pathname !== '/service' && <Header />}
       <Routes>
         <Route index element={<Home />} />
