@@ -20,7 +20,7 @@ import ChinhSachDoiTraHoanTien from './page/Footer/chinh-sach-doi-tra-hoan-tien/
 import Service from './page/HTXB/Service';
 import BackToTop from './components/Backtop/Backtop';
 import ContactButton from './components/ContactButton/ContactButton';
-import Contact from './page/Contact';
+import Contact from './page/Contact/Contact';
 
 
 function AppContent() {
