@@ -20,6 +20,7 @@ import ChinhSachDoiTraHoanTien from './page/Footer/chinh-sach-doi-tra-hoan-tien/
 import Service from './page/HTXB/Service';
 import BackToTop from './components/Backtop/Backtop';
 import ContactButton from './components/ContactButton/ContactButton';
+import Contact from './page/Contact/Contact';
 
 
 function AppContent() {
@@ -27,8 +28,10 @@ function AppContent() {
 
   return (
     <>
+
       <Navbar />
       {location.pathname !== '/home' && location.pathname !== '/' && location.pathname !== '/service' && <Header />}
+
       <Routes>
         <Route index element={<Home />} />
         <Route path="/home" element={<Home />} />
@@ -44,6 +47,7 @@ function AppContent() {
         <Route path="/chinhsachvanchuyen" element={<ChinhSachVanChuyen />} />
         <Route path="/chinhsachbaomat" element={<ChinhSachBaoMat />} />
         <Route path="/chinhsachdoitrahoantien" element={<ChinhSachDoiTraHoanTien />} />
+        <Route path='/contact' element={<Contact/>} />
       </Routes>
       <BackToTop />
       <ContactButton />
