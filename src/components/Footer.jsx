@@ -1,11 +1,9 @@
 import logo from '../assets/footer/logo_footer.webp'
 import logoBct from '../assets/footer/logo_bct.webp'
 import { Link } from 'react-router-dom';
-import AutoScrollToTop from '../utils/AutoScrollToTop';
 
 
 export default function Footer(){
-    AutoScrollToTop()
     return (
         <div className='bg-orange text-light mt-5 footer'>
             <div className='container d-flex py-3 gap-3 justify-content-between'>

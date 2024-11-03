@@ -1,20 +1,71 @@
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import AutoScrollToTop from '../../utils/AutoScrollToTop';
+import { useState } from 'react';
+import { auth } from '../../firebase/firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 function Login() {
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, []);
+    AutoScrollToTop()
+
+    const [email, setemail] = useState("")
+    const [password, setpassword] = useState("")
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState("");
+    const navigate = useNavigate();
+
+    const login = async (e)=>{
+        e.preventDefault();
+        setLoading(true);
+        setMessage(""); 
+        try {
+           await signInWithEmailAndPassword(auth, email, password)
+           setMessage("Đăng nhập thành công!");
+           setLoading(false);
+           setTimeout(() => {
+            navigate('/home');
+        }, 1000);
+
+        } catch (error) {
+            setLoading(false);
+            if (error.code === 'auth/invalid-credential') {
+                setMessage("Sai email hoặc mật khẩu, vui lòng nhập lại!");
+            } else {
+                setMessage("Đăng nhập thất bại, vui lòng thử lại sau.");
+            }
+        }
+    }
+
     return (
         <div>
             <div className='container mt-5 d-flex justify-content-center w-50'>
-                <form className='container py-3 border-orange'>
-                    <h4>Đăng nhập tài khoản</h4>
-                    <h6 className="text-body-secondary">Email<i style={{color:'red'}}>*</i></h6>
-                    <input type="email" name="" id="" placeholder='Email' className='w-100 border-opacity-10 border p-2 rounded' required/>
-                    <h6 className='pt-3 text-body-secondary'>Mật khẩu<i style={{color:'red'}}>*</i></h6>
-                    <input type="password" name="" id="" placeholder='Mật khẩu' className='w-100 border border-opacity-10 p-2 rounded' required/>
-                    <button className='my-3 text-center w-100 p-2 bg-orange border-0 text-light rounded'>ĐĂNG NHẬP</button>
+                <div className='container py-3 border-orange'>
+                    <form onSubmit={login}>
+                        <h4>Đăng nhập tài khoản</h4>
+                        <p className="text-danger">{message}</p>
+                        {loading ? <p>Đang xử lý...</p> : null}
+                        <label className="text-body-secondary" htmlFor='email'>Email<i style={{color:'red'}}>*</i></label>
+                        <input 
+                            type="email" 
+                            value={email}
+                            id="email" 
+                            placeholder='Email' 
+                            className='w-100 border-opacity-10 border p-2 rounded'
+                            onChange={(e) => setemail(e.target.value)}
+                            required
+                        />
+                        <label className='pt-3 text-body-secondary' htmlFor='password'>Mật khẩu<i style={{color:'red'}}>*</i></label>
+                        <input 
+                            type="password" 
+                            value={password} 
+                            id="password" 
+                            placeholder='Mật khẩu' 
+                            className='w-100 border border-opacity-10 p-2 rounded' 
+                            onChange={(e) => setpassword(e.target.value)}
+                            required
+                        />
+                        <button className='my-3 text-center w-100 p-2 bg-orange border-0 text-light rounded' type='submit'>ĐĂNG NHẬP</button>
+                    </form>
+
                     <p className="text-center">Hoặc đăng nhập bằng</p>
                     <div className="d-flex gap-1 justify-content-center">
                         <button className="text-light border-0 bg-primary d-flex gap-2 p-2 align-items-center">
@@ -30,7 +81,8 @@ function Login() {
                         </button>
                     </div>
                     <p className="text-center p-3">Bạn quên mật khẩu bấm <a href="#">vào đây</a></p>
-                </form>
+                </div>
+                
                 <div className="bg-orange text-light w-75">
                     <div className="p-3">
                         <h4 className=''>Quyền lợi với thành viên</h4>
