@@ -9,7 +9,6 @@ export default function Navbar() {
         <Link to='/home'>
           <img src={logo} alt="logo" style={{ width: '270px' }} />
         </Link>
-        
 
         <div className="d-flex gap-3">
           <Link to='/home' className='text-decoration-none text-dark fw-medium '>
@@ -74,6 +73,10 @@ export default function Navbar() {
               </Link>
             </div>
           </div>
+          
+            <Link to='/contact' className='text-decoration-none text-dark fw-medium'>
+              <nav className='hover-text-orange bg-light'>Liên hệ</nav>
+            </Link>
         </div>
 
         <div className='d-flex'>
