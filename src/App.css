@@ -27,3 +27,13 @@ input[type=number] {
 .footer span:hover{
   color: black;
 }
+
+.hover-text-orange:hover{
+  color: #f47920 !important;
+}
+
+.hover-text-orange{
+  background-color: #ffffff !important;
+}
+
+
