@@ -21,7 +21,7 @@ import Service from './page/HTXB/Service';
 import BackToTop from './components/Backtop/Backtop';
 import ContactButton from './components/ContactButton/ContactButton';
 import Contact from './page/Contact/Contact';
-
+import Event from './page/News-event/Event';
 
 function AppContent() {
   const location = useLocation();
@@ -39,6 +39,7 @@ function AppContent() {
         <Route path="/login" element={<Login />} />
         <Route path="/introduce" element={<Introduce />} />
         <Route path="/service" element={<Service />} />
+        <Route path="/event" element={<Event />} />
         <Route path="/hethongnhasach" element={<HeThongNhaSach />} />
         <Route path="/hethongphathanh" element={<HeThongPhatHanh />} />
         <Route path="/dichvu" element={<DichVu />} />
