@@ -22,6 +22,7 @@ import BackToTop from './components/Backtop/Backtop';
 import ContactButton from './components/ContactButton/ContactButton';
 import Contact from './page/Contact/Contact';
 import New from './page/News/New';
+import Cart from './components/Cart/Cart';
 
 
 function AppContent() {
@@ -50,6 +51,7 @@ function AppContent() {
         <Route path="/chinhsachdoitrahoantien" element={<ChinhSachDoiTraHoanTien />} />
         <Route path='/contact' element={<Contact/>} />
         <Route path='/news' element={<New/>} />
+        <Route path='/cart' element={<Cart/>} />
       </Routes>
       <BackToTop />
       <ContactButton />
