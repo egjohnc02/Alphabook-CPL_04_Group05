@@ -3,9 +3,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer';
 import {BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import Login from './page/Login/Login';
+import Login from './page/Account/Login/Login';
 import Home from './page/Home/Home'
-import Register from './page/Login/Register';
+import Register from './page/Account/Login/Register';
 import Introduce from './page/Introduce';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Header from './components/Header';
@@ -21,7 +21,8 @@ import Service from './page/HTXB/Service';
 import BackToTop from './components/Backtop/Backtop';
 import ContactButton from './components/ContactButton/ContactButton';
 import Contact from './page/Contact/Contact';
-
+import New from './page/News/New';
+import Customer from './page/Account/Customer/Customer';
 
 function AppContent() {
   const location = useLocation();
@@ -48,6 +49,8 @@ function AppContent() {
         <Route path="/chinhsachbaomat" element={<ChinhSachBaoMat />} />
         <Route path="/chinhsachdoitrahoantien" element={<ChinhSachDoiTraHoanTien />} />
         <Route path='/contact' element={<Contact/>} />
+        <Route path='/news' element={<New/>} />
+        <Route path='/customer' element={<Customer/>} />
       </Routes>
       <BackToTop />
       <ContactButton />
