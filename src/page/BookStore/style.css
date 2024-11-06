@@ -1,0 +1,45 @@
+.title-module {
+    background: #f47920;
+    color: #FFF;
+    padding: 6px 10px;
+    font-weight: 900;
+    font-size: 16px;
+    border-radius: 4px;
+    margin: 0;
+}
+
+
+.aside-item.collection-category .nav-item a {
+    font-family: var(--font-base);
+    font-weight: 400;
+    line-height: 20px;
+    color: var(--text-color);
+    position: relative;
+    font-size: 14px;
+    text-decoration: none;
+    display: block;
+}
+
+.aside-item .aside-title h2.title-filter {
+    font-family: var(--font-title);
+    text-transform: none;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 15px;
+    padding-bottom: 7px;
+    display: block;
+    background: #f47920;
+    color: #fff;
+    padding: 8px 10px 5px;
+    border-radius: 3px;
+}
+.filter-item--check-box .fa {
+    margin-right: 6px;
+    width: 14px;
+    font-size: 14px;
+    line-height: 40px;
+    position: absolute;
+    top: 0;
+    display: inline-block;
+    left: 0;
+}

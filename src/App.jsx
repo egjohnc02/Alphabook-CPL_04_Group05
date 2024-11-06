@@ -21,6 +21,7 @@ import Service from './page/HTXB/Service';
 import BackToTop from './components/Backtop/Backtop';
 import ContactButton from './components/ContactButton/ContactButton';
 import Contact from './page/Contact/Contact';
+import Book from './page/BookStore/Book';
 
 
 function AppContent() {
@@ -48,6 +49,7 @@ function AppContent() {
         <Route path="/chinhsachbaomat" element={<ChinhSachBaoMat />} />
         <Route path="/chinhsachdoitrahoantien" element={<ChinhSachDoiTraHoanTien />} />
         <Route path='/contact' element={<Contact/>} />
+        <Route path='/book' element={<Book />}/>
       </Routes>
       <BackToTop />
       <ContactButton />
