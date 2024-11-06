@@ -9,6 +9,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import htxbImg from '../../assets/duy/htxb.jpg'
 import introduceImg from '../../assets/introduce/sidebar_image_blog.webp'
 import AutoScrollToTop from '../../utils/AutoScrollToTop'
+import shit2Img from '../../assets/duy/shit2.png'
 const New = () => {
   // Tạo một mảng gồm 24 phần tử, mỗi phần tử là một chuỗi "News Item X"
   const newsItems = Array.from(
@@ -101,7 +102,7 @@ const New = () => {
                     <Card.Img
                       className="card-img"
                       variant="top"
-                      src="src\assets\duy\shit2.png"
+                      src={shit2Img}
                     />
                   </div>
                   <Card.Body className="p-0">

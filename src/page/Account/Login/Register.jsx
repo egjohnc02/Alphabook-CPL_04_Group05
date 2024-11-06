@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { auth, db } from '../../firebase/firebase';
-import AutoScrollToTop from '../../utils/AutoScrollToTop'
+import { auth, db } from '../../../firebase/firebase';
+import AutoScrollToTop from '../../../utils/AutoScrollToTop'
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 
@@ -44,8 +44,13 @@ export default function Register(){
             setLoading(false);
             if (error.code === 'auth/email-already-in-use') {
                 setMessage("Email đã tồn tại. Vui lòng thử email khác.");
-            } else {
-                setMessage("Đăng ký thất bại, vui lòng thử lại sau.");
+            } else if(error.code === 'auth/invalid-email'){
+                setMessage("Email không hợp lệ. Vui lòng thử email khác.")
+            } else if(error.code === 'auth/weak-password'){
+                setMessage("Mật khẩu phải có ít nhất 6 ký tự. Vui lòng nhập lại.")
+            }
+            else {
+                setMessage(error.message);
             }
         }
     }
