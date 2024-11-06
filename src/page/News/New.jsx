@@ -1,20 +1,21 @@
-import React from "react";
 import {
   Row,
   Col,
   Card,
   ListGroup,
-  Dropdown,
-  DropdownButton,
 } from "react-bootstrap";
 import "./news.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import htxbImg from '../../assets/duy/htxb.jpg'
+import introduceImg from '../../assets/introduce/sidebar_image_blog.webp'
+import AutoScrollToTop from '../../utils/AutoScrollToTop'
 const New = () => {
   // Tạo một mảng gồm 24 phần tử, mỗi phần tử là một chuỗi "News Item X"
   const newsItems = Array.from(
     { length: 12 },
     (_, index) => `News Item ${index + 1}`
   );
+  AutoScrollToTop()
 
   return (
     <div className="Container container-sm container-md container-lg">
@@ -50,29 +51,29 @@ const New = () => {
               </ListGroup.Item>
               <ListGroup.Item>
                 <div className="content-hot-news mb-1">
-                  <img src="src\assets\duy\htxb.jpg" alt="img-hot-news"></img>
-                  <p className="title-hot-new fw-bold ps-2">
+                  <img src={htxbImg} alt="img-hot-news"></img>
+                  <p className="title-hot-new fw-bold ps-2 hover-text-orange">
                     Những thách thức của nhà lãnh đạo: Cẩm nang thực nghiệm
                     trong hành trình lãnh đạo của bạn
                   </p>
                 </div>
                 <div className="content-hot-news mb-1">
-                  <img src="src\assets\duy\htxb.jpg" alt="img-hot-news"></img>
-                  <p className="title-hot-new fw-bold ps-2">
+                  <img src={htxbImg} alt="img-hot-news"></img>
+                  <p className="title-hot-new fw-bold ps-2 hover-text-orange">
                     Những thách thức của nhà lãnh đạo: Cẩm nang thực nghiệm
                     trong hành trình lãnh đạo của bạn
                   </p>
                 </div>
                 <div className="content-hot-news mb-1">
-                  <img src="src\assets\duy\htxb.jpg" alt="img-hot-news"></img>
-                  <p className="title-hot-new fw-bold ps-2">
+                  <img src={htxbImg} alt="img-hot-news"></img>
+                  <p className="title-hot-new fw-bold ps-2 hover-text-orange">
                     Những thách thức của nhà lãnh đạo: Cẩm nang thực nghiệm
                     trong hành trình lãnh đạo của bạn
                   </p>
                 </div>
                 <div className="content-hot-news mb-1">
-                  <img src="src\assets\duy\htxb.jpg" alt="img-hot-news"></img>
-                  <p className="title-hot-new fw-bold ps-2">
+                  <img src={htxbImg} alt="img-hot-news"></img>
+                  <p className="title-hot-new fw-bold ps-2 hover-text-orange">
                     Những thách thức của nhà lãnh đạo: Cẩm nang thực nghiệm
                     trong hành trình lãnh đạo của bạn
                   </p>
@@ -82,7 +83,7 @@ const New = () => {
           </Row>
           <Row className="news-poster-sider-bar p-0 mt-3 me-3 mb-3">
             <div className=" p-0 d-flex justify-content-center">
-              <img src="src\assets\introduce\sidebar_image_blog.webp"></img>
+              <img src={introduceImg}></img>
             </div>
           </Row>
         </Col>
@@ -105,7 +106,7 @@ const New = () => {
                   </div>
                   <Card.Body className="p-0">
                     <Card.Title className="fs-5">
-                      <a href="#" className="text-decoration-none">
+                      <a href="#" className="text-decoration-none hover-text-orange">
                         Danh sách đại lý alpha book alp sách đại lý alpha book
                         alpha book alpha book
                       </a>
@@ -124,15 +125,15 @@ const New = () => {
 
       {/* Phần phân trang (Pagination) */}
       <Row className="Pagination-news">
-        <div class="pagenav ">     
-            <ul class="pagination-custom list-unstyled">
-              <li class="page-item"><a class="page-link" href="#"><i class="fa-solid fa-angle-left"></i></a></li>
-              <li class="page-item actived"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#" disabled>...</a></li>
-              <li class="page-item"><a class="page-link" href="#">15</a></li>
-              <li class="page-item"><a class="page-link" href="#"><i class="fa-solid fa-angle-right"></i></a></li>
+        <div className="pagenav ">     
+            <ul className="pagination-custom list-unstyled">
+              <li className="page-item"><a className="page-link" href="#"><i className="fa-solid fa-angle-left"></i></a></li>
+              <li className="page-item actived"><a className="page-link" href="#">1</a></li>
+              <li className="page-item"><a className="page-link" href="#">2</a></li>
+              <li className="page-item"><a className="page-link" href="#">3</a></li>
+              <li className="page-item"><a className="page-link" href="#" disabled>...</a></li>
+              <li className="page-item"><a className="page-link" href="#">15</a></li>
+              <li className="page-item"><a className="page-link" href="#"><i className="fa-solid fa-angle-right"></i></a></li>
             </ul>
         </div>
       </Row>
