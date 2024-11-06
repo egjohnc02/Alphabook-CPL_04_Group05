@@ -5,17 +5,18 @@ import "./style.css";
 function Book() {
   return (
     <div>
-      <div className="book">
+      <div className="section warp_background">
+      <div className="container">
+      
         <img
           src={BookStore}
           alt="BookStore"
           className="img-fluid"
-          style={{ maxwidth: "60%" }}
+          style={{ maxwidth: "60%" ,padding:" 20px 0px 20px 0px"}}
         />
-      </div>
+     
 
-      <div className="section warp_background">
-        <div className="container">
+      
           <div className="bg_collection section">
             <div className="row">
               <aside class="dqdt-sidebar sidebar left-content col-lg-3 col-md-4 col-sm-4">
