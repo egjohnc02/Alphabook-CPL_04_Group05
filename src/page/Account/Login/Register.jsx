@@ -35,6 +35,7 @@ export default function Register(){
                 email: user.email,
             })
             setLoading(false)
+            localStorage.setItem("isLoggedIn", true)
             setMessage("Đăng ký thành công!");
             setTimeout(() => {
                 navigate('/home');
