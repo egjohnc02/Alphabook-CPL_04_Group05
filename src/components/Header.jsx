@@ -55,6 +55,8 @@ export default function Header(){
         case '/news':
                 pageName = 'Tin tức';
                 break;
+        case '/customer':
+                pageName = 'Trang khách hàng';
         case '/cart':
                 pageName = 'Giỏ hàng';
                 break;
