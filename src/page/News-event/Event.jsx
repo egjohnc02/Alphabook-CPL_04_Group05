@@ -1,13 +1,35 @@
-import React from 'react';
-import { Container, Row, Col, Card, Dropdown, ListGroup } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Container, Row, Col, Card, Dropdown, ListGroup, Pagination } from 'react-bootstrap';
 import AutoScrollToTop from '../../utils/AutoScrollToTop';
 
 function Event() {
   AutoScrollToTop();
 
+  // Pagination setup
+  const itemsPerPage = 9;
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // Sample data for events; replace with actual data
+  const events = Array.from({ length: 12 }, (_, index) => ({
+    id: index + 1,
+    title: `Tiêu đề sự kiện ${index + 1}`,
+    description: `Nội dung mô tả ngắn cho sự kiện ${index + 1}`,
+    imgSrc: `path/to/event-image-${index + 1}.jpg`
+  }));
+
+  // Determine items to display on the current page
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = events.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Change page
+  const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
+
+  // Total number of pages
+  const totalPages = Math.ceil(events.length / itemsPerPage);
+
   return (
     <Container className="mt-4">
-      {/* Danh mục tin và Tin nổi bật bên trái */}
       <Row>
         <Col md={3}>
           {/* Danh mục tin */}
@@ -16,7 +38,7 @@ function Event() {
             <ListGroup variant="flush">
               <ListGroup.Item>
                 <Dropdown>
-                <Dropdown.Toggle variant="link" id="dropdown-basic" style={{ textDecoration: 'none' }}>
+                  <Dropdown.Toggle variant="link" id="dropdown-basic" style={{ textDecoration: 'none' }}>
                     Tin tức
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
@@ -47,24 +69,34 @@ function Event() {
           </Card>
         </Col>
 
-        {/* Danh sách sự kiện bên phải */}
         <Col md={9}>
-          <h2 >SỰ KIỆN</h2>
+          <h2>SỰ KIỆN</h2>
           <Row>
-            {[...Array(10)].map((_, index) => (
-              <Col md={4} className="mb-4" key={index}>
+            {currentItems.map((event) => (
+              <Col md={4} className="mb-4" key={event.id}>
                 <Card>
-                  <Card.Img variant="top" src={`path/to/event-image-${index + 1}.jpg`} />
+                  <Card.Img variant="top" src={event.imgSrc} />
                   <Card.Body>
-                    <Card.Title>Tiêu đề sự kiện {index + 1}</Card.Title>
-                    <Card.Text>
-                      Nội dung mô tả ngắn cho sự kiện {index + 1}.
-                    </Card.Text>
+                    <Card.Title>{event.title}</Card.Title>
+                    <Card.Text>{event.description}</Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
             ))}
           </Row>
+
+          {/* Pagination Controls */}
+          <Pagination className="justify-content-center">
+            {Array.from({ length: totalPages }, (_, index) => (
+              <Pagination.Item
+                key={index + 1}
+                active={index + 1 === currentPage}
+                onClick={() => handlePageChange(index + 1)}
+              >
+                {index + 1}
+              </Pagination.Item>
+            ))}
+          </Pagination>
         </Col>
       </Row>
     </Container>
