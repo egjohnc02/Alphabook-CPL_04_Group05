@@ -57,6 +57,8 @@ export default function Header(){
                 break;
         case '/customer':
                 pageName = 'Trang khách hàng';
+        case '/cart':
+                pageName = 'Giỏ hàng';
                 break;
         default:
             pageName = 'Trang không tồn tại';
