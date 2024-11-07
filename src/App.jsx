@@ -23,6 +23,7 @@ import ContactButton from './components/ContactButton/ContactButton';
 import Contact from './page/Contact/Contact';
 import New from './page/News/New';
 import Customer from './page/Account/Customer/Customer';
+import Cart from './components/Cart/Cart';
 
 function AppContent() {
   const location = useLocation();
@@ -51,6 +52,7 @@ function AppContent() {
         <Route path='/contact' element={<Contact/>} />
         <Route path='/news' element={<New/>} />
         <Route path='/customer' element={<Customer/>} />
+        <Route path='/cart' element={<Cart/>} />
       </Routes>
       <BackToTop />
       <ContactButton />
