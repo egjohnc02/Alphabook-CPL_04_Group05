@@ -1,4 +1,3 @@
-// import bgLogin from "../../../assets/bg_login.webp";
 import AutoScrollToTop from "../../../utils/AutoScrollToTop";
 
 function ChinhSachHoanTraTien() {
@@ -6,22 +5,7 @@ function ChinhSachHoanTraTien() {
   return (
     <div>
       <div>
-        {/* <div className="position-relative text-center">
-          <img
-            src={bgLogin}
-            alt="Example"
-            className="img-fluid"
-            style={{ maxWidth: "100%" }}
-          />
-          <div className="position-absolute top-50 start-50 translate-middle">
-            <a href="/home">
-              <span>Trang chủ</span>
-            </a>
-            <h1 style={{ color: "orange" }}>
-              CHÍNH SÁCH ĐỔI / TRẢ / HOÀN TIỀN
-            </h1>
-          </div>
-        </div> */}
+        
 
         <section className="page">
           <div className="container">

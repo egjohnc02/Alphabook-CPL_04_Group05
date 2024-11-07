@@ -1,30 +1,9 @@
 import { Link } from "react-router-dom";
-// import React, { useEffect, useState } from "react";
-//  import bgLogin from "../../../assets/bg_login.webp";
-// import axios from "axios";
-// import "./hethongnhasach.css";
+
 import AutoScrollToTop from "../../../utils/AutoScrollToTop"
 
 function hethongnhasach() {
-  // const [data, setData] = useState([]);
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState(null);
-
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:9999/DiemBanHang")
-  //     .then((response) => {
-  //       setData(response.data);
-  //       setLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       setError(error);
-  //       setLoading(false);
-  //     });
-  // }, []);
-
-  // if (loading) return <p>Loading...</p>;
-  // if (error) return <p>Error: {error.message}</p>;
+  
   AutoScrollToTop()
   return (
     <div>

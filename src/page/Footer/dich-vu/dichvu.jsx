@@ -1,4 +1,3 @@
-// import bgLogin from "../../../assets/bg_login.webp";
 import "./dichvu.css";
 import anh1 from '../../../assets/footer/img-dich-vu/1-1484664962.jpg';
 import anh2 from '../../../assets/footer/img-dich-vu/8a.jpg';
@@ -10,20 +9,7 @@ function DichVu() {
   return (
     <div>
       <div>
-        {/* <div className="position-relative text-center">
-          <img
-            src={bgLogin}
-            alt="Example"
-            className="img-fluid"
-            style={{ maxwidth: "100%" }}
-          />
-          <div className="position-absolute top-50 start-50 translate-middle">
-            <a href="/home">
-              <span>Trang chủ</span>
-            </a>
-            <h1 style={{ color: "orange" }}>Dịch vụ</h1>
-          </div>
-        </div> */}
+        
 
         <div className="content-page rte">
             <p className="title">
