@@ -19,6 +19,7 @@ import customer4 from '../../assets/home/customer_4_ava.webp'
 import Carousel from 'react-bootstrap/Carousel';
 import { Link } from "react-router-dom";
 import './Home.css'
+import newsImg from '../../assets/duy/shit2.png'
 
 export default function Home(){
     AutoScrollToTop()
@@ -144,10 +145,10 @@ export default function Home(){
                 </div>
             </div>
 
-            <div className="my-5 py-5 container" style={{height:'600px'}}>
+            <div className="my-5 container">
                 <h3 className="fw-bold text-center bg-title">Chuyên gia đánh giá về Alpha Books</h3>
                 <div className="container">
-                    <Carousel interval={3000} className="testimonial-carousel mx-5 py-5">
+                    <Carousel interval={3000} className="testimonial-carousel mx-5 py-5 overflow-hidden" style={{height:'380px'}}>
                         <Carousel.Item>
                             <div className="d-flex justify-content-center gap-5">
                                 <div className="d-flex gap-3 justify-content-center w-50">
@@ -217,20 +218,149 @@ export default function Home(){
                 </div>
             </div>
 
-            <div className="container d-flex justify-content-center gap-3">
-                <div>
-                    <h3 className="fw-bold text-center bg-title">TIN TỨC</h3>
-                    <div className="my-3">
-                        <q className="text-danger">No data</q>
-                    </div>
+            <div className="container d-flex justify-content-center mb-5 gap-5">
+                <div className="w-50 container">
+                    <Link to='/news' className="text-decoration-none">
+                        <h3 className="fw-bold text-center bg-title hover-text-orange text-dark">TIN TỨC</h3>
+                    </Link>
+                    <Carousel interval={3000} className="testimonial-carousel py-3">
+                        <Carousel.Item>
+                            <div className="d-flex gap-4 justify-content-center">
+                                <Link to='/news' className="text-decoration-none">
+                                    <div className="text-dark">
+                                        <img src={newsImg} alt="news" className="zoom-effect rounded w-100"/>
+                                        <div className="d-flex gap-2 text-secondary my-2 align-items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-clock-fill" viewBox="0 0 16 16">
+                                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+                                            </svg>
+                                            <span className="mx-2">Ngày 06/11/2024</span>
+                                        </div>
+                                        <h3 className="overflow-x-hidden hover-text-orange text-2-line">Danh sách đại lý alpha book alp sách đại lý alpha book alpha book alpha book</h3>
+                                        <p className="text-3-line">Nhằm trách mua phải hàng giả, bạn đọc có thể tham khảo danh sách đại lý phân phối phối</p>
+                                    </div>
+                                </Link>
+                                
+                                <Link to='/news' className="text-decoration-none">
+                                    <div className="text-dark">
+                                        <img src={newsImg} alt="news" className="zoom-effect rounded w-100"/>
+                                        <div className="d-flex gap-2 text-secondary my-2 align-items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-clock-fill" viewBox="0 0 16 16">
+                                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+                                            </svg>
+                                            <span className="mx-2">Ngày 06/11/2024</span>
+                                        </div>
+                                        <h3 className="overflow-x-hidden hover-text-orange text-2-line">Danh sách đại lý alpha book alp sách đại lý alpha book alpha book alpha book</h3>
+                                        <p className="text-3-line">Nhằm trách mua phải hàng giả, bạn đọc có thể tham khảo danh sách đại lý phân phối phối</p>
+                                    </div>
+                                </Link>
+                            </div>
+                        </Carousel.Item>
+
+                        <Carousel.Item>
+                            <div className="d-flex gap-4 justify-content-center">
+                                <Link to='/news' className="text-decoration-none">
+                                    <div className="text-dark">
+                                        <img src={newsImg} alt="news" className="zoom-effect rounded w-100"/>
+                                        <div className="d-flex gap-2 text-secondary my-2 align-items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-clock-fill" viewBox="0 0 16 16">
+                                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+                                            </svg>
+                                            <span className="mx-2">Ngày 06/11/2024</span>
+                                        </div>
+                                        <h3 className="overflow-x-hidden hover-text-orange text-2-line">Danh sách đại lý alpha book alp sách đại lý alpha book alpha book alpha book</h3>
+                                        <p className="text-3-line">Nhằm trách mua phải hàng giả, bạn đọc có thể tham khảo danh sách đại lý phân phối phối</p>
+                                    </div>
+                                </Link>
+
+                                <Link to='/news' className="text-decoration-none">
+                                    <div className="text-dark">
+                                        <img src={newsImg} alt="news" className="zoom-effect rounded w-100"/>
+                                        <div className="d-flex gap-2 text-secondary my-2 align-items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-clock-fill" viewBox="0 0 16 16">
+                                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+                                            </svg>
+                                            <span className="mx-2">Ngày 06/11/2024</span>
+                                        </div>
+                                        <h3 className="overflow-x-hidden hover-text-orange text-2-line">Danh sách đại lý alpha book alp sách đại lý alpha book alpha book alpha book</h3>
+                                        <p className="text-3-line">Nhằm trách mua phải hàng giả, bạn đọc có thể tham khảo danh sách đại lý phân phối phối</p>
+                                    </div>
+                                </Link>
+                            </div>
+                        </Carousel.Item>
+                    </Carousel>
                 </div>
-                <div>
-                    <h3 className="fw-bold text-center bg-title">SỰ KIỆN</h3>
-                    <div className="my-3">
-                        <q className="text-danger">No data</q>
+
+                <div className="w-50 container">
+                    <Link to='/news' className="text-decoration-none">
+                        <h3 className="fw-bold text-center bg-title hover-text-orange text-dark">SỰ KIỆN</h3>
+                    </Link>
+                    <Carousel interval={3000} className="testimonial-carousel py-3">
+                        <Carousel.Item>
+                            <div className="d-flex gap-4 justify-content-center">
+                                <Link to='/news' className="text-decoration-none">
+                                    <div className="text-dark">
+                                        <img src={newsImg} alt="news" className="zoom-effect rounded w-100"/>
+                                        <div className="d-flex gap-2 text-secondary my-2 align-items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-clock-fill" viewBox="0 0 16 16">
+                                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+                                            </svg>
+                                            <span className="mx-2">Ngày 06/11/2024</span>
+                                        </div>
+                                        <h3 className="overflow-x-hidden hover-text-orange text-2-line">Danh sách đại lý alpha book alp sách đại lý alpha book alpha book alpha book</h3>
+                                        <p className="text-3-line">Nhằm trách mua phải hàng giả, bạn đọc có thể tham khảo danh sách đại lý phân phối phối</p>
+                                    </div>
+                                </Link>
+                                
+                                <Link to='/news' className="text-decoration-none">
+                                    <div className="text-dark">
+                                        <img src={newsImg} alt="news" className="zoom-effect rounded w-100"/>
+                                        <div className="d-flex gap-2 text-secondary my-2 align-items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-clock-fill" viewBox="0 0 16 16">
+                                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+                                            </svg>
+                                            <span className="mx-2">Ngày 06/11/2024</span>
+                                        </div>
+                                        <h3 className="overflow-x-hidden hover-text-orange text-2-line">Danh sách đại lý alpha book alp sách đại lý alpha book alpha book alpha book</h3>
+                                        <p className="text-3-line">Nhằm trách mua phải hàng giả, bạn đọc có thể tham khảo danh sách đại lý phân phối phối</p>
+                                    </div>
+                                </Link>
+                            </div>
+                        </Carousel.Item>
+
+                        <Carousel.Item>
+                            <div className="d-flex gap-4 justify-content-center">
+                                <Link to='/news' className="text-decoration-none">
+                                    <div className="text-dark">
+                                        <img src={newsImg} alt="news" className="zoom-effect rounded w-100"/>
+                                        <div className="d-flex gap-2 text-secondary my-2 align-items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-clock-fill" viewBox="0 0 16 16">
+                                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+                                            </svg>
+                                            <span className="mx-2">Ngày 06/11/2024</span>
+                                        </div>
+                                        <h3 className="overflow-x-hidden hover-text-orange text-2-line">Danh sách đại lý alpha book alp sách đại lý alpha book alpha book alpha book</h3>
+                                        <p className="text-3-line">Nhằm trách mua phải hàng giả, bạn đọc có thể tham khảo danh sách đại lý phân phối phối</p>
+                                    </div>
+                                </Link>
+
+                                <Link to='/news' className="text-decoration-none">
+                                    <div className="text-dark">
+                                        <img src={newsImg} alt="news" className="zoom-effect rounded w-100"/>
+                                        <div className="d-flex gap-2 text-secondary my-2 align-items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-clock-fill" viewBox="0 0 16 16">
+                                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+                                            </svg>
+                                            <span className="mx-2">Ngày 06/11/2024</span>
+                                        </div>
+                                        <h3 className="overflow-x-hidden hover-text-orange text-2-line">Danh sách đại lý alpha book alp sách đại lý alpha book alpha book alpha book</h3>
+                                        <p className="text-3-line">Nhằm trách mua phải hàng giả, bạn đọc có thể tham khảo danh sách đại lý phân phối phối</p>
+                                    </div>
+                                </Link>
+                            </div>
+                        </Carousel.Item>
+                    </Carousel>
                     </div>
                 </div>
             </div>
-        </div>
     )
 }
