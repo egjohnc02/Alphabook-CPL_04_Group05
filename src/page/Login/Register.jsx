@@ -2,8 +2,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { auth, db } from '../../firebase/firebase';
 import AutoScrollToTop from '../../utils/AutoScrollToTop'
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
+ import { createUserWithEmailAndPassword } from 'firebase/auth';
+ import { doc, setDoc } from 'firebase/firestore';
 
 export default function Register(){
     AutoScrollToTop()
