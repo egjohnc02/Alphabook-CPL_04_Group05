@@ -1,9 +1,10 @@
 import { Link, useNavigate } from 'react-router-dom';
 import AutoScrollToTop from '../../../utils/AutoScrollToTop';
 import { useState } from 'react';
-import { auth } from '../../../firebase/firebase';
+import { auth, db } from '../../../firebase/firebase';
 import { signInWithEmailAndPassword} from 'firebase/auth';
 import LoginWith from '../../../components/Login/LoginWith';
+import { doc, getDoc } from 'firebase/firestore';
 
 
 function Login() {
@@ -21,7 +22,15 @@ function Login() {
         setLoading(true);
         setMessage("");
         try {
-           await signInWithEmailAndPassword(auth, email, password);
+           const userCredential = await signInWithEmailAndPassword(auth, email, password);
+           const user = userCredential.user;
+           const userDoc = await getDoc(doc(db, "Users", user.uid));
+           if (userDoc.exists()) {
+            const userData = userDoc.data();
+            localStorage.setItem("userName", `${userData.FirstName} ${userData.LastName}`);
+            localStorage.setItem("phoneNumber", userData.PhoneNumber);
+            }
+
            setMessage("Đăng nhập thành công!");
            setLoading(false);
            localStorage.setItem("isLoggedIn", true);

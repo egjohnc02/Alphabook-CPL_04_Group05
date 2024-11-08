@@ -24,13 +24,13 @@ import Contact from './page/Contact/Contact';
 import New from './page/News/New';
 import Customer from './page/Account/Customer/Customer';
 import Cart from './components/Cart/Cart';
+import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
 
 function AppContent() {
   const location = useLocation();
 
   return (
     <>
-
       <Navbar />
       {location.pathname !== '/home' && location.pathname !== '/' && location.pathname !== '/service' && <Header />}
 
@@ -51,7 +51,7 @@ function AppContent() {
         <Route path="/chinhsachdoitrahoantien" element={<ChinhSachDoiTraHoanTien />} />
         <Route path='/contact' element={<Contact/>} />
         <Route path='/news' element={<New/>} />
-        <Route path='/customer' element={<Customer/>} />
+        <Route path="/customer" element={<ProtectedRoute> <Customer /> </ProtectedRoute>} />
         <Route path='/cart' element={<Cart/>} />
       </Routes>
       <BackToTop />
