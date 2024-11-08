@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/firebase"; // Adjust the import based on your project structure
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 
 const ProtectedRoute = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -15,7 +15,14 @@ const ProtectedRoute = ({ children }) => {
   }, []);
 
   if (isAuthenticated === null) {
-    return <Navigate to="/login" />;
+    return (
+      <div className="container my-5">
+        <p>Khôn lỏi à...</p>
+        <Link to='/login'>
+          <button className="bg-orange text-white p-2 rounded border-0">Back to Login</button>
+        </Link>
+      </div>
+    );
   }
 
   if (!isAuthenticated) {
