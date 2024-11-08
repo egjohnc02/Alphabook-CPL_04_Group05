@@ -12,15 +12,15 @@ export default function Footer(){
                         <img src={logo} alt="logo" style={{width:'250px'}}/>
                     </Link>
                     <div className='mt-3'>
-                        <q><i>Chúng tôi không bán sách, chúng tôi bán kiến thức quản trị vượt trội của các tập đoàn hàng đầu.</i></q>
-                        <p><i>Công ty Cổ phần Sách Alpha</i></p>
-                        <p><i>MST: 0101602138</i></p>
-                        <p><i>Ngày cấp: 27/01/2005</i></p>
-                        <p><i>Nơi cấp: Phòng ĐKKD - Sở Kế Hoạch & Đầu Tư Thành Phố Hà Nội</i></p>
+                        <q className='fst-italic'>Chúng tôi không bán sách, chúng tôi bán kiến thức quản trị vượt trội của các tập đoàn hàng đầu.</q>
+                        <p className='fst-italic'>Công ty Cổ phần Sách Alpha</p>
+                        <p className='fst-italic'>MST: 0101602138</p>
+                        <p className='fst-italic'>Ngày cấp: 27/01/2005</p>
+                        <p className='fst-italic'>Nơi cấp: Phòng ĐKKD - Sở Kế Hoạch & Đầu Tư Thành Phố Hà Nội</p>
                         <form action="" className='pt-2'>
                             <p className='fw-bold'>Đăng ký nhận khuyến mãi</p>
-                            <input type="email" name="" id="" className='border rounded-2' placeholder='Địa chỉ email'/>
-                            <button className='text-light bg-black btn'>Gửi</button>
+                            <input type="email" name="" id="" className='border rounded-2 p-2' placeholder='Địa chỉ email'/>
+                            <button className='text-light bg-black btn p-2'>Gửi</button>
                         </form>
                     </div>
                 </div>

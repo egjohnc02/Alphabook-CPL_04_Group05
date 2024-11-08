@@ -6,30 +6,30 @@ export default function Navbar() {
   const isLoggedIn = localStorage.getItem("isLoggedIn");
 
   return (
-    <div className="bg-light sticky-top border-bottom">
-      <div className='d-flex justify-content-around container align-items-center p-3'>
+    <div className="bg-white sticky-top border-bottom container-fluid">
+      <div className='d-flex align-items-center justify-content-between py-3 bg-white container'>
         <Link to='/home'>
           <img src={logo} alt="logo" style={{ width: '270px' }} />
         </Link>
 
         <div className="d-flex gap-3">
           <Link to='/home' className='text-decoration-none text-dark fw-medium '>
-            <nav className='hover-text-orange bg-light'>Trang chủ</nav>
+            <nav className='hover-text-orange bg-white'>Trang chủ</nav>
           </Link>
 
           <Link to='/introduce' className='text-decoration-none text-dark fw-medium'>
-            <nav className='hover-text-orange bg-light'>Về Alpha Books</nav>
+            <nav className='hover-text-orange bg-white'>Về Alpha Books</nav>
           </Link>
           
           <div className='dropdown position-relative d-inline-block'>
             <Link to='/book' className='text-dark'>
-              <button className="dropbtn border-0 bg-light fw-medium hover-text-orange bg-ligh">Tủ sách 
+              <button className="dropbtn border-0 bg-white fw-medium hover-text-orange bg-ligh">Tủ sách 
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-caret-down-fill" viewBox="0 0 16 16">
                   <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                 </svg>
               </button>
             </Link>
-            <div className="dropdown-content position-absolute bg-light z-1 p-3">
+            <div className="dropdown-content position-absolute bg-white z-1 p-3">
               <Link to='/category/harvard-business-review' className='text-decoration-none text-dark d-block'>
                 <p className='hover-text-orange'>Harvard Business Review</p>
               </Link>
@@ -55,18 +55,18 @@ export default function Navbar() {
           </div>
 
           <Link to='/service' className='text-decoration-none text-dark fw-medium'>
-            <nav className='hover-text-orange bg-light'>Dịch vụ HTXB</nav>
+            <nav className='hover-text-orange bg-white'>Dịch vụ HTXB</nav>
           </Link>
 
           <div className='dropdown position-relative d-inline-block'>
             <Link to='/news' className='text-dark'>
-              <button className="dropbtn border-0 bg-light fw-medium hover-text-orange">Tin tức - Sự kiện 
+              <button className="dropbtn border-0 bg-white fw-medium hover-text-orange">Tin tức - Sự kiện 
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-caret-down-fill" viewBox="0 0 16 16">
                   <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                 </svg>
               </button>
             </Link>
-            <div className="dropdown-content position-absolute bg-light z-1 p-3">
+            <div className="dropdown-content position-absolute bg-white z-1 p-3">
               <Link to='/news' className='text-decoration-none text-dark d-block'>
                 <p className='hover-text-orange'>Tin tức</p>
               </Link>
@@ -77,7 +77,7 @@ export default function Navbar() {
           </div>
           
             <Link to='/contact' className='text-decoration-none text-dark fw-medium'>
-              <nav className='hover-text-orange bg-light'>Liên hệ</nav>
+              <nav className='hover-text-orange bg-white'>Liên hệ</nav>
             </Link>
         </div>
 
@@ -109,12 +109,11 @@ export default function Navbar() {
         )}
 
           <Link to='/cart' className='text-decoration-none text-dark fw-medium'>
-            <div className='ps-3'>
-            <div as={Link} to="/cart" className='ps-3'>
-              <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" className="bi bi-bag" viewBox="0 0 16 16">
-                <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
-              </svg>
-            </div>
+              <div className='ps-3'>
+                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" className="bi bi-bag" viewBox="0 0 16 16">
+                  <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
+                </svg>
+              </div>
           </Link>
         </div>
       </div>

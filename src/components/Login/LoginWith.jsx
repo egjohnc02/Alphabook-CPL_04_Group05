@@ -7,6 +7,7 @@ export default function LoginWith(){
     const providerGG = new GoogleAuthProvider()
     const providerFb = new FacebookAuthProvider();
     const navigate = useNavigate();
+    
     const loginWithGoogle = ()=>{
         signInWithPopup(auth, providerGG)
         .then(() => {
@@ -29,6 +30,7 @@ export default function LoginWith(){
             window.alert(errorMessage)
         });
     }
+    
     return(
         <div>
             <p className="text-center">Hoặc đăng nhập bằng</p>

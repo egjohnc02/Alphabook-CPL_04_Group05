@@ -37,6 +37,8 @@ export default function Register(){
             })
             setLoading(false)
             localStorage.setItem("isLoggedIn", true)
+            localStorage.setItem("userName", `${fname} ${lname}`);
+            localStorage.setItem("PhoneNumber", `${phone}`);
             setMessage("Đăng ký thành công!");
             setTimeout(() => {
                 navigate('/home');
