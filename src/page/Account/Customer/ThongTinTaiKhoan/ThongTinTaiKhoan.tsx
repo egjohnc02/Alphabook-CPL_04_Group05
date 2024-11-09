@@ -5,7 +5,7 @@ const ThongTinTaiKhoan: React.FC = () => {
   const [userName, setUserName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const user = auth.currentUser;
-  const email = user?.email || ""; // Handle potential null user
+  const email = user?.email || "";
 
   useEffect(() => {
     const name = localStorage.getItem("userName");
