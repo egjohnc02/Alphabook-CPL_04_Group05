@@ -1,19 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth, db } from '../../../firebase/firebase';
 import AutoScrollToTop from '../../../utils/AutoScrollToTop';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import LoginWith from '../../../components/Login/LoginWith';
+import { FirebaseError } from 'firebase/app';
 
 const Register: React.FC = () => {
-  AutoScrollToTop();
+  useEffect(() => {
+    <AutoScrollToTop />;
+  }, []);
 
-  const [fname, setfname] = useState("");
-  const [lname, setlname] = useState("");
-  const [phone, setphone] = useState("");
-  const [email, setemail] = useState("");
-  const [password, setpassword] = useState("");
+  const [fname, setFname] = useState("");
+  const [lname, setLname] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
@@ -26,8 +29,7 @@ const Register: React.FC = () => {
     try {
       const checkUser = await createUserWithEmailAndPassword(auth, email, password);
       const user = checkUser.user;
-      console.log(user);
-      console.log("Done");
+
       if (user) {
         await setDoc(doc(db, "Users", user.uid), {
           FirstName: fname,
@@ -35,26 +37,34 @@ const Register: React.FC = () => {
           PhoneNumber: phone,
           email: user.email,
         });
-        setLoading(false);
+
         localStorage.setItem("isLoggedIn", "true");
         localStorage.setItem("userName", `${fname} ${lname}`);
         localStorage.setItem("PhoneNumber", `${phone}`);
+        
         setMessage("Đăng ký thành công!");
-        setTimeout(() => {
-          navigate('/home');
-        }, 1000);
+        setTimeout(() => navigate('/home'), 1000);
       }
-    } catch (error: any) {
-      setLoading(false);
-      if (error.code === 'auth/email-already-in-use') {
-        setMessage("Email đã tồn tại. Vui lòng thử email khác.");
-      } else if (error.code === 'auth/invalid-email') {
-        setMessage("Email không hợp lệ. Vui lòng thử email khác.");
-      } else if (error.code === 'auth/weak-password') {
-        setMessage("Mật khẩu phải có ít nhất 6 ký tự. Vui lòng nhập lại.");
+    } catch (error) {
+      if (error instanceof FirebaseError) {
+        switch (error.code) {
+          case 'auth/email-already-in-use':
+            setMessage("Email đã tồn tại. Vui lòng thử email khác.");
+            break;
+          case 'auth/invalid-email':
+            setMessage("Email không hợp lệ. Vui lòng thử email khác.");
+            break;
+          case 'auth/weak-password':
+            setMessage("Mật khẩu phải có ít nhất 6 ký tự. Vui lòng nhập lại.");
+            break;
+          default:
+            setMessage(error.message);
+        }
       } else {
-        setMessage(error.message);
+        setMessage("Đã xảy ra lỗi. Vui lòng thử lại sau.");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -66,6 +76,7 @@ const Register: React.FC = () => {
             <h4>Đăng ký tài khoản</h4>
             <p className="text-danger">{message}</p>
             {loading ? <p>Đang xử lý...</p> : null}
+
             <label className="text-body-secondary" htmlFor="fname">
               Họ<i style={{ color: "red" }}>*</i>
             </label>
@@ -75,63 +86,68 @@ const Register: React.FC = () => {
               id="fname"
               placeholder="Họ"
               className="w-100 border-opacity-10 border p-2 rounded"
-              onChange={(e) => setfname(e.target.value)}
+              onChange={(e) => setFname(e.target.value)}
               required
             />
             
-            <label className='pt-3 text-body-secondary' htmlFor="lname">
-              Tên<i style={{color:'red'}}>*</i>
+            <label className="pt-3 text-body-secondary" htmlFor="lname">
+              Tên<i style={{ color: 'red' }}>*</i>
             </label>
             <input
               type="text"
               value={lname}
               id="lname"
-              placeholder='Tên'
-              className='w-100 border border-opacity-10 p-2 rounded'
-              onChange={(e)=>setlname(e.target.value)}
+              placeholder="Tên"
+              className="w-100 border border-opacity-10 p-2 rounded"
+              onChange={(e) => setLname(e.target.value)}
               required
             />
 
-            <label className='pt-3 text-body-secondary' htmlFor='phone'>
-              Số điện thoại<i style={{color:'red'}}>*</i>
+            <label className="pt-3 text-body-secondary" htmlFor="phone">
+              Số điện thoại<i style={{ color: 'red' }}>*</i>
             </label>
             <input 
               type="number"
               value={phone}
               id="phone"
-              placeholder='Số điện thoại'
-              className='w-100 border border-opacity-10 p-2 rounded'
-              onChange={(e)=>setphone(e.target.value)}
+              placeholder="Số điện thoại"
+              className="w-100 border border-opacity-10 p-2 rounded"
+              onChange={(e) => setPhone(e.target.value)}
               required
             />
 
-            <label className='pt-3 text-body-secondary' htmlFor='email'>
-              Email<i style={{color:'red'}}>*</i>
+            <label className="pt-3 text-body-secondary" htmlFor="email">
+              Email<i style={{ color: 'red' }}>*</i>
             </label>
             <input 
               type="email"
               value={email}
               id="email"
-              placeholder='Email'
-              className='w-100 border border-opacity-10 p-2 rounded'
-              onChange={(e)=>setemail(e.target.value)}
+              placeholder="Email"
+              className="w-100 border border-opacity-10 p-2 rounded"
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
 
-            <label className='pt-3 text-body-secondary' htmlFor='password'>
-              Mật khẩu<i style={{color:'red'}}>*</i>
+            <label className="pt-3 text-body-secondary" htmlFor="password">
+              Mật khẩu<i style={{ color: 'red' }}>*</i>
             </label>
             <input 
               type="password"
               value={password}
               id="password"
-              placeholder='Mật khẩu'
-              className='w-100 border border-opacity-10 p-2 rounded'
-              onChange={(e)=>setpassword(e.target.value)}
+              placeholder="Mật khẩu"
+              className="w-100 border border-opacity-10 p-2 rounded"
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
-            <button className="my-3 text-center w-100 p-2 bg-orange border-0 text-light rounded" type="submit">
-              Đăng ký
+
+            <button 
+              className="my-3 text-center w-100 p-2 bg-orange border-0 text-light rounded" 
+              type="submit"
+              disabled={loading}
+            >
+              {loading ? "Đang xử lý..." : "Đăng ký"}
             </button>
           </form>
 

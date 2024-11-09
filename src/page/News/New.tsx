@@ -8,21 +8,19 @@ import AutoScrollToTop from '../../utils/AutoScrollToTop';
 import shit2Img from '../../assets/duy/shit2.png';
 
 const New: React.FC = () => {
-  // Tạo một mảng gồm 24 phần tử, mỗi phần tử là một chuỗi "News Item X"
   const newsItems = Array.from({ length: 12 }, (_, index) => `News Item ${index + 1}`);
   AutoScrollToTop();
 
   return (
     <div className="Container container-sm container-md container-lg">
       <Row className="mt-3">
-        {/* Phần điều hướng (navigate) */}
         <Col sm={12} md={12} lg={3}>
           <Row className="navigate-news me-3">
-            <ListGroup className="">
-              <ListGroup.Item className="h6 fw-bold" disabled readOnly>
-                Danh mục tin{" "}
+            <ListGroup>
+              <ListGroup.Item className="h6 fw-bold" disabled>
+                Danh mục tin
               </ListGroup.Item>
-              <ListGroup.Item className="text-muted ">
+              <ListGroup.Item className="text-muted">
                 <div className="dropDown-custom">
                   <div className="text-active-dropDown d-flex justify-content-between">
                     <p className="p-0 m-0">Tin tức</p>
@@ -36,50 +34,34 @@ const New: React.FC = () => {
                   </div>
                 </div>
               </ListGroup.Item>
-              <ListGroup.Item className="text-muted ">Sự kiện</ListGroup.Item>
+              <ListGroup.Item className="text-muted">Sự kiện</ListGroup.Item>
             </ListGroup>
           </Row>
           <Row className="hot-news me-3 mt-3">
             <ListGroup>
-              <ListGroup.Item className="h6 fw-bold" disabled readOnly>
-                Tin nổi bật{" "}
+              <ListGroup.Item className="h6 fw-bold" disabled>
+                Tin nổi bật
               </ListGroup.Item>
-              <ListGroup.Item>
-                <div className="content-hot-news mb-1">
-                  <img src={htxbImg} alt="img-hot-news" />
-                  <p className="title-hot-new fw-bold ps-2 hover-text-orange">
-                    Những thách thức của nhà lãnh đạo: Cẩm nang thực nghiệm trong hành trình lãnh đạo của bạn
-                  </p>
-                </div>
-                <div className="content-hot-news mb-1">
-                  <img src={htxbImg} alt="img-hot-news" />
-                  <p className="title-hot-new fw-bold ps-2 hover-text-orange">
-                    Những thách thức của nhà lãnh đạo: Cẩm nang thực nghiệm trong hành trình lãnh đạo của bạn
-                  </p>
-                </div>
-                <div className="content-hot-news mb-1">
-                  <img src={htxbImg} alt="img-hot-news" />
-                  <p className="title-hot-new fw-bold ps-2 hover-text-orange">
-                    Những thách thức của nhà lãnh đạo: Cẩm nang thực nghiệm trong hành trình lãnh đạo của bạn
-                  </p>
-                </div>
-                <div className="content-hot-news mb-1">
-                  <img src={htxbImg} alt="img-hot-news" />
-                  <p className="title-hot-new fw-bold ps-2 hover-text-orange">
-                    Những thách thức của nhà lãnh đạo: Cẩm nang thực nghiệm trong hành trình lãnh đạo của bạn
-                  </p>
-                </div>
-              </ListGroup.Item>
+              {Array(4).fill().map((_, i) => (
+                <ListGroup.Item key={i}>
+                  <div className="content-hot-news mb-1">
+                    <img src={htxbImg} alt="img-hot-news" />
+                    <p className="title-hot-new fw-bold ps-2 hover-text-orange">
+                      Những thách thức của nhà lãnh đạo: Cẩm nang thực nghiệm trong hành trình lãnh đạo của bạn
+                    </p>
+                  </div>
+                </ListGroup.Item>
+              ))}
             </ListGroup>
           </Row>
           <Row className="news-poster-sider-bar p-0 mt-3 me-3 mb-3">
-            <div className=" p-0 d-flex justify-content-center">
+            <div className="p-0 d-flex justify-content-center">
               <img src={introduceImg} alt="sidebar" />
             </div>
           </Row>
         </Col>
 
-        {/* Phần chính của main-news */}
+        {/* Main News Section */}
         <Col sm={12} md={12} lg={9}>
           <Row>
             {newsItems.map((item, index) => (
@@ -105,44 +87,35 @@ const New: React.FC = () => {
         </Col>
       </Row>
 
-      {/* Phần phân trang (Pagination) */}
       <Row className="Pagination-news">
-        <div className="pagenav ">
+        <div className="pagenav">
           <ul className="pagination-custom list-unstyled">
             <li className="page-item">
-              <a className="page-link" href="#">
+              <button className="page-link" disabled>
                 <i className="fa-solid fa-angle-left"></i>
-              </a>
+              </button>
             </li>
             <li className="page-item actived">
-              <a className="page-link" href="#">
-                1
-              </a>
+              <button className="page-link">1</button>
             </li>
             <li className="page-item">
-              <a className="page-link" href="#">
-                2
-              </a>
+              <button className="page-link">2</button>
             </li>
             <li className="page-item">
-              <a className="page-link" href="#">
-                3
-              </a>
+              <button className="page-link">3</button>
             </li>
             <li className="page-item">
-              <a className="page-link" href="#" disabled>
+              <button className="page-link" disabled>
                 ...
-              </a>
+              </button>
             </li>
             <li className="page-item">
-              <a className="page-link" href="#">
-                15
-              </a>
+              <button className="page-link">15</button>
             </li>
             <li className="page-item">
-              <a className="page-link" href="#">
+              <button className="page-link">
                 <i className="fa-solid fa-angle-right"></i>
-              </a>
+              </button>
             </li>
           </ul>
         </div>

@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import bgLogin from '../assets/header/bg_header.webp';
+import bgLogin from '../../assets/header/bg_header.webp';
 import React from 'react';
 
 

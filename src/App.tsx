@@ -1,14 +1,14 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navbar from './components/Navbar/Navbar';
-import Footer from './components/Footer';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import Navbar from './components/Navbar/Navbar';
+import Footer from './components/Footer/Footer';
 import Login from './page/Account/Login/Login';
 import Home from './page/Home/Home';
 import Register from './page/Account/Login/Register';
 import Introduce from './page/Introduce';
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import Header from './components/Header';
+import Header from './components/Header/Header';
 import HeThongNhaSach from './page/Footer/he-thong-nha-sach/hethongnhasach';
 import HeThongPhatHanh from './page/Footer/he-thong-phat-hanh/hethongphathanh';
 import DichVu from './page/Footer/dich-vu/dichvu';
@@ -29,10 +29,13 @@ import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
 function AppContent() {
   const location = useLocation();
 
+  // Define routes where the Header should not be displayed
+  const headerExclusionPaths = ['/home', '/', '/service'];
+
   return (
     <>
       <Navbar />
-      {location.pathname !== '/home' && location.pathname !== '/' && location.pathname !== '/service' && <Header />}
+      {!headerExclusionPaths.includes(location.pathname) && <Header />}
 
       <Routes>
         <Route index element={<Home />} />

@@ -1,5 +1,5 @@
-import logo from '../assets/footer/logo_footer.webp'
-import logoBct from '../assets/footer/logo_bct.webp'
+import logo from '../../assets/footer/logo_footer.webp'
+import logoBct from '../../assets/footer/logo_bct.webp'
 import { Link } from 'react-router-dom';
 import React from 'react';
 
