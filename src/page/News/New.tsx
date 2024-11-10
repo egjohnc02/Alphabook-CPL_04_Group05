@@ -2,10 +2,10 @@ import React from 'react';
 import { Row, Col, Card, ListGroup } from "react-bootstrap";
 import "./news.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import htxbImg from '../../assets/duy/htxb.jpg';
+import htxbImg from '../../assets/HTXB/trung-tam-tu-van-hop-tac-xuat-ban-03-1-2-20221013014017-o03o7.jpg';
 import introduceImg from '../../assets/introduce/sidebar_image_blog.webp';
 import AutoScrollToTop from '../../utils/AutoScrollToTop';
-import shit2Img from '../../assets/duy/shit2.png';
+import shit2Img from '../../assets/HTXB/trung-tam-tu-van-hop-tac-xuat-ban-03-1-2-20221013014017-o03o7.jpg';
 
 const New: React.FC = () => {
   const newsItems = Array.from({ length: 12 }, (_, index) => `News Item ${index + 1}`);

@@ -56,7 +56,7 @@ const Navbar: React.FC = () => {
             </div>
           </div>
 
-          <Link to='/service' className='text-decoration-none text-dark fw-medium'>
+          <Link to='/htxb' className='text-decoration-none text-dark fw-medium'>
             <nav className='hover-text-orange bg-white'>Dịch vụ HTXB</nav>
           </Link>
 
