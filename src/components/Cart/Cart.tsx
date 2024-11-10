@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import './cart.css'
-import { Button, Col, Form, ListGroup, Row } from "react-bootstrap";
+import {Col, Form, ListGroup, Row } from "react-bootstrap";
 import thumbnailItemCart from '../../assets/thumnail_item_cart.webp'
 
 const Cart: React.FC = () => {
@@ -27,7 +27,7 @@ const Cart: React.FC = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, [viewportSize]); // Thêm viewportSize vào dependency để cập nhật chính xác
 
-    const handleCheckbox = (e) => {
+    const handleCheckbox = (e: { target: { checked: boolean | ((prevState: boolean) => boolean); }; }) => {
         setCheckBox(e.target.checked)
     }
     return (
