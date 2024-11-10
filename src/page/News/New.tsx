@@ -64,7 +64,7 @@ const New: React.FC = () => {
         {/* Main News Section */}
         <Col sm={12} md={12} lg={9}>
           <Row>
-            {newsItems.map((item, index) => (
+            {newsItems.map((index) => (
               <Col key={index} sm={12} md={6} lg={4} xl={4} className="mb-4">
                 <Card>
                   <div className="card-img-container" style={{ overflow: "hidden" }}>
