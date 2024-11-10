@@ -42,7 +42,7 @@ const New: React.FC = () => {
               <ListGroup.Item className="h6 fw-bold" disabled>
                 Tin nổi bật
               </ListGroup.Item>
-              {Array(4).fill().map((_, i) => (
+              {Array(4).map((_, i) => (
                 <ListGroup.Item key={i}>
                   <div className="content-hot-news mb-1">
                     <img src={htxbImg} alt="img-hot-news" />
