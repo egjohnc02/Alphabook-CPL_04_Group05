@@ -1,5 +1,6 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
@@ -17,7 +18,6 @@ import ChinhSachThanhToan from './page/Footer/chinh-sach-thanh-toan/chinhsachtha
 import ChinhSachVanChuyen from './page/Footer/chinh-sach-van-chuyen/chinhsachvanchuyen';
 import ChinhSachBaoMat from './page/Footer/chinh-sach-bao-mat/chinhsachbaomat';
 import ChinhSachDoiTraHoanTien from './page/Footer/chinh-sach-doi-tra-hoan-tien/chinhsachhoantratien';
-import Service from './page/HTXB/Service';
 import BackToTop from './components/Backtop/Backtop';
 import ContactButton from './components/ContactButton/ContactButton';
 import Contact from './page/Contact/Contact';
@@ -25,12 +25,13 @@ import New from './page/News/New';
 import Customer from './page/Account/Customer/Customer';
 import Cart from './components/Cart/Cart';
 import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
+import HTXB from './page/HTXB/HTXB';
 
 function AppContent() {
   const location = useLocation();
 
   // Define routes where the Header should not be displayed
-  const headerExclusionPaths = ['/home', '/', '/service'];
+  const headerExclusionPaths = ['/home', '/', '/htxb'];
 
   return (
     <>
@@ -43,7 +44,7 @@ function AppContent() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/introduce" element={<Introduce />} />
-        <Route path="/service" element={<Service />} />
+        <Route path="/htxb" element={<HTXB />} />
         <Route path="/hethongnhasach" element={<HeThongNhaSach />} />
         <Route path="/hethongphathanh" element={<HeThongPhatHanh />} />
         <Route path="/dichvu" element={<DichVu />} />
