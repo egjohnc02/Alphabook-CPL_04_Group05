@@ -25,7 +25,6 @@ const Home: React.FC = () => {
 
     return (
         <div>
-            {/* Carousel */}
             <Carousel>
                 <Carousel.Item interval={1000}>
                     <Link to='/'>
@@ -36,7 +35,7 @@ const Home: React.FC = () => {
                     <img src={slider3} className="w-100 object-fit-cover" style={{ height: '500px' }} alt="Slider 3" />
                 </Carousel.Item>
                 <Carousel.Item interval={1000}>
-                    <Link to='/service'>
+                    <Link to='/htxb'>
                         <img src={slider4} className="w-100 object-fit-cover" style={{ height: '500px' }} alt="Slider 4" />
                     </Link>
                 </Carousel.Item>
@@ -45,7 +44,6 @@ const Home: React.FC = () => {
                 </Carousel.Item>
             </Carousel>
 
-            {/* About Section */}
             <div className="d-flex justify-content-center align-items-center px-5 gap-5 mx-5 container">
                 <Link to='/introduce'>
                     <img src={aboutImg} alt="About" />
@@ -64,7 +62,6 @@ const Home: React.FC = () => {
                 </div>
             </div>
 
-            {/* Top 100 Section (No data) */}
             <div className="text-center mt-4 bg-warning bg-opacity-10 p-5">
                 <Link to='/' className="text-decoration-none text-dark hover-text-orange">
                     <h3 className="fw-bold">Top 100 Sản phẩm bán chạy</h3>
@@ -72,7 +69,6 @@ const Home: React.FC = () => {
                 <q className="text-danger">No data</q>
             </div>
 
-            {/* Banner Section */}
             <div className="d-flex justify-content-center align-items-center my-5 gap-4">
                 <Link to="/">
                     <img src={banner1} alt="Banner 1" />
@@ -82,7 +78,6 @@ const Home: React.FC = () => {
                 </a>
             </div>
 
-            {/* New Releases Section (No data) */}
             <div className="my-5 text-center" id="sachMoiPhatHanh">
                 <Link to='/' className="text-decoration-none text-dark hover-text-orange">
                     <h3 className="bg-title fw-bold">Sách mới phát hành</h3>
@@ -90,7 +85,6 @@ const Home: React.FC = () => {
                 <q className="text-danger">No data</q>
             </div>
 
-            {/* Recommended Books Section (No data) */}
             <div className="my-5 text-center bg-warning bg-opacity-10 py-5">
                 <Link to='/' className="text-decoration-none text-dark hover-text-orange">
                     <h3 className="bg-title fw-bold">Sách dành cho bạn</h3>
@@ -98,7 +92,6 @@ const Home: React.FC = () => {
                 <q className="text-danger">No data</q>
             </div>
 
-            {/* Book Categories Section (No data) */}
             <div className="my-5 text-center">
                 <h3 className="bg-title fw-bold">TỦ SÁCH</h3>
                 <div className="col">
@@ -122,7 +115,6 @@ const Home: React.FC = () => {
                 </Link>
             </div>
 
-            {/* Services Section */}
             <div className="text-light my-5 p-5" style={{ background: `URL(${serviceBg})` }}>
                 <div className="d-flex gap-3">
                     <div className="w-25">
@@ -154,7 +146,6 @@ const Home: React.FC = () => {
                 </div>
             </div>
 
-            {/* Testimonials Section */}
             <div className="my-5 container">
                 <h3 className="fw-bold text-center bg-title">Chuyên gia đánh giá về Alpha Books</h3>
                 <div className="container">
@@ -228,7 +219,6 @@ const Home: React.FC = () => {
                 </div>
             </div>
 
-            {/* News and Events Section */}
             <div className="container d-flex justify-content-center mb-5 gap-5">
                 <div className="w-50 container">
                     <Link to='/news' className="text-decoration-none">

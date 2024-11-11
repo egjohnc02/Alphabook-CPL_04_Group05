@@ -6,7 +6,6 @@ import BookData from "./BookData";
 import Pagination from "./Pagination";
 import "./style.css";
 
-// Define types for the book data
 type Book = {
   id: number;
   title: string;
@@ -21,11 +20,6 @@ function Book() {
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const itemsPerPage = 6;
-  const totalPages = Math.ceil(books.length / itemsPerPage);
-  const currentBooks = books.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -35,14 +29,12 @@ function Book() {
     setSelectedCategory(category);
   };
 
-  // Use useEffect to log the selected category after it has been updated
   useEffect(() => {
     if (selectedCategory !== null) {
       console.log(selectedCategory);
     }
   }, [selectedCategory]);
 
-  // Filter books based on selectedCategory
   const filteredBooks = selectedCategory
     ? BookData.filter((book) => {
         if (Array.isArray(book.category)) {
@@ -54,7 +46,6 @@ function Book() {
       })
     : BookData;
 
-  // Use filteredBooks for pagination
   const currentFilteredBooks = filteredBooks.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
@@ -80,7 +71,6 @@ function Book() {
               <div className="main_container collection col-lg-9 col-md-12 col-sm-12">
                 <div className="warp-srt-title">
                   <h1 className="title-module d-none">Tất cả sản phẩm</h1>
-                  {/* <Filter /> */}
                 </div>
                 <div className="category-products products">
                   <section className="products-view products-view-grid collection_reponsive">
@@ -112,9 +102,8 @@ function Book() {
                       })}
                     </div>
 
-                    {/* Pagination is always shown, regardless of category */}
                     <Pagination
-                      totalPages={Math.ceil(filteredBooks.length / itemsPerPage)}  // Update total pages based on filteredBooks
+                      totalPages={Math.ceil(filteredBooks.length / itemsPerPage)}
                       currentPage={currentPage}
                       onPageChange={handlePageChange}
                     />
