@@ -511,7 +511,7 @@ const ChinhSachHoanTraTien: React.FC =() => {
                                 </tr>
                                 <tr>
                                   <td
-                                    colSpan="3"
+                                    colSpan={3}
                                     style={{
                                       border: "solid #000001 1.0pt",
                                       background: "white",
@@ -897,7 +897,7 @@ const ChinhSachHoanTraTien: React.FC =() => {
                                   </td>
                                 </tr>
                                 <tr>
-                                  <td colSpan="3">
+                                  <td colSpan={3}>
                                     <p>
                                       (*) Phương thức hoàn tiền: Thông qua tài
                                       khoản ngân hàng từ 2-7 ngày làm việc (sau

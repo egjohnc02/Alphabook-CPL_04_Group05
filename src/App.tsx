@@ -26,6 +26,7 @@ import Customer from './page/Account/Customer/Customer';
 import Cart from './components/Cart/Cart';
 import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
 import HTXB from './page/HTXB/HTXB';
+import Book from './page/Book/Book';
 
 function AppContent() {
   const location = useLocation();
@@ -57,6 +58,8 @@ function AppContent() {
         <Route path="/news" element={<New />} />
         <Route path="/customer" element={<ProtectedRoute><Customer /></ProtectedRoute>} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/book" element={<Book />}/>
+        <Route path="/book/:category" element={<Book />} />
       </Routes>
       <BackToTop />
       <ContactButton />

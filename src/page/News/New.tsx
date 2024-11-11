@@ -42,7 +42,7 @@ const New: React.FC = () => {
               <ListGroup.Item className="h6 fw-bold" disabled>
                 Tin nổi bật
               </ListGroup.Item>
-              {Array(4).fill().map((_, i) => (
+              {Array(4).map((_, i) => (
                 <ListGroup.Item key={i}>
                   <div className="content-hot-news mb-1">
                     <img src={htxbImg} alt="img-hot-news" />
@@ -64,7 +64,7 @@ const New: React.FC = () => {
         {/* Main News Section */}
         <Col sm={12} md={12} lg={9}>
           <Row>
-            {newsItems.map((item, index) => (
+            {newsItems.map((index) => (
               <Col key={index} sm={12} md={6} lg={4} xl={4} className="mb-4">
                 <Card>
                   <div className="card-img-container" style={{ overflow: "hidden" }}>

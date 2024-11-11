@@ -3,9 +3,9 @@ import React from "react";
 const DoiMatKhau: React.FC = () => {
   return (
     <div>
-      <p className="fs-4">Đổi mật khẩu</p>
+      <nav className="fs-4">Đổi mật khẩu</nav>
+      <nav>Để đảm bảo tính bảo mật bạn vui lòng đặt lại mật khẩu với ít nhất 6 kí tự</nav>
       <br />
-      <p>Để đảm bảo tính bảo mật bạn vui lòng đặt lại mật khẩu với ít nhất 6 kí tự</p>
       <div>
         <label htmlFor="old-password">Mật khẩu cũ *</label>
         <br />
