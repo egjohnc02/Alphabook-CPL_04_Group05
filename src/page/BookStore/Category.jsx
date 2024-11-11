@@ -7,6 +7,7 @@ function Category( onCategorySelect ) {
   ];
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
+    console.log(category);
   };
   return (
     <aside className="aside-item sidebar-category collection-category clear-fix">
@@ -25,7 +26,7 @@ function Category( onCategorySelect ) {
               <li key={index} className="nav-item" >
                 <Link
                   className="nav-link"
-                  to={`/category/${category.toLowerCase().replace(/\s+/g, '-')}`}
+                  to={`/book/${category.toLowerCase().replace(/\s+/g, '-')}`}
                   style={{ padding: "10px 15px 10px 0px" }} 
                   onClick={() => handleCategoryClick(category)}
                 >

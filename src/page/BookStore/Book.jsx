@@ -1,5 +1,6 @@
 import BookStore from "../../assets/home/bookstore_image.webp";
-import { useState } from "react";
+import { Link, useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 import Category from "./Category";
 import Price from "./Price";
@@ -8,32 +9,50 @@ import BookData from "./BookData";
 import Pagination from "./Pagination";
 import "./style.css";
 function Book() {
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedPriceRanges, setSelectedPriceRanges] = useState([]); // State for selected price ranges
+  const books = BookData;
 
+
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const itemsPerPage = 5;
+  const totalPages = Math.ceil(books.length / itemsPerPage);
+  const currentBooks = books.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+);
+const handlePageChange = (page) => {
+  setCurrentPage(page);
+};
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
+    console.log(selectedCategory)
   };
-  const handlePriceFilterChange = (value) => {
-    setSelectedPriceRanges((prev) => {
-      if (prev.includes(value)) {
-        return prev.filter((item) => item !== value); // Remove the price range if already selected
-      }
-      return [...prev, value]; // Add the price range if not selected
-    });
-  };
+
   const filteredBooks = selectedCategory
   ? BookData.filter((book) => {
-      // Kiểm tra nếu category là một mảng, sử dụng includes để kiểm tra
+      
       if (Array.isArray(book.category)) {
         return book.category.some((cat) =>
           cat.toLowerCase().replace(/\s+/g, '-').includes(selectedCategory.toLowerCase().replace(/\s+/g, '-'))
         );
       }
-      // Nếu category là chuỗi, chỉ cần kiểm tra trực tiếp
+     
       return book.category.toLowerCase().replace(/\s+/g, '-').includes(selectedCategory.toLowerCase().replace(/\s+/g, '-'));
     })
   : BookData;
+  // const [selectedPriceRanges, setSelectedPriceRanges] = useState([]); // State for selected price ranges
+
+  // const handlePriceFilterChange = (value) => {
+  //   setSelectedPriceRanges((prev) => {
+  //     if (prev.includes(value)) {
+  //       return prev.filter((item) => item !== value); // Remove the price range if already selected
+  //     }
+  //     return [...prev, value]; // Add the price range if not selected
+  //   });
+  // };
+  
+
   // const filteredBooks = BookData.filter((book) => {
   //   let isCategoryMatched = true;
 
@@ -82,10 +101,10 @@ function Book() {
                 <div className="category-products products">
                   <section className="products-view products-view-grid collection_reponsive">
                     <div className="row">
-                      {filteredBooks.map((item, index) => {
+                      {currentBooks.map((item, index) => {
                         return (
                           <div
-                            className="col-6 col-md-4 col-lg-3 product-col"
+                            className="col-4 product-col"
                             key={index}
                           >
                             <div className="item_product_main">                   
@@ -107,8 +126,8 @@ function Book() {
                       })}
                     
                     </div>
-                    <Pagination/>
-                  </section>
+                    <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
+                    </section>
                 </div>
               </div>
             </div>
