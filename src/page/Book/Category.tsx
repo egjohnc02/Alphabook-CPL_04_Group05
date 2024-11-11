@@ -8,7 +8,7 @@ type CategoryProps = {
 
 const Category: React.FC<CategoryProps> = ({ onCategorySelect }) => {
   const uniqueCategories = [
-    ...new Set(BookData.map((item) => item.category).filter(Boolean)),
+    ...new Set(BookData.flatMap((item) => item.category).filter(Boolean)),
   ];
 
   const handleCategoryClick = (category: string) => {
