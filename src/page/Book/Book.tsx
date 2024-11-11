@@ -20,10 +20,12 @@ function Book() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  // Set the number of items per page to 6
   const itemsPerPage = 6;
-
-  // Calculate the books to display on the current page
+  const totalPages = Math.ceil(books.length / itemsPerPage);
+  const currentBooks = books.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
