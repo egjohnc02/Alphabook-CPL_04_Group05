@@ -23,7 +23,7 @@ function Book() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const itemsPerPage = 5;
+  const itemsPerPage = 6;
   const totalPages = Math.ceil(books.length / itemsPerPage);
   const currentBooks = books.slice(
     (currentPage - 1) * itemsPerPage,
