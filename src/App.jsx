@@ -22,6 +22,7 @@ import BackToTop from './components/Backtop/Backtop';
 import ContactButton from './components/ContactButton/ContactButton';
 import Contact from './page/Contact/Contact';
 import Event from './page/News-event/Event';
+import EventDetail from './page/News-event/EventDetail';
 
 function AppContent() {
   const location = useLocation();
@@ -40,6 +41,7 @@ function AppContent() {
         <Route path="/introduce" element={<Introduce />} />
         <Route path="/service" element={<Service />} />
         <Route path="/event" element={<Event />} />
+        <Route path="/event/:id" element={<EventDetail />} />
         <Route path="/hethongnhasach" element={<HeThongNhaSach />} />
         <Route path="/hethongphathanh" element={<HeThongPhatHanh />} />
         <Route path="/dichvu" element={<DichVu />} />

@@ -1,33 +1,51 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Dropdown, ListGroup, Pagination } from 'react-bootstrap';
+import { collection, getDocs, query, orderBy, limit } from "firebase/firestore";
+import { db } from '../../firebase/firebase';
 import AutoScrollToTop from '../../utils/AutoScrollToTop';
+import { useNavigate } from 'react-router-dom';
 
 function Event() {
   AutoScrollToTop();
-
-  // Pagination setup
+  // State for events and pagination
   const itemsPerPage = 9;
+  const [events, setEvents] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [featuredEvent, setFeaturedEvent] = useState(null);
+  const navigate = useNavigate();
+  // Fetch events from Firestore
+  useEffect(() => {
+    const fetchEvents = async () => {
+      const eventCollection = collection(db, "event");
+      const eventSnapshot = await getDocs(eventCollection);
+      const eventList = eventSnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setEvents(eventList);
+          // Fetch the latest event for the featured section
+          const latestEventQuery = query(eventCollection, orderBy("Date", "desc"), limit(1));
+          const latestEventSnapshot = await getDocs(latestEventQuery);
+          if (!latestEventSnapshot.empty) {
+            setFeaturedEvent({ id: eventList[0].id, ...eventList[0] });
+          }
+    };
+    fetchEvents();
+  }, []);
 
-  // Sample data for events; replace with actual data
-  const events = Array.from({ length: 12 }, (_, index) => ({
-    id: index + 1,
-    title: `Tiêu đề sự kiện ${index + 1}`,
-    description: `Nội dung mô tả ngắn cho sự kiện ${index + 1}`,
-    imgSrc: `path/to/event-image-${index + 1}.jpg`
-  }));
-
-  // Determine items to display on the current page
+  // Pagination logic
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = events.slice(indexOfFirstItem, indexOfLastItem);
-
-  // Change page
   const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
-
-  // Total number of pages
   const totalPages = Math.ceil(events.length / itemsPerPage);
-
+  const truncateText = (text, maxLength) => {
+    return text.length > maxLength ? `${text.substring(0, maxLength)}...` : text;
+  };
+    // Hàm chuyển hướng sang trang chi tiết sự kiện
+    const handleTitleClick = (eventId) => {
+      navigate(`/event/${eventId}`);
+    };
   return (
     <Container className="mt-4">
       <Row>
@@ -52,21 +70,28 @@ function Event() {
             </ListGroup>
           </Card>
 
-          {/* Tin nổi bật */}
-          <Card>
-            <Card.Header><strong>Tin nổi bật</strong></Card.Header>
-            <Card.Body>
-              <Row>
-                <Col xs={4}>
-                  <img src="path/to/featured-image.jpg" alt="Tin nổi bật" className="img-fluid" />
-                </Col>
-                <Col xs={8}>
-                  <p><strong>Tiêu đề nổi bật</strong></p>
-                  <p>Mô tả ngắn cho tin nổi bật.</p>
-                </Col>
-              </Row>
-            </Card.Body>
-          </Card>
+                 {/* Tin nổi bật */}
+                 {featuredEvent && (
+            <Card>
+              <Card.Header><strong>Tin nổi bật</strong></Card.Header>
+              <Card.Body>
+                <Row>
+                  <Col xs={4}>
+                    <img src={featuredEvent.img} alt="Tin nổi bật" className="img-fluid" />
+                  </Col>
+                  <Col xs={8}>
+                     <Card.Title 
+                      onClick={() => handleTitleClick(featuredEvent.id)} 
+                      style={{ cursor: 'pointer', color: 'blue' }}
+                    >
+                      {truncateText(featuredEvent.title, 50)}
+                    </Card.Title>
+                    <p>{truncateText(featuredEvent.content, 50)}</p>
+                  </Col>
+                </Row>
+              </Card.Body>
+            </Card>
+          )}
         </Col>
 
         <Col md={9}>
@@ -75,10 +100,15 @@ function Event() {
             {currentItems.map((event) => (
               <Col md={4} className="mb-4" key={event.id}>
                 <Card>
-                  <Card.Img variant="top" src={event.imgSrc} />
+                  <Card.Img variant="top" src={event.img} />
                   <Card.Body>
-                    <Card.Title>{event.title}</Card.Title>
-                    <Card.Text>{event.description}</Card.Text>
+                  <Card.Title 
+                      onClick={() => handleTitleClick(event.id)} 
+                      style={{ cursor: 'pointer', color: 'blue' }}
+                    >
+                      {truncateText(event.title, 50)}
+                    </Card.Title>
+                    <Card.Text>{truncateText(event.content, 50)}</Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
