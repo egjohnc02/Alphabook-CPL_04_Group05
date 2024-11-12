@@ -11,8 +11,19 @@ const SoDiaChi: React.FC = () => {
   const [district, setDistrict] = useState("");
   const [ward, setWard] = useState("");
   const [isDefault, setIsDefault] = useState(false);
-  const [addresses, setAddresses] = useState<any[]>([]);
+  const [addresses, setAddresses] = useState<Address[]>([]);
 
+  type Address = {
+    name: string;
+    phone: string;
+    company: string;
+    address: string;
+    province: string;
+    district: string;
+    ward: string;
+    isDefault: boolean;
+  };
+  
   useEffect(() => {
     const fetchAddresses = async () => {
       const user = auth.currentUser;
