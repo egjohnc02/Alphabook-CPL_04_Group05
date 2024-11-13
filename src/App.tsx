@@ -34,7 +34,6 @@ import EventDetail from './page/News/EventDetail';
 function AppContent() {
   const location = useLocation();
 
-  // Define routes where the Header should not be displayed
   const headerExclusionPaths = ['/home', '/', '/htxb'];
 
   return (

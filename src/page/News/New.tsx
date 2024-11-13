@@ -4,6 +4,7 @@ import "./news.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import introduceImg from '../../assets/introduce/sidebar_image_blog.webp';
 import AutoScrollToTop from '../../utils/AutoScrollToTop';
+import { Link } from 'react-router-dom';
 import { useParams } from "react-router-dom";
 import { getAllNews, getAllHotNews, NewsItem, HotNewsItem } from "./NewsData";  // Import các hàm và kiểu dữ liệu
 const New: React.FC = () => {
@@ -41,7 +42,7 @@ const New: React.FC = () => {
               <ListGroup.Item className="text-muted">
                 <div className="dropDown-custom">
                   <div className="text-active-dropDown d-flex justify-content-between">
-                    <p className="p-0 m-0">Tin tức</p>
+                    <p className="p-0 m-0"><Link to='/news'>Tin tức</Link></p>
                   </div>
                   <div className="dropDown-menu-custom">
                     <ul className="list-unstyled ms-3">
@@ -52,7 +53,7 @@ const New: React.FC = () => {
                   </div>
                 </div>
               </ListGroup.Item>
-              <ListGroup.Item className="text-muted">Sự kiện</ListGroup.Item>
+              <ListGroup.Item className="text-muted"><Link to='/event'>Sự kiện</Link></ListGroup.Item>
             </ListGroup>
           </Row>
           <Row className="hot-news me-3 mt-3">

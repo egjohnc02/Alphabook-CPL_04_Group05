@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Dropdown, ListGroup, Pagination } from 'react-bootstrap';
 import { collection, getDocs, query, orderBy, limit } from "firebase/firestore";
 import { db } from '../../firebase/firebase';
@@ -14,7 +14,6 @@ interface EventData {
 }
 
 function Event() {
-  AutoScrollToTop();
 
   // Định nghĩa kiểu dữ liệu cho state
   const itemsPerPage = 9;
@@ -63,6 +62,7 @@ function Event() {
 
   return (
     <Container className="mt-4">
+      <AutoScrollToTop />;
       <Row>
         <Col md={3}>
           {/* Danh mục tin */}
