@@ -57,6 +57,9 @@ const Header: React.FC = () =>{
         case '/news':
                 pageName = 'Tin tức';
                 break;
+        case '/event':
+                pageName = 'Sự Kiện';
+                break;
 
         case '/customer':
                 pageName = 'Trang khách hàng';
