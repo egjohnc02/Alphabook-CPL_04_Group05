@@ -37,7 +37,7 @@ const SoDiaChi: React.FC = () => {
             setAddresses(data.addresses || []);
           }
         } catch (error) {
-          console.error("Error fetching addresses:", error);
+          window.alert("Error fetching addresses:"+ error);
         }
       }
     };
@@ -96,7 +96,7 @@ const SoDiaChi: React.FC = () => {
   const deleteAddress = async (index: number) => {
     const user = auth.currentUser;
     if (!user) {
-      console.error("No user is logged in.");
+      window.alert("?");
       return;
     }
     const confirmDelete = window.confirm("Bạn có chắc chắn muốn xóa địa chỉ này?");
