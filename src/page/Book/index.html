@@ -1,8 +1,0 @@
-const { category } = useParams(); // Lấy tham số category từ URL
-  const filteredBooks = category
-  ? BookData.filter((item) =>
-      item.category.some((cat) =>
-        cat.toLowerCase().replace(/\s+/g, '-') === category.toLowerCase().replace(/\s+/g, '-') // So khớp category trong URL
-      )
-    )
-  : BookData; // Nếu không có category, lấy tất cả sách
