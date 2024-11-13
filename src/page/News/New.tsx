@@ -2,18 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col, Card, ListGroup } from "react-bootstrap";
 import "./news.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import htxbImg from '../../assets/HTXB/trung-tam-tu-van-hop-tac-xuat-ban-03-1-2-20221013014017-o03o7.jpg';
 import introduceImg from '../../assets/introduce/sidebar_image_blog.webp';
 import AutoScrollToTop from '../../utils/AutoScrollToTop';
 import { useParams } from "react-router-dom";
-import getAllNews, { getAllHotNews } from './NewsData'
+import { getAllNews, getAllHotNews, NewsItem, HotNewsItem } from "./NewsData";  // Import các hàm và kiểu dữ liệu
 const New: React.FC = () => {
-  const [listNews, setListNews] = useState<any[]>([]);
-  const [listHotNews, setLisHotNews] = useState<any[]>([]); 
+
+  const [listNews, setListNews] = useState<NewsItem[]>([]);
+  const [listHotNews, setLisHotNews] = useState<HotNewsItem[]>([]); 
   const [totalPage, setTotalPage] = useState<number>(0)
   const { page } = useParams<{ page: string }>();
   const currentPage = page == null ? 1: page;
-  
    // Gọi hàm getAllNews khi component render
    useEffect(() => {
     const fetchNews = async () => {
