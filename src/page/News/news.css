@@ -1,0 +1,124 @@
+.card{
+    border: none;
+}
+.card-title,
+.card-text,
+.title-hot-new {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Giới hạn số dòng là 2 */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Hiển thị "..." khi vượt quá */
+}
+.card-title a {
+  color: black;
+}
+.card-title a:hover {
+  color: orange;
+}
+.card-img-container{
+    overflow: hidden;
+}
+.card-img{
+    height: 200px;
+    overflow: hidden; /* Ẩn phần thừa của hình ảnh khi phóng to */
+    transition: transform 0.3s ease; /* Thêm hiệu ứng chuyển tiếp */
+}
+
+.card-img:hover {
+    transform: scale(1.2); /* Dãn 1.5 lần khi hover */
+}
+.list-group, .news-poster-sider-bar{
+    --bs-list-group-border-color: none;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Thêm icon vào text-active-dropDown */
+.text-active-dropDown:after{
+    content: '';
+    font-family: "Font Awesome 5 Free"; 
+    font-weight: 900; /* Đảm bảo icon hiển thị chính xác */
+    display: inline-block; /* Cho phép icon hiển thị đúng */
+    content: "\f0d7"; /* Unicode cho icon caret-down */
+    color: orange;
+}
+/* Ản menu-dropdown */
+.dropDown-custom .dropDown-menu-custom{
+    display: none;
+}
+
+/* Ản nút down và hiện nút up khi hover */
+.text-active-dropDown:hover{
+    display: none;
+}
+.text-active-dropDown:hover:after{
+    font-family: "Font Awesome 5 Free"; 
+    font-weight: 900; 
+    display: inline-block; 
+    content: "\f0d8"; 
+    color: orange;
+}
+
+/* Hiển thị menu dropdown */
+.dropDown-custom:hover .dropDown-menu-custom{
+    display: block;
+}
+.dropDown-menu-custom li:hover{
+    background-color: rgba(192, 192, 192, 0.1);
+}
+.dropDown-custom:hover .text-active-dropDown:after{
+    font-family: "Font Awesome 5 Free"; 
+    font-weight: 900; 
+    display: inline-block; 
+    content: "\f0d8"; 
+    color: orange;
+}
+/*                   Style hot news*/
+.content-hot-news{
+    overflow: hidden;
+}
+.content-hot-news img{
+    float: left;
+    width: 90px;
+    height: 44px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+.content-hot-news p:hover{
+    color: orange
+}
+
+/*               Style sider bar */
+.news-poster-sider-bar img{
+    width: 328px;
+    height: auto;
+    object-fit: contain;
+
+}
+/* Pagnination */
+.pagination-custom {
+    display: flex; 
+    list-style-type: none;
+    flex-wrap: nowrap;
+    justify-content: center;
+
+}
+
+.pagination-custom .page-item {
+    margin: 0 4px; 
+    color: black;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 43px; /* Căn giữa theo chiều dọc */
+    border: 1px solid rgba(0, 0, 0, 0.3);
+}
+.pagination-custom .page-item:hover{
+    color: white;
+    background-color: rgba(253, 166, 4, 0.877);
+}
+.pagination-custom .actived{
+    color: white;
+    background-color: rgba(253, 166, 4, 0.877);
+}
