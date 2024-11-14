@@ -68,11 +68,10 @@ const Header: React.FC = () =>{
         case '/cart':
                 pageName = 'Giỏ hàng';
                 break;
-        
+          
         case '/book':
             pageName = 'Tất cả sản phẩm';
             break;
-
         default:
             pageName = 'Trang không tồn tại';
     }

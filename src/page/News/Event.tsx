@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Dropdown, ListGroup, Pagination } from 'react-bootstrap';
 import { collection, getDocs, query, orderBy, limit } from "firebase/firestore";
 import { db } from '../../firebase/firebase';
 import AutoScrollToTop from '../../utils/AutoScrollToTop';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 interface EventData {
   id: string;
@@ -14,7 +15,6 @@ interface EventData {
 }
 
 function Event() {
-  AutoScrollToTop();
 
   // Định nghĩa kiểu dữ liệu cho state
   const itemsPerPage = 9;
@@ -63,6 +63,7 @@ function Event() {
 
   return (
     <Container className="mt-4">
+      <AutoScrollToTop />;
       <Row>
         <Col md={3}>
           {/* Danh mục tin */}
@@ -71,13 +72,15 @@ function Event() {
             <ListGroup variant="flush">
               <ListGroup.Item>
                 <Dropdown>
-                  <Dropdown.Toggle href="/news" variant="link" id="dropdown-basic" style={{ textDecoration: 'none' }}>
-                    Tin tức
+                  <Dropdown.Toggle variant="link" id="dropdown-basic" style={{ textDecoration: 'none' }}>
+                    <Link to='/news'>
+                      Tin tức
+                    </Link>
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    <Dropdown.Item href="#">Báo chí</Dropdown.Item>
-                    <Dropdown.Item href="#">Tin nội bộ</Dropdown.Item>
-                    <Dropdown.Item href="#">Tin tuyển dụng</Dropdown.Item>
+                    <Dropdown.Item>Báo chí</Dropdown.Item>
+                    <Dropdown.Item>Tin nội bộ</Dropdown.Item>
+                    <Dropdown.Item>Tin tuyển dụng</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               </ListGroup.Item>
