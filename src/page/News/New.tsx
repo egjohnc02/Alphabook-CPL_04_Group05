@@ -8,7 +8,80 @@ import { useParams, useLocation  } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import { getAllNews, getAllHotNews, NewsItem, HotNewsItem, getAllPressNews, getAllRecruitmentNews, getAllInternalNews, getAllEventNews } from "./NewsData";  // Import các hàm và kiểu dữ liệu
 const New: React.FC = () => {
-  const newsItems = Array.from({ length: 12 }, (_, index) => `News Item ${index + 1}`);
+  type FilterType = "News" | "Press" | "Internal" | "Recruitment" | "Event";
+  const [filter, setFilter] = useState<FilterType>("News");
+  const [listNews, setListNews] = useState<NewsItem[]>([]);
+  const [listHotNews, setListHotNews] = useState<HotNewsItem[]>([]);
+  const [totalPage, setTotalPage] = useState<number>(0)
+  const { page } = useParams<{ page: string }>();
+  const [currentPage, setCurrentPage] = useState<number>(page == null ? 1 : parseInt(page, 10));
+  // Lấy thông tin URL hiện tại
+  const location = useLocation();
+  // Tạo đối tượng URLSearchParams từ query string (location.search)
+  const queryParams = new URLSearchParams(location.search);
+  // Lấy giá trị của tham số 'event'
+  const event = queryParams.get('event');  // event sẽ có giá trị 'true' nếu tồn tại
+
+   // Gọi hàm getAllNews khi component render
+   useEffect(() => {
+    const fetchNews = async () => {
+      let news = await getAllNews(); 
+      const hotNews = await getAllHotNews()
+      if(event){
+        news = await getAllEventNews();
+      }
+      setListNews(news); // Cập nhật listNews với dữ liệu nhận được
+      setListHotNews(hotNews)
+      const totalPageTest = Math.ceil(news.length / 9); // Sử dụng Math.ceil để làm tròn lên
+      setTotalPage(totalPageTest);
+    };
+    
+    fetchNews(); // Gọi hàm fetchNews
+  }, []);
+
+
+  const filterNew = listNews.slice(
+    (currentPage - 1) * 9, 
+    Math.min(currentPage * 9, listNews.length) // Đảm bảo không vượt quá độ dài mảng
+  );
+  
+  useEffect(() => {
+    const fetchNewsFilter = async () => {
+      let news: NewsItem[] = []; // Định nghĩa kiểu dữ liệu cho news
+      if (filter === "Internal") {
+        news = await getAllInternalNews();
+      }
+      if (filter === "Press") {
+        news = await getAllPressNews();
+      }
+      if (filter === "Recruitment") {
+        news = await getAllRecruitmentNews();
+      }
+      if (filter ==="News"){
+        news = await getAllNews()
+      }
+      if (filter === "Event"){
+        news = await getAllEventNews()
+      }
+      setListNews(news);
+      const hotNews = await getAllHotNews();
+      setListHotNews(hotNews);
+
+      const totalPageTest = Math.ceil(news.length / 9); // Sử dụng Math.ceil để làm tròn lên
+      setTotalPage(totalPageTest);
+    };
+    fetchNewsFilter(); // Gọi hàm fetchNews
+
+  }, [filter]);
+  const handleClick = (e: React.MouseEvent<HTMLLIElement>) => {
+    const value = e.currentTarget.getAttribute("data-value") as FilterType;
+    if (value) setFilter(value);
+  };
+
+  const handleChangePage = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const page = parseInt(e.currentTarget.value); // Ép kiểu sang number nếu cần
+    setCurrentPage(page)
+  };
   AutoScrollToTop();
   return (
     <div className="Container container-sm container-md container-lg">
@@ -22,7 +95,7 @@ const New: React.FC = () => {
               <ListGroup.Item className="text-muted">
                 <div className="dropDown-custom">
                   <div className="text-active-dropDown d-flex justify-content-between">
-                    <p className="p-0 m-0">Tin tức</p>
+                    <p className="p-0 m-0"><li className="list-unstyled" data-value="News" onClick={handleClick}>Tin tức</li></p>
                   </div>
                   <div className="dropDown-menu-custom">
                     <ul className="list-unstyled ms-3">
@@ -33,7 +106,9 @@ const New: React.FC = () => {
                   </div>
                 </div>
               </ListGroup.Item>
-              <ListGroup.Item className="text-muted">Sự kiện</ListGroup.Item>
+              <Link to='/event'>
+                <ListGroup.Item className="text-muted" data-value="Event" onClick={handleClick}>Sự kiện</ListGroup.Item>
+              </Link>
             </ListGroup>
           </Row>
           <Row className="hot-news me-3 mt-3">
@@ -46,7 +121,7 @@ const New: React.FC = () => {
                   <div className="content-hot-news mb-1">
                     <img src={value.img} alt="img-hot-news" />
                     <p className="title-hot-new fw-bold ps-2 hover-text-orange">
-                      Những thách thức của nhà lãnh đạo: Cẩm nang thực nghiệm trong hành trình lãnh đạo của bạn
+                      {value.title}
                     </p>
                   </div>
                 </ListGroup.Item>
@@ -90,7 +165,7 @@ const New: React.FC = () => {
                       </a>
                     </Card.Title>
                     <Card.Text className="text-muted fs-6">
-                      Nhằm trách mua phải hàng giả, bạn đọc có thể tham khảo danh sách đại lý phân phối phối
+                    {value.content}
                     </Card.Text>
                   </Card.Body>
                 </Card>
@@ -121,7 +196,7 @@ const New: React.FC = () => {
               </li>
             )))}
             <li className="page-item">
-              <button className="page-link">
+              <button className="page-link mx-auto">
                 <i className="fa-solid fa-angle-right"></i>
               </button>
             </li>

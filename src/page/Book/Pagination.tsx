@@ -10,7 +10,7 @@ const Pagination: React.FC<PaginationProps> = ({ totalPages, currentPage, onPage
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
-    <div className="section pagenav" style={{ textAlign: "center" ,display:"flex", justifyContent:"space-around" }}>
+    <div className="section pagenav" style={{ textAlign: "center" }}>
       <nav className="clearfix relative nav_pagi w_100">
         <ul className="pagination clearfix" style={{ listStyleType: "none", padding: 0 }}>
           {/* Previous Page Button */}

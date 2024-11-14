@@ -35,7 +35,7 @@ const Home: React.FC = () => {
                     <img src={slider3} className="w-100 object-fit-cover" style={{ height: '500px' }} alt="Slider 3" />
                 </Carousel.Item>
                 <Carousel.Item interval={1000}>
-                    <Link to='/service'>
+                    <Link to='/htxb'>
                         <img src={slider4} className="w-100 object-fit-cover" style={{ height: '500px' }} alt="Slider 4" />
                     </Link>
                 </Carousel.Item>

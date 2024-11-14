@@ -1,53 +1,8 @@
-// const filteredAndPagedBooks = (
-  //   selectedCategory: string | null,
-  //   currentPage: number
-  // ) => {
-  //   const filteredBooks = selectedCategory
-  //     ? book.filter((book) => {
-  //         if (Array.isArray(book.category)) {
-  //           return book.category.some((cat) =>
-  //             cat
-  //               .toLowerCase()
-  //               .replace(/\s+/g, "-")
-  //               .includes(selectedCategory.toLowerCase().replace(/\s+/g, "-"))
-  //           );
-  //         }
-  //         return book.category
-  //           .toLowerCase()
-  //           .replace(/\s+/g, "-")
-  //           .includes(selectedCategory.toLowerCase().replace(/\s+/g, "-"));
-  //       })
-  //     : book;
-
-  //   const startIndex = (currentPage - 1) * itemsPerPage;
-  //   const endIndex = currentPage * itemsPerPage;
-  //   return filteredBooks.slice(startIndex, endIndex);
-  // };
-
-  // const totalPages = Math.ceil(
-  //   (selectedCategory
-  //     ? book.filter((book) => book.category === selectedCategory).length
-  //     : book.length) / itemsPerPage
-  // );
-  // const currentBooks = filteredAndPagedBooks(selectedCategory, currentPage);
-
-
-  
-  // const filterBooksByPriceRange = (books: Book[], selectedPriceRange: string) => {
-  //   switch (selectedPriceRange) {
-  //     case "(<100000)":
-  //       return books.filter((book) => book.price < 100000);
-  //     case "(>=100000 AND <=200000)":
-  //       return books.filter((book) => book.price >= 100000 && book.price <= 200000);
-  //     case "(>=200000 AND <=300000)":
-  //       return books.filter((book) => book.price >= 200000 && book.price <= 300000);
-  //     case "(>=300000 AND <=500000)":
-  //       return books.filter((book) => book.price >= 300000 && book.price <= 500000);
-  //     case "(>=500000 AND <=1000000)":
-  //       return books.filter((book) => book.price >= 500000 && book.price <= 1000000);
-  //     case "(>1000000)":
-  //       return books.filter((book) => book.price > 1000000);
-  //     default:
-  //       return books; // Trả về tất cả nếu không có khoảng giá nào được chọn
-  //   }
-  // };
+const { category } = useParams(); // Lấy tham số category từ URL
+  const filteredBooks = category
+  ? BookData.filter((item) =>
+      item.category.some((cat) =>
+        cat.toLowerCase().replace(/\s+/g, '-') === category.toLowerCase().replace(/\s+/g, '-') // So khớp category trong URL
+      )
+    )
+  : BookData; // Nếu không có category, lấy tất cả sách
