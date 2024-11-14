@@ -1,7 +1,10 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import BookStore from "../../assets/home/bookstore_image.webp";
 import Category from "./Category";
 import Price from "./Price";
+import Filter from "./Filter";
+
 import BookData from "./BookData";
 import Pagination from "./Pagination";
 import "./style.css";
@@ -15,11 +18,18 @@ type Book = {
 };
 
 function Book() {
+  const books: Book[] = BookData;
+
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const itemsPerPage = 6;
+  const itemsPerPage = 5;
+  const totalPages = Math.ceil(books.length / itemsPerPage);
+  const currentBooks = books.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -27,6 +37,9 @@ function Book() {
 
   const handleCategorySelect = (category: string) => {
     setSelectedCategory(category);
+    console.log(selectedCategory);
+  };
+
   };
 
   useEffect(() => {
@@ -46,11 +59,11 @@ function Book() {
       })
     : BookData;
 
+
   const currentFilteredBooks = filteredBooks.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
-
   return (
     <div>
       <div className="section warp_background">
@@ -71,11 +84,12 @@ function Book() {
               <div className="main_container collection col-lg-9 col-md-12 col-sm-12">
                 <div className="warp-srt-title">
                   <h1 className="title-module d-none">Tất cả sản phẩm</h1>
+
                 </div>
                 <div className="category-products products">
                   <section className="products-view products-view-grid collection_reponsive">
                     <div className="row">
-                      {currentFilteredBooks.map((item) => {
+                      {currentBooks.map((item) => {
                         return (
                           <div className="col-4 product-col" key={item.id}>
                             <div className="item_product_main">
@@ -101,9 +115,8 @@ function Book() {
                         );
                       })}
                     </div>
-
                     <Pagination
-                      totalPages={Math.ceil(filteredBooks.length / itemsPerPage)}
+                      totalPages={totalPages}
                       currentPage={currentPage}
                       onPageChange={handlePageChange}
                     />

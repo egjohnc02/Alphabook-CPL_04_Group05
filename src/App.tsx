@@ -27,9 +27,9 @@ import Cart from './components/Cart/Cart';
 import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
 import HTXB from './page/HTXB/HTXB';
 import Book from './page/Book/Book';
+import Category from './page/Book/Category';
 import Event from './page/News/Event';
 import EventDetail from './page/News/EventDetail';
-
 
 function AppContent() {
   const location = useLocation();
@@ -56,7 +56,6 @@ function AppContent() {
         <Route path="/chinhsachvanchuyen" element={<ChinhSachVanChuyen />} />
         <Route path="/chinhsachbaomat" element={<ChinhSachBaoMat />} />
         <Route path="/chinhsachdoitrahoantien" element={<ChinhSachDoiTraHoanTien />} />
-
         <Route path="/contact" element={<Contact />} />
         <Route path="/news" element={<New />} />
         <Route path="/event" element={<Event />} />
@@ -65,7 +64,6 @@ function AppContent() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/book" element={<Book />}/>
         <Route path="/book/:category" element={<Book />} />
-
       </Routes>
       <BackToTop />
       <ContactButton />
