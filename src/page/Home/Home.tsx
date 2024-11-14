@@ -35,6 +35,7 @@ const Home: React.FC = () => {
                     <img src={slider3} className="w-100 object-fit-cover" style={{ height: '500px' }} alt="Slider 3" />
                 </Carousel.Item>
                 <Carousel.Item interval={1000}>
+                    <Link to='/service'>
                     <Link to='/htxb'>
                         <img src={slider4} className="w-100 object-fit-cover" style={{ height: '500px' }} alt="Slider 4" />
                     </Link>
@@ -43,6 +44,7 @@ const Home: React.FC = () => {
                     <img src={slider5} className="w-100 object-fit-cover" style={{ height: '500px' }} alt="Slider 5" />
                 </Carousel.Item>
             </Carousel>
+
 
             <div className="d-flex justify-content-center align-items-center px-5 gap-5 mx-5 container">
                 <Link to='/introduce'>
@@ -91,7 +93,6 @@ const Home: React.FC = () => {
                 </Link>
                 <q className="text-danger">No data</q>
             </div>
-
             <div className="my-5 text-center">
                 <h3 className="bg-title fw-bold">TỦ SÁCH</h3>
                 <div className="col">
@@ -114,7 +115,6 @@ const Home: React.FC = () => {
                     <button className="bg-orange text-light p-3 px-4 border-0 rounded-pill">Xem tất cả</button>
                 </Link>
             </div>
-
             <div className="text-light my-5 p-5" style={{ background: `URL(${serviceBg})` }}>
                 <div className="d-flex gap-3">
                     <div className="w-25">
@@ -145,7 +145,6 @@ const Home: React.FC = () => {
                     </div>
                 </div>
             </div>
-
             <div className="my-5 container">
                 <h3 className="fw-bold text-center bg-title">Chuyên gia đánh giá về Alpha Books</h3>
                 <div className="container">
@@ -218,7 +217,6 @@ const Home: React.FC = () => {
                     </Carousel>
                 </div>
             </div>
-
             <div className="container d-flex justify-content-center mb-5 gap-5">
                 <div className="w-50 container">
                     <Link to='/news' className="text-decoration-none">
