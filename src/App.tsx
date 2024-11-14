@@ -28,11 +28,12 @@ import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
 import HTXB from './page/HTXB/HTXB';
 import Book from './page/Book/Book';
 import Category from './page/Book/Category';
+import Event from './page/News/Event';
+import EventDetail from './page/News/EventDetail';
 
 function AppContent() {
   const location = useLocation();
 
-  // Define routes where the Header should not be displayed
   const headerExclusionPaths = ['/home', '/', '/htxb'];
 
   return (
@@ -57,10 +58,12 @@ function AppContent() {
         <Route path="/chinhsachdoitrahoantien" element={<ChinhSachDoiTraHoanTien />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/news" element={<New />} />
+        <Route path="/event" element={<Event />} />
+        <Route path="/event/:id" element={<EventDetail />} />
         <Route path="/customer" element={<ProtectedRoute><Customer /></ProtectedRoute>} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/book" element={<Book />}/>
-        <Route path="/book/:category" element={<Book />} />
+        <Route path="/category/:category" element={<Book />} />
       </Routes>
       <BackToTop />
       <ContactButton />

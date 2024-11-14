@@ -19,6 +19,7 @@
     text-decoration: none;
     display: block;
 }
+
 .aside-item.collection-category .nav-item {
     position: relative;
     clear: left;
@@ -129,4 +130,184 @@
     font-size: 18px;
     font-weight: 700;
     font-family: var(--font-base);
+}
+.item_product_main .price-box .price {
+    margin-right: 10px;
+}
+.item_product_main .price-box .compare-price {
+    font-size: 15px;
+    color: #616161;
+    font-weight: 400;
+    text-decoration: line-through;
+}
+.wrap-srt-title {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.title-module,
+.title-block-page {
+    font-size: 30px;
+    font-weight: 800;
+    color: #000;
+    margin-bottom: 15px;
+}
+
+.sortPagiBar {
+    margin-bottom: 0;
+    margin-top: 0;
+    display: flex;
+    border-radius: 3px;
+    height: 40px;
+}
+
+.sortPagiBar .sort-cate {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.sortPagiBar .sort-cate-left {
+    position: relative;
+    color: #636363;
+}
+
+.sortPagiBar .sort-cate-left em {
+    border: 1px solid #D9D9D9;
+    border-radius: 4px;
+    padding: 0 7px;
+    line-height: 31px;
+    display: inline-block;
+    width: 147px;
+    background: url("https://bizweb.dktcdn.net/100/197/269/themes/890698/assets/arrd.svg") right 10px center no-repeat;
+    font-style: initial;
+    cursor: pointer;
+    /* Thêm cursor pointer */
+}
+
+.sortPagiBar .sort-cate-left ul {
+    width: 147px;
+    position: absolute;
+    z-index: 1000;
+    /* Đảm bảo dropdown ở trên các phần tử khác */
+    background: #fff;
+    border: solid 1px #ebebeb;
+    right: 0;
+    top: 35px;
+    /* Điều chỉnh vị trí */
+    padding: 5px;
+    margin: 0;
+    display: none;
+}
+
+.sortPagiBar .sort-cate-left ul.open {
+    display: block;
+    /* Hiển thị dropdown khi class 'open' được thêm vào */
+}
+
+.sortPagiBar .sort-cate-left ul li {
+    float: left;
+    padding: 3px 0px 0 20px;
+    margin: 0 10px 10px 0px;
+    position: relative;
+    cursor: pointer;
+    width: 100%;
+    list-style-type: none;
+}
+
+button {
+    background: transparent;
+    border: 1px solid #d9d9d9;
+    color: #636363;
+    padding: 5px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Khi hover */
+button:hover {
+    color: #f47920;
+    background-color: #f0f0f0;
+}
+
+/* Khi button có class active */
+button.active {
+    color: #f47920;
+    background-color: #ececec;
+    border-color: #f47920;
+}
+
+.sortPagiBar .sort-cate-left ul li a {
+    color: #616161;
+    font-size: 14px;
+    position: relative;
+}
+
+
+.aside-item .aside-title {
+    position: relative;
+}
+
+.aside-item .aside-title h2.title-filter {
+    font-family: var(--font-title);
+    text-transform: none;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 15px;
+    padding-bottom: 7px;
+    display: block;
+    background: #f47920;
+    color: #482929;
+    padding: 8px 10px 5px;
+    border-radius: 3px;
+}
+
+.aside-item .aside-title h2.title-filter span {
+    font-size: 16px !important;
+}
+
+.aside-item .aside-content {
+    background: #fff;
+    padding: 0 0px;
+}
+
+.filter-item {
+    margin: 0;
+    cursor: pointer;
+    line-height: 28px;
+    min-width: 100%;
+    float: left;
+    padding: 0px;
+    position: relative;
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.filter-item label {
+    display: flex;
+    padding-left: 0px;
+    line-height: 15px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.filter-item--check-box input {
+    display: block;
+    z-index: 9;
+    width: 20px;
+    height: 20px;
+}
+
+.filter-item--check-box .fa {
+    margin-right: 6px;
+    width: 14px;
+    font-size: 14px;
+    line-height: 40px;
+    position: absolute;
+    top: 0;
+    display: inline-block;
+    left: 0;
 }
