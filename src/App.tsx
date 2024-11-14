@@ -28,8 +28,6 @@ import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
 import HTXB from './page/HTXB/HTXB';
 import Book from './page/Book/Book';
 import Category from './page/Book/Category';
-import Event from './page/News/Event';
-import EventDetail from './page/News/EventDetail';
 
 function AppContent() {
   const location = useLocation();
