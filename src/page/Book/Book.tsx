@@ -4,11 +4,11 @@ import BookStore from "../../assets/home/bookstore_image.webp";
 import Category from "./Category";
 import Price from "./Price";
 import Filter from "./Filter";
+
 import BookData from "./BookData";
 import Pagination from "./Pagination";
 import "./style.css";
 
-// Define types for the book data
 type Book = {
   id: number;
   title: string;
@@ -19,6 +19,7 @@ type Book = {
 
 function Book() {
   const books: Book[] = BookData;
+
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -39,6 +40,14 @@ function Book() {
     console.log(selectedCategory);
   };
 
+  };
+
+  useEffect(() => {
+    if (selectedCategory !== null) {
+      console.log(selectedCategory);
+    }
+  }, [selectedCategory]);
+
   const filteredBooks = selectedCategory
     ? BookData.filter((book) => {
         if (Array.isArray(book.category)) {
@@ -50,6 +59,11 @@ function Book() {
       })
     : BookData;
 
+
+  const currentFilteredBooks = filteredBooks.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
   return (
     <div>
       <div className="section warp_background">
@@ -70,7 +84,7 @@ function Book() {
               <div className="main_container collection col-lg-9 col-md-12 col-sm-12">
                 <div className="warp-srt-title">
                   <h1 className="title-module d-none">Tất cả sản phẩm</h1>
-                  {/* <Filter /> */}
+
                 </div>
                 <div className="category-products products">
                   <section className="products-view products-view-grid collection_reponsive">

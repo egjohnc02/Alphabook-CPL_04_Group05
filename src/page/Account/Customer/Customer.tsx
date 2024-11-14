@@ -9,9 +9,7 @@ import SoDiaChi from "./SoDiaChi/SoDiaChi";
 
 const Customer: React.FC = () => {
   const navigate = useNavigate();
-  const [currentView, setCurrentView] = useState<
-    "ThongTinTaiKhoan" | "DonHang" | "DoiMatKhau" | "SoDiaChi"
-  >("ThongTinTaiKhoan");
+  const [currentView, setCurrentView] = useState< "ThongTinTaiKhoan" | "DonHang" | "DoiMatKhau" | "SoDiaChi">("ThongTinTaiKhoan");
   const [userName, setUserName] = useState("");
 
   useEffect(() => {
@@ -82,7 +80,7 @@ const Customer: React.FC = () => {
             onClick={() => setCurrentView("SoDiaChi")}
             style={{ cursor: "pointer" }}
           >
-            Sổ địa chỉ (0)
+            Sổ địa chỉ
           </p>
           <p
             className="text-dark hover-text-orange text-decoration-none"

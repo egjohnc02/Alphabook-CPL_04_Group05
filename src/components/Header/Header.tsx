@@ -57,6 +57,10 @@ const Header: React.FC = () =>{
         case '/news':
                 pageName = 'Tin tức';
                 break;
+        case '/event':
+                pageName = 'Sự Kiện';
+                break;
+
         case '/customer':
                 pageName = 'Trang khách hàng';
                 break;
@@ -64,7 +68,10 @@ const Header: React.FC = () =>{
         case '/cart':
                 pageName = 'Giỏ hàng';
                 break;
-                
+          
+        case '/book':
+            pageName = 'Tất cả sản phẩm';
+            break;
         default:
             pageName = 'Trang không tồn tại';
     }
