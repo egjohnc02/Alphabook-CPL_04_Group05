@@ -72,7 +72,7 @@ const Navbar: React.FC = () => {
               <Link to='/news' className='text-decoration-none text-dark d-block'>
                 <p className='hover-text-orange'>Tin tức</p>
               </Link>
-              <Link to='/events' className='text-decoration-none text-dark d-block'>
+              <Link to='/news?event=true' className='text-decoration-none text-dark d-block'>
                 <p className='hover-text-orange'>Sự kiện</p>
               </Link>
             </div>
