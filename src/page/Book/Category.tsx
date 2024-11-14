@@ -1,15 +1,34 @@
 import { Link } from "react-router-dom";
-import BookData from "./BookData";
 import "./style.css";
+import { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebase/firebase.tsx";
 
 type CategoryProps = {
   onCategorySelect: (category: string) => void;
 };
 
 const Category: React.FC<CategoryProps> = ({ onCategorySelect }) => {
-  const uniqueCategories = [
-    ...new Set(BookData.flatMap((item) => item.category).filter(Boolean)),
-  ];
+  const [uniqueCategories, setUniqueCategories] = useState<string[]>([]);
+
+  useEffect(() => {
+    // Hàm để lấy danh sách các danh mục từ Firebase
+    const fetchCategories = async () => {
+      try {
+        const bookCollection = collection(db, "books");
+        const snapshot = await getDocs(bookCollection);
+        const categories = snapshot.docs
+          .flatMap((doc) => doc.data().category) // Trích xuất mảng category từ mỗi document
+          .filter(Boolean); // Loại bỏ các giá trị null hoặc undefined
+        const uniqueCategories = Array.from(new Set(categories)); // Lấy các danh mục duy nhất
+        setUniqueCategories(uniqueCategories);
+      } catch (error) {
+        console.error("Lỗi khi lấy dữ liệu danh mục từ Firebase:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   const handleCategoryClick = (category: string) => {
     onCategorySelect(category);
@@ -17,10 +36,7 @@ const Category: React.FC<CategoryProps> = ({ onCategorySelect }) => {
   };
 
   const getCategorySlug = (category: string): string => {
-    if (typeof category === "string") {
-      return category.toLowerCase().replace(/\s+/g, "-");
-    }
-    return "";
+    return category.toLowerCase().replace(/\s+/g, "-");
   };
 
   return (
