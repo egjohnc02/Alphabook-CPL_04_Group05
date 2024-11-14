@@ -30,7 +30,6 @@ import Book from './page/Book/Book';
 import Event from './page/News/Event';
 import EventDetail from './page/News/EventDetail';
 
-
 function AppContent() {
   const location = useLocation();
 
@@ -56,7 +55,6 @@ function AppContent() {
         <Route path="/chinhsachvanchuyen" element={<ChinhSachVanChuyen />} />
         <Route path="/chinhsachbaomat" element={<ChinhSachBaoMat />} />
         <Route path="/chinhsachdoitrahoantien" element={<ChinhSachDoiTraHoanTien />} />
-
         <Route path="/contact" element={<Contact />} />
         <Route path="/news" element={<New />} />
         <Route path="/event" element={<Event />} />
@@ -65,7 +63,6 @@ function AppContent() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/book" element={<Book />}/>
         <Route path="/book/:category" element={<Book />} />
-
       </Routes>
       <BackToTop />
       <ContactButton />
