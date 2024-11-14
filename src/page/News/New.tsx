@@ -4,31 +4,85 @@ import "./news.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import introduceImg from '../../assets/introduce/sidebar_image_blog.webp';
 import AutoScrollToTop from '../../utils/AutoScrollToTop';
-import { useParams } from "react-router-dom";
-import { getAllNews, getAllHotNews, NewsItem, HotNewsItem } from "./NewsData";  // Import các hàm và kiểu dữ liệu
+import { useParams, useLocation  } from "react-router-dom";
+import { getAllNews, getAllHotNews, NewsItem, HotNewsItem, getAllPressNews, getAllRecruitmentNews, getAllInternalNews, getAllEventNews } from "./NewsData";  // Import các hàm và kiểu dữ liệu
 const New: React.FC = () => {
-
+  type FilterType = "News" | "Press" | "Internal" | "Recruitment" | "Event";
+  const [filter, setFilter] = useState<FilterType>("News");
   const [listNews, setListNews] = useState<NewsItem[]>([]);
-  const [listHotNews, setLisHotNews] = useState<HotNewsItem[]>([]); 
+  const [listHotNews, setListHotNews] = useState<HotNewsItem[]>([]);
   const [totalPage, setTotalPage] = useState<number>(0)
   const { page } = useParams<{ page: string }>();
-  const currentPage = page == null ? 1: page;
+  const [currentPage, setCurrentPage] = useState<number>(page == null ? 1 : parseInt(page, 10));
+  // Lấy thông tin URL hiện tại
+  const location = useLocation();
+  // Tạo đối tượng URLSearchParams từ query string (location.search)
+  const queryParams = new URLSearchParams(location.search);
+  // Lấy giá trị của tham số 'event'
+  const event = queryParams.get('event');  // event sẽ có giá trị 'true' nếu tồn tại
+
    // Gọi hàm getAllNews khi component render
    useEffect(() => {
     const fetchNews = async () => {
-      const news = await getAllNews(); 
+      let news = await getAllNews(); 
       const hotNews = await getAllHotNews()
+      if(event){
+        news = await getAllEventNews();
+      }
       setListNews(news); // Cập nhật listNews với dữ liệu nhận được
-      setLisHotNews(hotNews)
+      setListHotNews(hotNews)
       const totalPageTest = Math.ceil(news.length / 9); // Sử dụng Math.ceil để làm tròn lên
       setTotalPage(totalPageTest);
-      console.log(totalPageTest);
     };
     
     fetchNews(); // Gọi hàm fetchNews
   }, []);
-  AutoScrollToTop();
 
+
+  const filterNew = listNews.slice(
+    (currentPage - 1) * 9, 
+    Math.min(currentPage * 9, listNews.length) // Đảm bảo không vượt quá độ dài mảng
+  );
+  
+  useEffect(() => {
+    const fetchNewsFilter = async () => {
+      let news: NewsItem[] = []; // Định nghĩa kiểu dữ liệu cho news
+      if (filter === "Internal") {
+        news = await getAllInternalNews();
+      }
+      if (filter === "Press") {
+        news = await getAllPressNews();
+      }
+      if (filter === "Recruitment") {
+        news = await getAllRecruitmentNews();
+      }
+      if (filter ==="News"){
+        news = await getAllNews()
+      }
+      if (filter === "Event"){
+        news = await getAllEventNews()
+      }
+      setListNews(news);
+      const hotNews = await getAllHotNews();
+      setListHotNews(hotNews);
+
+      const totalPageTest = Math.ceil(news.length / 9); // Sử dụng Math.ceil để làm tròn lên
+      setTotalPage(totalPageTest);
+    };
+    fetchNewsFilter(); // Gọi hàm fetchNews
+
+  }, [filter]);
+  
+  const handleClick = (e: React.MouseEvent<HTMLLIElement>) => {
+    const value = e.currentTarget.getAttribute("data-value") as FilterType;
+    if (value) setFilter(value);
+  };
+
+  const handleChangePage = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const page = parseInt(e.currentTarget.value); // Ép kiểu sang number nếu cần
+    setCurrentPage(page)
+  };
+  AutoScrollToTop();
   return (
     <div className="Container container-sm container-md container-lg">
       <Row className="mt-3">
@@ -41,18 +95,18 @@ const New: React.FC = () => {
               <ListGroup.Item className="text-muted">
                 <div className="dropDown-custom">
                   <div className="text-active-dropDown d-flex justify-content-between">
-                    <p className="p-0 m-0">Tin tức</p>
+                    <p className="p-0 m-0"><li className="list-unstyled" data-value="News" onClick={handleClick}>Tin tức</li></p>
                   </div>
                   <div className="dropDown-menu-custom">
                     <ul className="list-unstyled ms-3">
-                      <li className="mb-2 mt-1">Báo chí</li>
-                      <li className="mb-2">Tin nội bộ</li>
-                      <li>Tin tuyển dụng</li>
+                      <li className="mb-2 mt-1" data-value="Press" onClick={handleClick}>Báo chí</li>
+                      <li className="mb-2" data-value="Internal" onClick={handleClick}>Tin nội bộ</li>
+                      <li data-value="Recruitment" onClick={handleClick}>Tin tuyển dụng</li>
                     </ul>
                   </div>
                 </div>
               </ListGroup.Item>
-              <ListGroup.Item className="text-muted">Sự kiện</ListGroup.Item>
+              <ListGroup.Item className="text-muted" data-value="Event" onClick={handleClick}>Sự kiện</ListGroup.Item>
             </ListGroup>
           </Row>
           <Row className="hot-news me-3 mt-3">
@@ -83,10 +137,20 @@ const New: React.FC = () => {
         <Col sm={12} md={12} lg={9}>
           <Row>
             <div className='d-flex pb-2'>
-              <p className='h5 p-0 m-0 pe-1'>News </p>
-              <p className='p-0 m-0 pt-1'>(Total new: {listNews.length}) </p>
+              {filter === "News" && (
+                <>
+                  <p className='h5 p-0 m-0 pe-1'>{filter}</p>
+                  <p className='p-0 m-0 pt-1'>(Total {filter}: {listNews.length})</p>
+                </>
+              )}
+              {filter !== "News" && (
+                <>
+                  <p className='h5 p-0 m-0 pe-1'>{filter} News</p>
+                  <p className='p-0 m-0 pt-1'>(Total {filter} News: {listNews.length})</p>
+                </>
+              )}
             </div>
-            {listNews.map((value, key) => (
+            {filterNew.map((value, key) => (
               <Col key={key} sm={12} md={6} lg={4} xl={4} className="mb-4">
                 <Card>
                   <div className="card-img-container" style={{ overflow: "hidden" }}>
@@ -126,7 +190,7 @@ const New: React.FC = () => {
               </li>
               ) : (
               <li key={i}  className={`page-item ${currentPage == (i + 1) ? 'actived' : ''}`} >
-              <button className="page-link mx-auto">{i + 1}</button>
+              <button className="page-link mx-auto" value={i+1}onClick={(e) => handleChangePage(e)}>{i + 1}</button>
               </li>
             )))}
             <li className="page-item">
