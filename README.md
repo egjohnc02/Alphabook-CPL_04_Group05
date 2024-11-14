@@ -25,7 +25,7 @@
 <a name="introduce"></a>
 ## I. Introduce
 
-Our project is developed based on an existing website called [Alphabook](https://www.alphabooks.vn/). Although the project is not yet complete and is still under development, you can still preview my project [here](https://g5-fe04-alphabook.netlify.app/).
+Our project is developed based on an existing website called [Alphabook](https://www.alphabooks.vn/). Although the project is not yet complete and is still under development, you can still preview [my project here](https://g5-fe04-alphabook.netlify.app/).
 
 <a name="structure"></a>
 ## II. Structure

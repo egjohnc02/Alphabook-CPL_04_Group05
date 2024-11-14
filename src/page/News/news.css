@@ -20,6 +20,7 @@
     overflow: hidden;
 }
 .card-img{
+    height: 200px;
     overflow: hidden; /* Ẩn phần thừa của hình ảnh khi phóng to */
     transition: transform 0.3s ease; /* Thêm hiệu ứng chuyển tiếp */
 }
