@@ -4,6 +4,7 @@ import { collection, getDocs } from "firebase/firestore";
 // Định nghĩa interface cho dữ liệu News và HotNews
 
 export interface HotNewsItem {
+  id:string;
   img: string;
   title: string;
 }

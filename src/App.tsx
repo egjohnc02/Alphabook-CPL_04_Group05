@@ -29,6 +29,7 @@ import HTXB from './page/HTXB/HTXB';
 import Book from './page/Book/Book';
 import Event from './page/News/Event';
 import EventDetail from './page/News/EventDetail';
+import NewsDetail from './page/News/NewsDetail';
 
 function AppContent() {
   const location = useLocation();
@@ -57,6 +58,7 @@ function AppContent() {
         <Route path="/chinhsachdoitrahoantien" element={<ChinhSachDoiTraHoanTien />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/news" element={<New />} />
+        <Route path="/news/detail/:id" element={<NewsDetail />} />
         <Route path="/event" element={<Event />} />
         <Route path="/event/:id" element={<EventDetail />} />
         <Route path="/customer" element={<ProtectedRoute><Customer /></ProtectedRoute>} />

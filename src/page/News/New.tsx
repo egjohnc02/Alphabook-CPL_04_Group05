@@ -4,7 +4,7 @@ import "./news.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import introduceImg from '../../assets/introduce/sidebar_image_blog.webp';
 import AutoScrollToTop from '../../utils/AutoScrollToTop';
-import { useParams, useLocation  } from "react-router-dom";
+import { useParams, useLocation, useNavigate  } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import { getAllNews, getAllHotNews, NewsItem, HotNewsItem, getAllPressNews, getAllRecruitmentNews, getAllInternalNews, getAllEventNews } from "./NewsData";  // Import các hàm và kiểu dữ liệu
 const New: React.FC = () => {
@@ -14,6 +14,7 @@ const New: React.FC = () => {
   const [listHotNews, setListHotNews] = useState<HotNewsItem[]>([]);
   const [totalPage, setTotalPage] = useState<number>(0)
   const { page } = useParams<{ page: string }>();
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState<number>(page == null ? 1 : parseInt(page, 10));
   // Lấy thông tin URL hiện tại
   const location = useLocation();
@@ -34,6 +35,7 @@ const New: React.FC = () => {
       setListHotNews(hotNews)
       const totalPageTest = Math.ceil(news.length / 9); // Sử dụng Math.ceil để làm tròn lên
       setTotalPage(totalPageTest);
+      // console.log(news)
     };
     
     fetchNews(); // Gọi hàm fetchNews
@@ -82,6 +84,13 @@ const New: React.FC = () => {
     const page = parseInt(e.currentTarget.value); // Ép kiểu sang number nếu cần
     setCurrentPage(page)
   };
+  const handleNewsDetail = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const value = e.currentTarget.getAttribute("value-card");
+    if (value) {
+      // Điều hướng đến trang chi tiết
+      navigate(`/news/detail/${value}`);
+    }
+  }
   AutoScrollToTop();
   return (
     <div className="Container container-sm container-md container-lg">
@@ -117,7 +126,7 @@ const New: React.FC = () => {
                 Tin nổi bật
               </ListGroup.Item>
               {listHotNews.map((value, key) => (
-                <ListGroup.Item key={key} className='m-0 p-0 px-2'>
+                <ListGroup.Item key={key} className='m-0 p-0 px-2' value-card={value.id} onClick={handleNewsDetail}>
                   <div className="content-hot-news mb-1">
                     <img src={value.img} alt="img-hot-news" />
                     <p className="title-hot-new fw-bold ps-2 hover-text-orange">
@@ -154,7 +163,7 @@ const New: React.FC = () => {
             </div>
             {filterNew.map((value, key) => (
               <Col key={key} sm={12} md={6} lg={4} xl={4} className="mb-4">
-                <Card>
+                <Card value-card={value.id} onClick={handleNewsDetail}>
                   <div className="card-img-container" style={{ overflow: "hidden" }}>
                     <Card.Img className="card-img" variant="top" src={value.img} />
                   </div>
