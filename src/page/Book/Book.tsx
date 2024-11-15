@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import BookStore from "../../assets/home/bookstore_image.webp";
 import Category from "./Category";
