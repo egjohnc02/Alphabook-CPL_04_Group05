@@ -175,14 +175,15 @@ const SoDiaChi: React.FC = () => {
                   <input type="checkbox" className="form-check-label me-2" id="default" checked={isDefault} onChange={(e) => setIsDefault(e.target.checked)} />
                   <label htmlFor="default">Đặt là địa chỉ mặc định?</label>
                 </div>
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={resetForm}>Huỷ</button>
+                  <button type="submit" className="btn btn-primary" onClick={addOrUpdateAddress} data-bs-dismiss="modal">
+                    {editIndex !== null ? "Cập nhật địa chỉ" : "Thêm địa chỉ"}
+                  </button>
+                </div>
               </form>
             </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={resetForm}>Huỷ</button>
-              <button type="button" className="btn btn-primary" onClick={addOrUpdateAddress} data-bs-dismiss="modal">
-                {editIndex !== null ? "Cập nhật địa chỉ" : "Thêm địa chỉ"}
-              </button>
-            </div>
+            
           </div>
         </div>
       </div>

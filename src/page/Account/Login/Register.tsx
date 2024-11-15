@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth, db } from '../../../firebase/firebase';
 import AutoScrollToTop from '../../../utils/AutoScrollToTop';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword} from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import LoginWith from '../../../components/Login/LoginWith';
 import { FirebaseError } from 'firebase/app';
@@ -21,6 +21,8 @@ const Register: React.FC = () => {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
+  
+
   const register = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -37,6 +39,7 @@ const Register: React.FC = () => {
           PhoneNumber: phone,
           email: user.email,
         });
+        setMessage("Đăng ký thành công! Vui lòng kiểm tra email để xác nhận tài khoản.");
 
         localStorage.setItem("isLoggedIn", "true");
         localStorage.setItem("userName", `${fname} ${lname}`);
@@ -67,6 +70,7 @@ const Register: React.FC = () => {
       setLoading(false);
     }
   };
+
 
   return (
     <div>
