@@ -65,7 +65,7 @@ const Home: React.FC = () => {
 
             <div className="text-center mt-4 bg-warning bg-opacity-10 p-5">
                 <Link to='/' className="text-decoration-none text-dark hover-text-orange">
-                    <h3 className="fw-bold">Top 100 Sản phẩm bán chạy</h3>
+                    <h3 className="fw-bold">Top Sản phẩm bán chạy</h3>
                 </Link>
                 <q className="text-danger">No data</q>
             </div>
