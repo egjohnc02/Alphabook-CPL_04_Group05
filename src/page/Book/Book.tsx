@@ -32,7 +32,7 @@ function Book() {
 
   useEffect(() => {
     const fetchBooks = async () => {
-      const bookCollection = collection(db, "books");
+      const bookCollection = collection(db, "Books");
       const bookSnapshot = await getDocs(bookCollection);
       const bookList = bookSnapshot.docs.map((doc) => ({
         id: doc.id,
