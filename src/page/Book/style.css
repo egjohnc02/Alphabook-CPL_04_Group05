@@ -19,6 +19,7 @@
     text-decoration: none;
     display: block;
 }
+
 .aside-item.collection-category .nav-item {
     position: relative;
     clear: left;
@@ -130,3 +131,137 @@
     font-weight: 700;
     font-family: var(--font-base);
 }
+
+.item_product_main .price-box .price {
+    margin-right: 10px;
+}
+
+.item_product_main .price-box .compare-price {
+    font-size: 15px;
+    color: #616161;
+    font-weight: 400;
+    text-decoration: line-through;
+}
+
+.wrap-srt-title {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.sortPagiBar {
+    margin-bottom: 0;
+    margin-top: 0;
+    display: flex;
+    border-radius: 3px;
+    height: 40px;
+}
+
+.sortPagiBar .sort-cate {
+    float: left;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.sortPagiBar .sort-cate-left {
+    position: relative;
+    color: #636363;
+}
+
+.sortPagiBar .sort-cate-left em {
+    border: 1px solid #D9D9D9;
+    border-radius: 4px;
+    padding: 0 7px;
+    line-height: 31px;
+    display: inline-block;
+    width: 147px;
+    background: url(https://bizweb.dktcdn.net/100/197/269/themes/890698/assets/arrd.svg) right 10px center no-repeat;
+    font-style: initial;
+}
+
+.sortPagiBar .sort-cate-left ul {
+    width: 147px;
+    position: absolute;
+    z-index: 2;
+    background: #fff;
+    border: solid 1px #ebebeb;
+    right: 0;
+    top: 31px;
+    padding: 5px;
+    margin: 0;
+    display: none; /* Dropdown bị ẩn mặc định */
+    list-style-type: none;
+
+}
+.sortPagiBar .sort-cate-left ul.open {
+    display: block;
+}
+.sortPagiBar .sort-cate-left ul li {
+    float: left;
+    padding: 3px 0px 0 20px;
+    margin: 0 10px 10px 0px;
+    position: relative;
+    cursor: pointer;
+    width: 100%;
+    
+}
+.sortPagiBar .sort-cate-left ul li a {
+    color: #616161;
+    font-size: 14px;
+    position: relative;
+}
+
+
+.sortPagiBar .sort-cate-left li button {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.sortPagiBar .sort-cate-left li button:hover {
+    background-color: #f1f1f1;
+}
+
+.aside-item .aside-content {
+    background: #fff;
+    padding: 0 14px;
+}
+.filter-item {
+    margin: 0;
+    cursor: pointer;
+    line-height: 28px;
+    min-width: 100%;
+    float: left;
+    padding: 0px;
+    position: relative;
+    display: flex;
+    margin-bottom: 10px;
+}
+.filter-item label {
+    display: flex;
+    padding-left: 0px;
+    line-height: 15px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    position: relative;
+}
+.filter-item--check-box input {
+    display: block;
+    z-index: 9;
+    width: 20px;
+    height: 20px;
+}
+.filter-item--check-box .fa {
+    margin-right: 6px;
+    width: 14px;
+    font-size: 14px;
+    line-height: 40px;
+    position: absolute;
+    top: 0;
+    display: inline-block;
+    left: 0;
+}
+    

@@ -6,3 +6,8 @@ const { category } = useParams(); // Lấy tham số category từ URL
       )
     )
   : BookData; // Nếu không có category, lấy tất cả sách
+
+  case 'Mới nhất':
+        return books.sort((a, b) => new Date(b.id).getTime() - new Date(a.id).getTime());
+      case 'Cũ nhất':
+        return books.sort((a, b) => new Date(a.id).getTime() - new Date(b.id).getTime());

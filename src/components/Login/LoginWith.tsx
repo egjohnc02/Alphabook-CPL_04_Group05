@@ -1,6 +1,7 @@
 import React from 'react';
-import { auth } from '../../firebase/firebase';
-import { GoogleAuthProvider, signInWithPopup, FacebookAuthProvider } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup, FacebookAuthProvider, AuthProvider } from 'firebase/auth';
+import { auth, db } from '../../firebase/firebase';
+import { doc, setDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 
 const LoginWith: React.FC = () => {
@@ -8,29 +9,28 @@ const LoginWith: React.FC = () => {
   const providerFb = new FacebookAuthProvider();
   const navigate = useNavigate();
 
-  const loginWithGoogle = () => {
-    signInWithPopup(auth, providerGG)
-      .then(() => {
-        localStorage.setItem("isLoggedIn", "true");
-        navigate('/home');
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        window.alert(errorMessage);
-      });
+  const handleLogin = async (provider: AuthProvider) => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      const userRef = doc(db, "Users", user.uid);
+      await setDoc(userRef, {
+        FirstName: user.displayName?.split(" ")[0] || "",
+        LastName: user.displayName?.split(" ").slice(1).join(" ") || "",
+        PhoneNumber: user.phoneNumber || "",
+      }, { merge: true });
+
+      localStorage.setItem("userName", user.displayName || "");
+      localStorage.setItem("isLoggedIn", "true");
+
+      navigate('/home');
+    } catch (error) {
+      window.alert("Lỗi đăng nhập:"+ error);
+    }
   };
 
-  const loginWithFacebook = () => {
-    signInWithPopup(auth, providerFb)
-      .then(() => {
-        localStorage.setItem("isLoggedIn", "true");
-        navigate('/home');
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        window.alert(errorMessage);
-      });
-  };
+  const loginWithGoogle = () => handleLogin(providerGG);
+  const loginWithFacebook = () => handleLogin(providerFb);
 
   return (
     <div>

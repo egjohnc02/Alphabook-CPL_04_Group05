@@ -1,15 +1,18 @@
-import { useState } from "react";
+import React from "react";
 
-const Price: React.FC = () => {
-  const [selectedPriceRanges, setSelectedPriceRanges] = useState<string[]>([]); // State for selected price ranges
+type PriceFilterProps = {
+  selectedPriceRange: string;
+  handlePriceFilterChange: (range: string) => void;
+};
 
-  const handlePriceFilterChange = (value: string) => {
-    setSelectedPriceRanges((prev) => {
-      if (prev.includes(value)) {
-        return prev.filter((item) => item !== value); // Remove the price range if already selected
-      }
-      return [...prev, value]; // Add the price range if not selected
-    });
+const PriceFilter: React.FC<PriceFilterProps> = ({ selectedPriceRange, handlePriceFilterChange }) => {
+  const handleRadioChange = (range: string) => {
+    // Nếu đang chọn cùng một khoảng giá thì bỏ chọn
+    if (selectedPriceRange === range) {
+      handlePriceFilterChange("");  // Bỏ chọn
+    } else {
+      handlePriceFilterChange(range);  // Chọn khoảng giá mới
+    }
   };
 
   return (
@@ -27,8 +30,8 @@ const Price: React.FC = () => {
                 <label>
                   <input
                     type="checkbox"
-                    onChange={() => handlePriceFilterChange("(<100000)")}
-                    checked={selectedPriceRanges.includes("(<100000)")}
+                    onChange={() => handleRadioChange("(<100000)")}
+                    checked={selectedPriceRange === "(<100000)"}
                   />
                   Dưới 100.000đ
                 </label>
@@ -37,8 +40,8 @@ const Price: React.FC = () => {
                 <label>
                   <input
                     type="checkbox"
-                    onChange={() => handlePriceFilterChange("(>=100000 AND <=200000)")}
-                    checked={selectedPriceRanges.includes("(>=100000 AND <=200000)")}
+                    onChange={() => handleRadioChange("(>=100000 AND <=200000)")}
+                    checked={selectedPriceRange === "(>=100000 AND <=200000)"}
                   />
                   Từ 100.000đ đến 200.000đ
                 </label>
@@ -47,8 +50,8 @@ const Price: React.FC = () => {
                 <label>
                   <input
                     type="checkbox"
-                    onChange={() => handlePriceFilterChange("(>=200000 AND <=300000)")}
-                    checked={selectedPriceRanges.includes("(>=200000 AND <=300000)")}
+                    onChange={() => handleRadioChange("(>=200000 AND <=300000)")}
+                    checked={selectedPriceRange === "(>=200000 AND <=300000)"}
                   />
                   Từ 200.000đ đến 300.000đ
                 </label>
@@ -57,8 +60,8 @@ const Price: React.FC = () => {
                 <label>
                   <input
                     type="checkbox"
-                    onChange={() => handlePriceFilterChange("(>=300000 AND <=500000)")}
-                    checked={selectedPriceRanges.includes("(>=300000 AND <=500000)")}
+                    onChange={() => handleRadioChange("(>=300000 AND <=500000)")}
+                    checked={selectedPriceRange === "(>=300000 AND <=500000)"}
                   />
                   Từ 300.000đ đến 500.000đ
                 </label>
@@ -67,8 +70,8 @@ const Price: React.FC = () => {
                 <label>
                   <input
                     type="checkbox"
-                    onChange={() => handlePriceFilterChange("(>=500000 AND <=1000000)")}
-                    checked={selectedPriceRanges.includes("(>=500000 AND <=1000000)")}
+                    onChange={() => handleRadioChange("(>=500000 AND <=1000000)")}
+                    checked={selectedPriceRange === "(>=500000 AND <=1000000)"}
                   />
                   Từ 500.000đ đến 1 triệu
                 </label>
@@ -77,8 +80,8 @@ const Price: React.FC = () => {
                 <label>
                   <input
                     type="checkbox"
-                    onChange={() => handlePriceFilterChange("(>1000000)")}
-                    checked={selectedPriceRanges.includes("(>1000000)")}
+                    onChange={() => handleRadioChange("(>1000000)")}
+                    checked={selectedPriceRange === "(>1000000)"}
                   />
                   Trên 1 triệu
                 </label>
@@ -91,4 +94,4 @@ const Price: React.FC = () => {
   );
 };
 
-export default Price;
+export default PriceFilter;
