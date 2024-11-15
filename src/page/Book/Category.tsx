@@ -15,7 +15,7 @@ const Category: React.FC<CategoryProps> = ({ onCategorySelect }) => {
     // Hàm để lấy danh sách các danh mục từ Firebase
     const fetchCategories = async () => {
       try {
-        const bookCollection = collection(db, "books");
+        const bookCollection = collection(db, "Books");
         const snapshot = await getDocs(bookCollection);
         const categories = snapshot.docs
           .flatMap((doc) => doc.data().category) // Trích xuất mảng category từ mỗi document
