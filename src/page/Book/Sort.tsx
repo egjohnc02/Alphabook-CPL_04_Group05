@@ -25,9 +25,9 @@ const SortOptions: React.FC<SortOptionsProps> = ({ onSortOptionChange }) => {
     { label: 'Tên A-Z', value: 'Tên A-Z' },
     { label: 'Tên Z-A', value: 'Tên Z-A' },
     { label: 'Giá tăng dần', value: 'Giá tăng dần' },
-    { label: 'Giá giảm dần', value: 'Giá giảm dần' },
-    { label: 'Mới nhất', value: 'Mới nhất' },
-    { label: 'Cũ nhất', value: 'Cũ nhất' },
+    { label: 'Giá giảm dần', value: 'Giá giảm dần' }
+    // { label: 'Mới nhất', value: 'Mới nhất' },
+    // { label: 'Cũ nhất', value: 'Cũ nhất' },
   ];
 
   return (
