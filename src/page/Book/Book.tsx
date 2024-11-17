@@ -1,4 +1,3 @@
-
 import { Link, useParams } from "react-router-dom";
 import BookStore from "../../assets/home/bookstore_image.webp";
 import Category from "./Category";
