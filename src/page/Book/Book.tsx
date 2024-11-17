@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
+
 import { Link, useParams } from "react-router-dom";
-import { collection, getDocs } from "firebase/firestore";
 import BookStore from "../../assets/home/bookstore_image.webp";
 import Category from "./Category";
 import Price from "./Price";
 import SortOptions from "./Sort.tsx";
 import Pagination from "./Pagination";
 import "./style.css";
+import React, { useState, useEffect } from "react";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase/firebase.tsx";
 
 // Define types for the book data
@@ -33,7 +34,7 @@ function Book() {
 
   useEffect(() => {
     const fetchBooks = async () => {
-      const bookCollection = collection(db, "books");
+      const bookCollection = collection(db, "Books");
       const bookSnapshot = await getDocs(bookCollection);
       const bookList = bookSnapshot.docs.map((doc) => ({
         id: doc.id,
@@ -117,17 +118,16 @@ function Book() {
     selectedCategory: string | null,
     selectedPriceRange: string,
     currentPage: number,
-    itemsPerPage: number // Đảm bảo rằng itemsPerPage được truyền vào
+    itemsPerPage: number 
   ) => {
-    // Kiểm tra nếu books là mảng không rỗng
     if (!Array.isArray(books) || books.length === 0) {
-      return []; // Trả về mảng rỗng nếu không có sách
+      return []; 
     }
 
-    // Bước 1: Sắp xếp sách
+   
     const sortedBooksArray = sortedBooks(books, sortOption);
 
-    // Bước 2: Lọc theo category
+   
     const categoryFilteredBooks = selectedCategory
       ? sortedBooksArray.filter((book) => {
         if (Array.isArray(book.category)) {
@@ -145,13 +145,13 @@ function Book() {
       })
       : sortedBooksArray;
 
-    // Bước 3: Lọc theo price range
+   
     const filteredBooks = filterBooksByPriceRange(
       categoryFilteredBooks,
       selectedPriceRange
     );
 
-    // Bước 4: Phân trang
+  
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = currentPage * itemsPerPage;
     return filteredBooks.slice(startIndex, endIndex);
@@ -160,21 +160,20 @@ function Book() {
 
   const totalPages = Math.ceil(
     filterBooksByPriceRange(
-      filterBooksByCategory(sortedBooks(book, sortOption), selectedCategory), // Lọc theo category trước
+      filterBooksByCategory(sortedBooks(book, sortOption), selectedCategory), 
       selectedPriceRange
     ).length / itemsPerPage
   );
   
   
-  console.log("Total Pages:", totalPages); // Kiểm tra tổng số trang
-  // Sử dụng filteredAndPagedBooks để lấy danh sách sách đã lọc, sắp xếp và phân trang
+  console.log("Total Pages:", totalPages); 
   const currentBooks = filteredAndPagedBooks(
-    book, // Mảng sách ban đầu
-    sortOption, // Tùy chọn sắp xếp
-    selectedCategory, // Danh mục đã chọn
-    selectedPriceRange, // Phạm vi giá đã chọn
-    currentPage, // Trang hiện tại
-    itemsPerPage // Số lượng sách trên mỗi trang
+    book, 
+    sortOption, 
+    selectedCategory, 
+    selectedPriceRange,
+    currentPage, 
+    itemsPerPage 
   );
 
   return (

@@ -77,7 +77,7 @@ const Header: React.FC = () =>{
     }
 
     return (
-        <div>
+        <div style={{paddingBottom :'50px'}}>
             <div className="position-relative text-center">
             <img
                 src={bgLogin}
@@ -85,7 +85,7 @@ const Header: React.FC = () =>{
                 className="img-fluid"
                 style={{ maxWidth: '100%' }}
             />
-            <div className="position-absolute top-50 start-50 translate-middle">
+            <div className="position-absolute top-50 start-50  translate-middle">
             <nav>
                 <Link to="/home" className='text-decoration-none '>
                     <span>Trang chủ</span>
