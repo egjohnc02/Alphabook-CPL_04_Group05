@@ -18,6 +18,8 @@ import customer3 from '../../assets/home/customer_3_ava.webp'
 import customer4 from '../../assets/home/customer_4_ava.webp'
 import Carousel from 'react-bootstrap/Carousel';
 import { Link } from "react-router-dom";
+import TopSelling from "./TopSelling"
+import NewBookRelease from "./NewBookRelease";
 import './Home.css'
 
 const Home: React.FC = () => {
@@ -73,20 +75,15 @@ const Home: React.FC = () => {
                     <img src={banner2} alt="Banner 2" />
                 </a>
             </div>
-
+            <section className="section_new">
+            <div className="container">
             <div className="my-5 text-center" id="sachMoiPhatHanh">
                 <Link to='/' className="text-decoration-none text-dark hover-text-orange">
                     <h3 className="bg-title fw-bold">Sách mới phát hành</h3>
                 </Link>
-                <q className="text-danger">No data</q>
+                <NewBookRelease />
             </div>
-
-            <div className="my-5 text-center bg-warning bg-opacity-10 py-5">
-                <Link to='/' className="text-decoration-none text-dark hover-text-orange">
-                    <h3 className="bg-title fw-bold">Sách dành cho bạn</h3>
-                </Link>
-                <q className="text-danger">No data</q>
-            </div>
+            </div></section>
             <div className="my-5 text-center">
                 <h3 className="bg-title fw-bold">TỦ SÁCH</h3>
                 <div className="col">
@@ -211,7 +208,7 @@ const Home: React.FC = () => {
                     </Carousel>
                 </div>
             </div>
-            <div className="container d-flex justify-content-center mb-5 gap-5">
+            {/* <div className="container d-flex justify-content-center mb-5 gap-5">
                 <div className="w-50 container">
                     <Link to='/news' className="text-decoration-none">
                         <h3 className="fw-bold text-center bg-title hover-text-orange text-dark">TIN TỨC</h3>
@@ -307,7 +304,7 @@ const Home: React.FC = () => {
                     </Link>
                     <Carousel interval={3000} className="testimonial-carousel py-3"></Carousel>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }
