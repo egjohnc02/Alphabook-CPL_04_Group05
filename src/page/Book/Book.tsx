@@ -1,16 +1,13 @@
-
-import { Link, useParams } from "react-router-dom";
 import BookStore from "../../assets/home/bookstore_image.webp";
 import Category from "./Category";
 import Price from "./Price";
 import SortOptions from "./Sort.tsx";
 import Pagination from "./Pagination";
 import "./style.css";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase/firebase.tsx";
 
-// Define types for the book data
 interface Book {
   id: string;
   title: string;
@@ -82,7 +79,7 @@ function Book() {
   };
 
   const sortedBooks = (books: Book[], sortOption: string) => {
-    let sortedBooksArray = [...books];
+    const sortedBooksArray = [...books];
     switch (sortOption) {
       case 'Tên A-Z':
         sortedBooksArray.sort((a, b) => a.title.localeCompare(b.title));

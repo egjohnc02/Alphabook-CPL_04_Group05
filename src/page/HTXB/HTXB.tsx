@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import bgHeader from '../../assets/HTXB/trung-tam-tu-van-hop-tac-xuat-ban-03-1-2-20221013014017-o03o7.jpg'
 import ifUR1 from "../../assets/HTXB/neu-ban-la-1.gif";
 import ifUR2 from "../../assets/HTXB/neu-ban-la-2.gif";
@@ -22,8 +22,50 @@ import vl from '../../assets/HTXB/doi tac/logo-vincom.png';
 import camSach from '../../assets/HTXB/cam-sach.png'
 import './HTXB.css'
 import AutoScrollToTop from "../../utils/AutoScrollToTop";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../../firebase/firebase";
 
-const HTXB: React.FC= ()=>{
+const HTXB = ()=> {
+
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        phone: "",
+        service: "",
+      });
+      const [error, setError] = useState("");
+    
+      const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+      };
+    
+      const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        const { name, email, phone, service } = formData;
+        if (!name || !email || !phone || !service) {
+          setError("Vui lòng điền đầy đủ thông tin!");
+          return;
+        }
+    
+        try {
+          const htxbRef = collection(db, "htxb");
+          await addDoc(htxbRef, {
+            name,
+            email,
+            phone,
+            service,
+            timestamp: new Date(),
+          });
+          setError("");
+          alert("Thông tin của bạn đã được gửi thành công!");
+          setFormData({ name: "", email: "", phone: "", service: "" });
+        } catch (err) {
+          console.error("Error saving registration:", err);
+          setError("Đã xảy ra lỗi, vui lòng thử lại.");
+        }
+    }
+        
     return(
         <>
             <AutoScrollToTop />
@@ -460,46 +502,50 @@ const HTXB: React.FC= ()=>{
                 </div>
             </div>
             
-            <div className="bg-orange d-flex align-items-center pt-5" id="dangKy">
-                <img src={camSach} alt="" />
-                <div className="rounded bg-white p-2  w-75">
+            <div className="bg-orange d-flex align-items-center justify-content-center pt-5" id="dangKy">
+                <img src={camSach} alt="..."/>
+                <div className="rounded bg-white p-2 w-50">
                     <h2 className="text-orange text-center">ĐĂNG KÍ NGAY HÔM NAY
                     <br />ĐỂ NHẬN ĐƯỢC GÓI ƯU ĐÃI!</h2>
-                    <form action="" className="container m-3">
-                        <input 
-                            type="text" 
-                            name="" 
-                            id="" 
+                    <form onSubmit={handleSubmit} className="container m-3">
+                        <input
+                            type="text"
+                            name="name"
                             placeholder="Họ và tên"
                             className="border-orange w-100 rounded-4 my-2 p-1"
+                            value={formData.name}
+                            onChange={handleInputChange}
                         />
-                        <input 
-                            type="email" 
-                            name="" 
-                            id="" 
+                        <input
+                            type="email"
+                            name="email"
                             placeholder="Email"
                             className="border-orange rounded-4 mb-2 p-1 w-50"
+                            value={formData.email}
+                            onChange={handleInputChange}
                         />
-                        
-                        <input 
-                            type="number" 
-                            name="" 
-                            id="" 
+                        <input
+                            type="number"
+                            name="phone"
                             placeholder="Số điện thoại"
                             className="border-orange w-50 rounded-4 mb-2 p-1"
+                            value={formData.phone}
+                            onChange={handleInputChange}
                         />
-
-                        <input 
-                            type="text" 
-                            name=""
-                            id="" 
+                        <input
+                            type="text"
+                            name="service"
                             placeholder="Bạn muốn tư vấn dịch vụ nào của chúng tôi?"
                             className="border-orange w-100 rounded-4 mb-2 p-1"
-                            style={{height:100}}
+                            style={{ height: 100 }}
+                            value={formData.service}
+                            onChange={handleInputChange}
                         />
-                        <button className="w-100 bg-orange text-white border-0 rounded-4 p-2">GỬI THÔNG TIN</button>
+                        {error && <p className="text-danger">{error}</p>}
+                        <button type="submit" className="w-100 bg-orange text-white border-0 rounded-4 p-2">
+                            GỬI THÔNG TIN
+                        </button>
                     </form>
-                    
                 </div>
             </div>
         </>
