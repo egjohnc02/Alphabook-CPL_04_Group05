@@ -6,8 +6,10 @@ import ThongTinTaiKhoan from "./ThongTinTaiKhoan/ThongTinTaiKhoan";
 import DonHang from "./DonHang/DonHang";
 import DoiMatKhau from "./DoiMatKhau/DoiMatKhau";
 import SoDiaChi from "./SoDiaChi/SoDiaChi";
+import AutoScrollToTop from "../../../utils/AutoScrollToTop";
 
 const Customer: React.FC = () => {
+
   const navigate = useNavigate();
   const [currentView, setCurrentView] = useState< "ThongTinTaiKhoan" | "DonHang" | "DoiMatKhau" | "SoDiaChi">("ThongTinTaiKhoan");
   const [userName, setUserName] = useState("");
@@ -46,8 +48,8 @@ const Customer: React.FC = () => {
   };
 
   return (
-    <div className="py-5 d-flex container gap-5">
-      <div>
+    <div className="pb-5 d-flex container gap-5">
+      <AutoScrollToTop />
         <div>
           <nav className="fs-4">Trang tài khoản</nav>
           <nav className="fw-bolder">
@@ -90,7 +92,6 @@ const Customer: React.FC = () => {
             Đăng xuất
           </p>
         </div>
-      </div>
       <div>{renderView()}</div>
     </div>
   );
