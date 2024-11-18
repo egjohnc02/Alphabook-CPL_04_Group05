@@ -1,5 +1,5 @@
 import { db } from "../../firebase/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, limit } from "firebase/firestore";
 
 // Định nghĩa interface cho dữ liệu News và HotNews
 
@@ -19,6 +19,14 @@ export interface NewsItem {
 const getAllNews = async (): Promise<NewsItem[]> => {
   const newsData = collection(db, "News");
   const newsSnapshot = await getDocs(newsData);
+  const newsList: NewsItem[] = newsSnapshot.docs.map(doc => doc.data() as NewsItem);
+  return newsList;
+};
+// Lấy 4 phần tử để hiển thị caroual
+const getLimitedNews = async (): Promise<NewsItem[]> => {
+  const newsData = collection(db, "News");
+  const newsQuery = query(newsData, limit(4)); // Lấy tối đa 4 phần tử
+  const newsSnapshot = await getDocs(newsQuery);
   const newsList: NewsItem[] = newsSnapshot.docs.map(doc => doc.data() as NewsItem);
   return newsList;
 };
@@ -59,4 +67,4 @@ const getAllEventNews = async (): Promise<NewsItem[]> => {
   const eventNewsList: NewsItem[] = eventNewsSnapshot.docs.map(doc => doc.data() as NewsItem);
   return eventNewsList;
 };
-export { getAllNews, getAllHotNews, getAllPressNews, getAllRecruitmentNews, getAllInternalNews, getAllEventNews };
+export { getAllNews, getAllHotNews, getAllPressNews, getAllRecruitmentNews, getAllInternalNews, getAllEventNews,getLimitedNews };

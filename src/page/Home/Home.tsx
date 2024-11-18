@@ -17,19 +17,12 @@ import customer2 from '../../assets/home/customer_2_ava.webp'
 import customer3 from '../../assets/home/customer_3_ava.webp'
 import customer4 from '../../assets/home/customer_4_ava.webp'
 import Carousel from 'react-bootstrap/Carousel';
-
 import { Link } from "react-router-dom";
 import './Home.css'
-import TopSelling from "./TopSelling";
-
-
 
 const Home: React.FC = () => {
-
-
-
     AutoScrollToTop();
-    
+
     return (
         <div>
             <Carousel>
@@ -223,7 +216,89 @@ const Home: React.FC = () => {
                     <Link to='/news' className="text-decoration-none">
                         <h3 className="fw-bold text-center bg-title hover-text-orange text-dark">TIN TỨC</h3>
                     </Link>
-                    <Carousel interval={3000} className="testimonial-carousel py-3"></Carousel>
+                    <Carousel interval={3000} indicators={false} controls={false} className="testimonial-carousel py-3">
+                        <Carousel.Item>
+                            <div className="d-flex gap-1">
+                                <div className="new-item w-50">
+                                    {listNewsCaroual.length && (
+                                        <Card value-card={listNewsCaroual[0].id} onClick={handleNewsDetail}>
+                                            <div className="card-img-container" style={{ overflow: "hidden" }}>
+                                                <Card.Img className="card-img" variant="top" src={listNewsCaroual[0].img} />
+                                            </div>
+                                            <Card.Body className="p-0">
+                                                <Card.Title className="fs-5 pt-1">
+                                                    <a href="#" className="text-decoration-none hover-text-orange">
+                                                        {listNewsCaroual[0].title}
+                                                    </a>
+                                                </Card.Title>
+                                                <Card.Text className="text-muted fs-6">
+                                                    {listNewsCaroual[0].content}
+                                                </Card.Text>
+                                            </Card.Body>
+                                        </Card>)}
+                                </div>
+
+                                <div className="new-item w-50">
+                                    {listNewsCaroual.length && (
+                                        <Card value-card={listNewsCaroual[1].id} onClick={handleNewsDetail}>
+                                            <div className="card-img-container" style={{ overflow: "hidden" }}>
+                                                <Card.Img className="card-img" variant="top" src={listNewsCaroual[1].img} />
+                                            </div>
+                                            <Card.Body className="p-0">
+                                                <Card.Title className="fs-5 pt-1">
+                                                    <a href="#" className="text-decoration-none hover-text-orange">
+                                                        {listNewsCaroual[1].title}
+                                                    </a>
+                                                </Card.Title>
+                                                <Card.Text className="text-muted fs-6">
+                                                    {listNewsCaroual[1].content}
+                                                </Card.Text>
+                                            </Card.Body>
+                                        </Card>)}
+                                </div>
+                            </div>
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <div className="d-flex gap-1">
+                            <div className="new-item w-50">
+                                    {listNewsCaroual.length && (
+                                        <Card value-card={listNewsCaroual[2].id} onClick={handleNewsDetail}>
+                                            <div className="card-img-container" style={{ overflow: "hidden" }}>
+                                                <Card.Img className="card-img" variant="top" src={listNewsCaroual[2].img} />
+                                            </div>
+                                            <Card.Body className="p-0">
+                                                <Card.Title className="fs-5 pt-1">
+                                                    <a href="#" className="text-decoration-none hover-text-orange">
+                                                        {listNewsCaroual[2].title}
+                                                    </a>
+                                                </Card.Title>
+                                                <Card.Text className="text-muted fs-6">
+                                                    {listNewsCaroual[2].content}
+                                                </Card.Text>
+                                            </Card.Body>
+                                        </Card>)}
+                                </div>
+                                <div className="new-item w-50">
+                                    {listNewsCaroual.length && (
+                                        <Card value-card={listNewsCaroual[3].id} onClick={handleNewsDetail}>
+                                            <div className="card-img-container" style={{ overflow: "hidden" }}>
+                                                <Card.Img className="card-img" variant="top" src={listNewsCaroual[3].img} />
+                                            </div>
+                                            <Card.Body className="p-0">
+                                                <Card.Title className="fs-5 pt-1">
+                                                    <a href="#" className="text-decoration-none hover-text-orange">
+                                                        {listNewsCaroual[3].title}
+                                                    </a>
+                                                </Card.Title>
+                                                <Card.Text className="text-muted fs-6">
+                                                    {listNewsCaroual[3].content}
+                                                </Card.Text>
+                                            </Card.Body>
+                                        </Card>)}
+                                </div>
+                            </div>
+                        </Carousel.Item>
+                    </Carousel>
                 </div>
 
                 <div className="w-50 container">
