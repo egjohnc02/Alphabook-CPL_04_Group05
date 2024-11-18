@@ -80,7 +80,6 @@ const Header: React.FC = () => {
         case '/news':
             pageName = 'Tin tức';
             break;
-
         // case `${location.pathname}`:
         //         pageName = 'Content News';
         //             break;
@@ -103,8 +102,6 @@ const Header: React.FC = () => {
             pageName = 'Chi tiết sách';
             break;
 
-
-            
         default:
             pageName = 'Trang không tồn tại';
     }
