@@ -27,7 +27,7 @@ import Cart from './components/Cart/Cart';
 import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
 import HTXB from './page/HTXB/HTXB';
 import Book from './page/Book/Book';
-import BookDetail from './page/Book/BookDetail';
+import BookDetailPage from './page/Book/BookDetail';
 import Event from './page/News/Event';
 import EventDetail from './page/News/EventDetail';
 
@@ -64,7 +64,7 @@ function AppContent() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/book" element={<Book />}/>
         <Route path="/book/:category" element={<Book />} />
-        <Route path='/bookdetail' element={<BookDetail/>}/>
+        <Route path="/book/detail/:id" element={<BookDetailPage />} />
       </Routes>
       <BackToTop />
       <ContactButton />

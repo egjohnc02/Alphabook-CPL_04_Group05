@@ -118,16 +118,16 @@ function Book() {
     selectedCategory: string | null,
     selectedPriceRange: string,
     currentPage: number,
-    itemsPerPage: number 
+    itemsPerPage: number
   ) => {
     if (!Array.isArray(books) || books.length === 0) {
-      return []; 
+      return [];
     }
 
-   
+
     const sortedBooksArray = sortedBooks(books, sortOption);
 
-   
+
     const categoryFilteredBooks = selectedCategory
       ? sortedBooksArray.filter((book) => {
         if (Array.isArray(book.category)) {
@@ -145,13 +145,13 @@ function Book() {
       })
       : sortedBooksArray;
 
-   
+
     const filteredBooks = filterBooksByPriceRange(
       categoryFilteredBooks,
       selectedPriceRange
     );
 
-  
+
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = currentPage * itemsPerPage;
     return filteredBooks.slice(startIndex, endIndex);
@@ -160,20 +160,20 @@ function Book() {
 
   const totalPages = Math.ceil(
     filterBooksByPriceRange(
-      filterBooksByCategory(sortedBooks(book, sortOption), selectedCategory), 
+      filterBooksByCategory(sortedBooks(book, sortOption), selectedCategory),
       selectedPriceRange
     ).length / itemsPerPage
   );
-  
-  
-  console.log("Total Pages:", totalPages); 
+
+
+  console.log("Total Pages:", totalPages);
   const currentBooks = filteredAndPagedBooks(
-    book, 
-    sortOption, 
-    selectedCategory, 
+    book,
+    sortOption,
+    selectedCategory,
     selectedPriceRange,
-    currentPage, 
-    itemsPerPage 
+    currentPage,
+    itemsPerPage
   );
 
   return (
@@ -223,7 +223,7 @@ function Book() {
                           <div className="col-4 product-col" key={item.id}>
                             <div className="item_product_main">
                               <form action="">
-                                <a href="" className="image_thumb">
+                                <a href={`/book/detail/${item.id}`} className="image_thumb">
                                   <img
                                     src={item.img}
                                     className="lazyload img-responsive center-block loaded"
@@ -232,7 +232,9 @@ function Book() {
                                 </a>
                                 <div className="info-product">
                                   <h3 className="product-name">
-                                    <a href="" title={item.title}>
+
+
+                                    <a href={`/book/detail/${item.id}`} title={item.title}>
                                       {item.title}
                                     </a>
                                   </h3>
