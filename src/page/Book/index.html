@@ -1,96 +1,46 @@
-const { category } = useParams(); // Lấy tham số category từ URL
-const filteredBooks = category
-? BookData.filter((item) =>
-item.category.some((cat) =>
-cat.toLowerCase().replace(/\s+/g, '-') === category.toLowerCase().replace(/\s+/g, '-') // So khớp category trong URL
-)
-)
-: BookData; // Nếu không có category, lấy tất cả sách
+<div class="swiper-slide flashsale__item swiper-slide-active" data-pdid="6813660" data-inventory-quantity="0"
+  data-management="true" data-available="true" style="width: 202px; margin-right: 40px;" role="group"
+  aria-label="54 / 60" data-swiper-slide-index="48">
+  <div class=" item_product_main">
 
-case 'Mới nhất':
-return books.sort((a, b) => new Date(b.id).getTime() - new Date(a.id).getTime());
-case 'Cũ nhất':
-return books.sort((a, b) => new Date(a.id).getTime() - new Date(b.id).getTime());
+    <form action="/cart/add" method="post" class="variants product-action wishItem" data-cart-form=""
+      data-id="product-actions-6813660" enctype="multipart/form-data">
+      <a class="image_thumb" href="/ty-phu-ban-giay-tai-ban" title="Tỷ Phú Bán Giày">
+        <img width="199" height="199"
+          src="https://bizweb.dktcdn.net/100/197/269/products/ty-phu-ban-giay-outline-23-3-21-01-2.jpg?v=1676447728580"
+          data-src="https://bizweb.dktcdn.net/100/197/269/products/ty-phu-ban-giay-outline-23-3-21-01-2.jpg?v=1676447728580"
+          alt="Tỷ Phú Bán Giày" class="lazyload img-responsive center-block loaded" data-was-processed="true">
+      </a>
+      <div class="info-product">
+        <h3 class="product-name"><a href="/ty-phu-ban-giay-tai-ban" title="Tỷ Phú Bán Giày">Tỷ Phú Bán Giày</a></h3>
+        <div class="price-box">
+          <span class="price">127.200₫</span>
+          <span class="compare-price">159.000₫</span>
 
-
-
-<div class="col-12">
-  <div class="section-related-product e-tabs">
-    <div class="section_prd_feature">
-      <div class="title_module section tabs-title">
-        <h2 class="title-module tab-link current" data-tab="tab-4">Sản phẩm liên quan</h2>
-
-
-      </div>
-      <div id="tab-4" class="tab-content current">
-
-
-
-
-
-        <div class="sliderelated">
-          <div class="swiper-container swiper_related swiper-container-initialized swiper-container-horizontal">
-            <div class="swiper-wrapper" id="swiper-wrapper-b5f886eb10ba41018d" aria-live="polite"
-              style="transform: translate3d(0px, 0px, 0px);">
-
-
-             
-
-
-
-              <div class="item swiper-slide" style="width: 218.8px; margin-right: 20px;" role="group"
-                aria-label="5 / 5">
-                <div class="item_product_main">
-
-                  <form action="/cart/add" method="post" class="variants product-action wishItem" data-cart-form=""
-                    data-id="product-actions-6577396" enctype="multipart/form-data">
-                    <a class="image_thumb" href="/dau-tu-bat-dong-san-cach-thuc-khoi-nghiep-va-thu-loi-nhuan-lon"
-                      title="Đầu Tư Bất Động Sản - Cách Thức Khởi Nghiệp Và Thu Lợi Nhuận Lớn">
-                      <img width="199" height="199"
-                        src="https://bizweb.dktcdn.net/100/197/269/products/dau-tu-bat-dong-san-outline-1-6-21-01.jpg?v=1676195799617"
-                        data-src="https://bizweb.dktcdn.net/100/197/269/products/dau-tu-bat-dong-san-outline-1-6-21-01.jpg?v=1676195799617"
-                        alt="Đầu Tư Bất Động Sản - Cách Thức Khởi Nghiệp Và Thu Lợi Nhuận Lớn"
-                        class="lazyload img-responsive center-block loaded" data-was-processed="true">
-                    </a>
-                    <div class="info-product">
-                      <h3 class="product-name"><a href="/dau-tu-bat-dong-san-cach-thuc-khoi-nghiep-va-thu-loi-nhuan-lon"
-                          title="Đầu Tư Bất Động Sản - Cách Thức Khởi Nghiệp Và Thu Lợi Nhuận Lớn">Đầu Tư Bất Động Sản -
-                          Cách Thức Khởi Nghiệp Và Thu Lợi Nhuận Lớn</a></h3>
-                      <div class="price-box">
-                        <span class="price">135.200₫</span>
-                        <span class="compare-price">169.000₫</span>
-
-                      </div>
-                      <div class="product-rev">
-                        <div class="bizweb-product-reviews-badge" data-id="6577396">
-                          <div class="bizweb-product-reviews-star" data-score="0" data-number="5" title="Not rated yet!"
-                            style="color: rgb(255, 204, 51);"><i data-alt="1" class="star-off-png"
-                              title="Not rated yet!"></i>&nbsp;<i data-alt="2" class="star-off-png"
-                              title="Not rated yet!"></i>&nbsp;<i data-alt="3" class="star-off-png"
-                              title="Not rated yet!"></i>&nbsp;<i data-alt="4" class="star-off-png"
-                              title="Not rated yet!"></i>&nbsp;<i data-alt="5" class="star-off-png"
-                              title="Not rated yet!"></i><input name="score" type="hidden" readonly=""></div>
-                          <div><img src="https://productreviews.sapoapps.vn//assets/images/user.png" width="18"
-                              height="17"></div>
-                        </div>
-                        <span class="count">(0)</span>
-                      </div>
-
-                    </div>
-                  </form>
-                </div>
-              </div>
-
-
+        </div>
+        <div class="product-rev">
+          <div class="bizweb-product-reviews-badge" data-id="6813660">
+            <div class="bizweb-product-reviews-star" data-score="5" data-number="5" title="gorgeous"
+              style="color: rgb(255, 204, 51);"><i data-alt="1" class="star-on-png" title="gorgeous"></i>&nbsp;<i
+                data-alt="2" class="star-on-png" title="gorgeous"></i>&nbsp;<i data-alt="3" class="star-on-png"
+                title="gorgeous"></i>&nbsp;<i data-alt="4" class="star-on-png" title="gorgeous"></i>&nbsp;<i
+                data-alt="5" class="star-on-png" title="gorgeous"></i><input name="score" type="hidden" value="5"
+                readonly=""></div>
+            <div>
+              <p>1</p>
             </div>
-            <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+            <div><img src="https://productreviews.sapoapps.vn//assets/images/user.png" width="18" height="17"></div>
           </div>
+          <span class="count">(5)</span>
+        </div>
 
+        <div class="flashsale__bottom" style="">
+          <div class="flashsale__label"> ⚡ Sắp hết hàng</div>
+
+          <div class="flashsale___percent" style="width: 98%;"></div>
         </div>
 
       </div>
-
-
-    </div>
+    </form>
   </div>
 </div>

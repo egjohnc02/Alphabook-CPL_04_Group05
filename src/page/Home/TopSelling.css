@@ -1,0 +1,18 @@
+/* Làm cho nút trượt rõ ràng hơn */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: #000; /* Màu nền đen cho nút */
+    border-radius: 50%; /* Để nút hình tròn */
+    width: 30px; /* Kích thước nút */
+    height: 30px; /* Kích thước nút */
+    opacity: 1; /* Đảm bảo nút luôn nhìn thấy */
+}
+
+/* Thêm hiệu ứng hover cho nút */
+.carousel-control-prev-icon:hover,
+.carousel-control-next-icon:hover {
+    background-color: #ff6600; /* Đổi màu khi hover */
+}
+.carousel-indicators {
+    display: none;
+}

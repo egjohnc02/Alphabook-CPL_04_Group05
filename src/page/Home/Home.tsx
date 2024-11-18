@@ -17,12 +17,19 @@ import customer2 from '../../assets/home/customer_2_ava.webp'
 import customer3 from '../../assets/home/customer_3_ava.webp'
 import customer4 from '../../assets/home/customer_4_ava.webp'
 import Carousel from 'react-bootstrap/Carousel';
+
 import { Link } from "react-router-dom";
 import './Home.css'
+import TopSelling from "./TopSelling";
+
+
 
 const Home: React.FC = () => {
-    AutoScrollToTop();
 
+
+
+    AutoScrollToTop();
+    
     return (
         <div>
             <Carousel>
@@ -62,13 +69,8 @@ const Home: React.FC = () => {
                     </Link>
                 </div>
             </div>
+            <TopSelling />
 
-            <div className="text-center mt-4 bg-warning bg-opacity-10 p-5">
-                <Link to='/' className="text-decoration-none text-dark hover-text-orange">
-                    <h3 className="fw-bold">Top Sản phẩm bán chạy</h3>
-                </Link>
-                <q className="text-danger">No data</q>
-            </div>
 
             <div className="d-flex justify-content-center align-items-center my-5 gap-4">
                 <Link to="/">
