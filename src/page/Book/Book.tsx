@@ -1,15 +1,13 @@
-import { Link, useParams } from "react-router-dom";
 import BookStore from "../../assets/home/bookstore_image.webp";
 import Category from "./Category";
 import Price from "./Price";
 import SortOptions from "./Sort.tsx";
 import Pagination from "./Pagination";
 import "./style.css";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase/firebase.tsx";
 
-// Define types for the book data
 interface Book {
   id: string;
   title: string;
@@ -81,7 +79,7 @@ function Book() {
   };
 
   const sortedBooks = (books: Book[], sortOption: string) => {
-    let sortedBooksArray = [...books];
+    const sortedBooksArray = [...books];
     switch (sortOption) {
       case 'Tên A-Z':
         sortedBooksArray.sort((a, b) => a.title.localeCompare(b.title));
@@ -117,16 +115,16 @@ function Book() {
     selectedCategory: string | null,
     selectedPriceRange: string,
     currentPage: number,
-    itemsPerPage: number 
+    itemsPerPage: number
   ) => {
     if (!Array.isArray(books) || books.length === 0) {
-      return []; 
+      return [];
     }
 
-   
+
     const sortedBooksArray = sortedBooks(books, sortOption);
 
-   
+
     const categoryFilteredBooks = selectedCategory
       ? sortedBooksArray.filter((book) => {
         if (Array.isArray(book.category)) {
@@ -144,13 +142,13 @@ function Book() {
       })
       : sortedBooksArray;
 
-   
+
     const filteredBooks = filterBooksByPriceRange(
       categoryFilteredBooks,
       selectedPriceRange
     );
 
-  
+
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = currentPage * itemsPerPage;
     return filteredBooks.slice(startIndex, endIndex);
@@ -159,20 +157,20 @@ function Book() {
 
   const totalPages = Math.ceil(
     filterBooksByPriceRange(
-      filterBooksByCategory(sortedBooks(book, sortOption), selectedCategory), 
+      filterBooksByCategory(sortedBooks(book, sortOption), selectedCategory),
       selectedPriceRange
     ).length / itemsPerPage
   );
-  
-  
-  console.log("Total Pages:", totalPages); 
+
+
+  console.log("Total Pages:", totalPages);
   const currentBooks = filteredAndPagedBooks(
-    book, 
-    sortOption, 
-    selectedCategory, 
+    book,
+    sortOption,
+    selectedCategory,
     selectedPriceRange,
-    currentPage, 
-    itemsPerPage 
+    currentPage,
+    itemsPerPage
   );
 
   return (
@@ -222,7 +220,7 @@ function Book() {
                           <div className="col-4 product-col" key={item.id}>
                             <div className="item_product_main">
                               <form action="">
-                                <a href="" className="image_thumb">
+                                <a href={`/book/detail/${item.id}`} className="image_thumb">
                                   <img
                                     src={item.img}
                                     className="lazyload img-responsive center-block loaded"
@@ -231,7 +229,9 @@ function Book() {
                                 </a>
                                 <div className="info-product">
                                   <h3 className="product-name">
-                                    <a href="" title={item.title}>
+
+
+                                    <a href={`/book/detail/${item.id}`} title={item.title}>
                                       {item.title}
                                     </a>
                                   </h3>

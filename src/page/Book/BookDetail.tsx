@@ -1,56 +1,142 @@
 import './styleBookDetail.css'
-import React, { useState, useEffect } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { useState, useEffect } from "react";
+import { useParams } from 'react-router-dom';  // Import useParams để lấy id từ URL
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../firebase/firebase.tsx";
 interface Book {
     id: string;
+    author: string;
     title: string;
     category: string;
     price: number;
     img: string;
     coupon: string;
-  }
+    quantity: number;
+}
+interface BookDetail {
+    id: string;
+    coverType: string;
+    dimensions: string;
+    pageCount: string;
+    publishDate: string;
+    publisher: string;
+}
 function BookDetail() {
-    const [book, setBook] = useState<Book[]>([]);
+    const { id } = useParams();
+    const [book, setBook] = useState<Book | null>(null);
+    const [bookDetail, setBookDetail] = useState<BookDetail | null>(null);
+    const [relatedBooks, setRelatedBooks] = useState<Book[]>([]); // Sách cùng thể loại
+
+
     useEffect(() => {
-        const fetchBooks = async () => {
-          const bookCollection = collection(db, "Books");
-          const bookSnapshot = await getDocs(bookCollection);
-          const bookList = bookSnapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          })) as Book[];
-          setBook(bookList);
+        const fetchBook = async () => {
+            const bookCollection = collection(db, "Books");
+            const q = query(bookCollection, where("id", "==", id));
+            const bookSnapshot = await getDocs(q);
+            const bookData = bookSnapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data(),
+            })) as Book[];
+
+            if (bookData.length > 0) {
+                setBook(bookData[0]); // Set the found book
+            }
         };
-        fetchBooks();
-      }, []);
+
+        if (id) {
+            fetchBook();
+        }
+    }, [id]);  // Rerun when id changes
+
+    // Fetch book details based on book id
+    useEffect(() => {
+        const fetchBookDetail = async () => {
+            if (book) {
+                const bookDCollection = collection(db, "DetailBook");
+                const q = query(bookDCollection, where("id", "==", book.id));
+                const bookDSnapshot = await getDocs(q);
+                const bookDetailData = bookDSnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data(),
+                })) as BookDetail[];
+
+                if (bookDetailData.length > 0) {
+                    setBookDetail(bookDetailData[0]); // Set the book detail
+                }
+            }
+        };
+
+        fetchBookDetail();
+    }, [book]);  // Fetch details when the book changes
+
+
+
+    useEffect(() => {
+        const fetchRelatedBooks = async () => {
+            if (book) {
+                const relatedBookCollection = collection(db, 'Books');
+
+                // Dùng category[0] hoặc thể loại bất kỳ trong mảng để tìm sách liên quan
+                const q = query(
+                    relatedBookCollection,
+                    where("category", "array-contains", book.category[0])
+                );
+
+                const relatedBookSnapshot = await getDocs(q);
+                const relatedBookData = relatedBookSnapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                })) as Book[];
+
+                // Lọc bỏ sách hiện tại (đang hiển thị chi tiết) ra khỏi danh sách liên quan
+                const filteredRelatedBooks = relatedBookData.filter((relatedBook) => relatedBook.id !== book.id);
+
+                console.log(filteredRelatedBooks);  // Kiểm tra danh sách sách liên quan đã được lọc chưa
+                setRelatedBooks(filteredRelatedBooks);  // Cập nhật sách liên quan sau khi lọc
+            }
+        };
+
+        fetchRelatedBooks();
+    }, [book]);  // Fetch lại khi `book` thay đổi
+
+    if (!book || !bookDetail) {
+        return <div>Loading...</div>; // Render loading if book or book detail is not available yet
+    }
     return (
         <div className="container">
             <div className="row">
+
                 <div className="product-detail-left product-images col-12 col-md-12 col-lg-6">
-                    <div className="product-image-detail">
-                        <div className="swiper-container gallery-top margin-bottom-10 swiper-container-initialized swiper-container-horizontal swiper-container-free-mode">
+
+                    <div key={book.id} className="product-image-detail">
+                        <div className="swiper-container gallery-top margin-bottom-10 swiper-container-initialized swiper-container-horizontal 
+                                    swiper-container-free-mode" >
+
                             <div className="swiper-wrapper" id="lightgallery" aria-live="polite">
 
                                 <a
+
                                     className="swiper-slide swiper-slide-active"
                                     data-hash="0"
-                                    href="//bizweb.dktcdn.net/thumb/1024x1024/100/197/269/products/chien-luoc-dau-tu-bat-dong-san.jpg?v=1528354291673"
-                                    title="Bấm vào để xem thư viện ảnh Donald Trump - Chiến Lược Đầu Tư Bất Động Sản"
+                                    href={book.img}
+                                    title={`Bấm vào để xem thư viện ảnh ${book.title}`}
                                     style={{ width: '564px', marginRight: '10px' }}
                                     role="group"
                                     aria-label="1 / 2"
                                 >
+
                                     <img
-                                        src="//bizweb.dktcdn.net/thumb/large/100/197/269/products/chien-luoc-dau-tu-bat-dong-san.jpg?v=1528354291673"
-                                        alt="Donald Trump - Chiến Lược Đầu Tư Bất Động Sản"
-                                        data-image="//bizweb.dktcdn.net/thumb/medium/100/197/269/products/chien-luoc-dau-tu-bat-dong-san.jpg?v=1528354291673"
+                                        src={book.img}
+                                        alt={book.title}
+                                        data-image={book.img}
                                         className="img-responsive mx-auto d-block swiper-lazy swiper-lazy-loaded"
                                     />
                                 </a>
 
 
                             </div>
+
+
                         </div>
                         <div className="gallery-thumbs">
                             <div className="swiper-container swiper-container-initialized swiper-container-horizontal swiper-container-free-mode swiper-container-thumbs">
@@ -65,9 +151,9 @@ function BookDetail() {
                                     >
                                         <div className="image">
                                             <img
-                                                src="//bizweb.dktcdn.net/thumb/medium/100/197/269/products/chien-luoc-dau-tu-bat-dong-san.jpg?v=1528354291673"
-                                                alt="Donald Trump - Chiến Lược Đầu Tư Bất Động Sản"
-                                                data-image="//bizweb.dktcdn.net/100/197/269/products/chien-luoc-dau-tu-bat-dong-san.jpg?v=1528354291673"
+                                                src={book.img}
+                                                alt={book.title}
+                                                data-image={book.img}
                                                 className="swiper-lazy swiper-lazy-loaded"
                                             />
                                         </div>
@@ -80,52 +166,61 @@ function BookDetail() {
 
                         </div>
                     </div>
+
                 </div>
 
-                <div className="col-12 col-md-12 col-lg-6 details-pro">
-                    <h1 className="title-head">Donald Trump - Chiến Lược Đầu Tư Bất Động Sản</h1>
+                <div key={book.id} className="col-12 col-md-12 col-lg-6 details-pro">
+                    {/* Tên sách */}
+                    <h1 className="title-head">{book.title}</h1>
                     <div className="flex-vd">
+                        {/* Tên tác giả */}
                         <div className="vendor">
-                            <span>Tác giả:</span> George H.Ross
+                            <span>Tác giả:</span> {book.author || 'Chưa cập nhật'}
                         </div>
-                        <div className="skuuu sku-product d-none">
-                            <span className="variant-sku" itemProp="sku" content="8935251418439">
-                                Mã sản phẩm: <strong>8935251418439</strong>
+
+                        {/* Mã sản phẩm (có thể lấy từ bookDetails nếu có) */}
+                        {/* <div className="skuuu sku-product d-none">
+                            <span className="variant-sku" itemProp="sku" content={book.sku || 'Chưa có SKU'}>
+                                Mã sản phẩm: <strong>{book.sku}</strong>
                             </span>
-                        </div>
+                        </div> */}
                     </div>
-
-
 
                     <div className="group-action-button">
                         <div className="group-power">
                             <div className="price-box clearfix">
                                 <span className="special-price">
-                                    <span className="price product-price">135.200₫</span>
+                                    <span className="price product-price">
+                                        {(
+                                            book.coupon && typeof book.coupon === 'string' && book.coupon.includes('%')
+                                                ? book.price - (book.price * parseInt(book.coupon) / 100)
+                                                : book.price
+                                        ).toLocaleString("vi-VN")}
+                                        đ {/* Giá sách */}
+                                    </span>
                                 </span>
                                 <span className="old-price">
-                                    Giá cũ:
-                                    <del className="price product-price-old">169.000₫</del>
-                                </span>
-                                <span className="save-price d-none">
-                                    Rẻ hơn <span className="price product-price-save">33.800₫</span> so với thị trường
+                                    Giá cũ: <del className="price product-price-old">{book.price.toLocaleString("vi-VN")}đ</del>
                                 </span>
                             </div>
                         </div>
                         <div className="pro-summary">
                             <table className="tab-2">
                                 <tbody>
-                                    <tr>
-                                        <td>Loại sách:</td>
-                                        <td>Đang cập nhật</td>
-                                    </tr>
+                                    {bookDetail.coverType && (
+                                        <tr>
+                                            <td><span>Loại sách:</span></td>
+                                            <td>{bookDetail ? bookDetail.coverType : 'Đang cập nhật'}</td>
+                                        </tr>
+                                    )}
+
                                     <tr>
                                         <td>Số lượng còn lại:</td>
                                         <td>
                                             <div className="inventory_quantity">
                                                 <span className="a-stock a2">
                                                     <link itemProp="availability" href="http://schema.org/InStock" />
-                                                    Còn hàng
+                                                    {book.quantity > 0 ? book.quantity : 'Hết hàng'}
                                                 </span>
                                             </div>
                                         </td>
@@ -137,7 +232,9 @@ function BookDetail() {
                         <form encType="multipart/form-data" id="add-to-cart-form" data-cart-form="" action="/cart/add" method="post" className="wishItem">
                             <div className="form-product">
                                 <div className="box-variant clearfix d-none">
-                                    <input type="hidden" id="one_variant" name="variantId" value="11254249" />
+                                    <input type="hidden" id="one_variant" name="variantId"
+                                    //  value={book.variantId || 'default'} 
+                                    />
                                 </div>
                                 <div className="clearfix from-action-addcart">
                                     <div className="qty-ant clearfix custom-btn-number">
@@ -187,7 +284,10 @@ function BookDetail() {
                                             <i className="fa-solid fa-cart-shopping" style={{ paddingRight: '20px' }}></i>
                                             MUA NGAY
                                         </button>
-                                        <a href="tel:0932329959" className="call-pro"> <i className="fa-solid fa-phone" style={{ paddingRight: '20px' }}></i>Gọi ngay đặt hàng</a>
+                                        <a href="tel:0932329959" className="call-pro">
+                                            <i className="fa-solid fa-phone" style={{ paddingRight: '20px' }}></i>
+                                            Gọi ngay đặt hàng
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -198,7 +298,7 @@ function BookDetail() {
                             <li className="social-media__item social-media__item--facebook">
                                 <a
                                     title="Chia sẻ lên Facebook"
-                                    href="https://www.facebook.com/sharer.php?u=https://www.alphabooks.vn/donald-trump-chien-luoc-dau-tu-bat-dong-san-tai-ban"
+                                    // href={`https://www.facebook.com/sharer.php?u=https://www.alphabooks.vn/${book.slug}`}
                                     target="_blank"
                                     rel="noopener"
                                     aria-label="Chia sẻ lên Facebook"
@@ -212,7 +312,7 @@ function BookDetail() {
                             <li className="social-media__item social-media__item--pinterest">
                                 <a
                                     title="Chia sẻ lên Pinterest"
-                                    href="https://pinterest.com/pin/create/button/?url=https://www.alphabooks.vn/donald-trump-chien-luoc-dau-tu-bat-dong-san-tai-ban"
+                                    // href="https://pinterest.com/pin/create/button/?url=https://www.alphabooks.vn/donald-trump-chien-luoc-dau-tu-bat-dong-san-tai-ban"
                                     target="_blank"
                                     rel="noopener"
                                     aria-label="Pinterest"
@@ -226,7 +326,7 @@ function BookDetail() {
                             <li className="social-media__item social-media__item--twitter">
                                 <a
                                     title="Chia sẻ lên Twitter"
-                                    href="https://twitter.com/share?url=https://www.alphabooks.vn/donald-trump-chien-luoc-dau-tu-bat-dong-san-tai-ban"
+                                    // href="https://twitter.com/share?url=https://www.alphabooks.vn/donald-trump-chien-luoc-dau-tu-bat-dong-san-tai-ban"
                                     target="_blank"
                                     rel="noopener"
                                     aria-label="Tweet on Twitter"
@@ -240,71 +340,60 @@ function BookDetail() {
                         </ul>
                     </div>
                 </div>
+
                 <div className="col-12 product-content">
-                    <div className="row">
+                    <div key={book.id} className="row">
                         <div className="col-lg-12 col-12">
                             <div className="product-tab e-tabs not-dqtab">
                                 <ul className="tabs tabs-title clearfix">
-                                    <li className="tab-link current" data-tab="tab-1">Chi tiết</li>
-                                    <li className="tab-link" data-tab="tab-2">REVIEW ĐỘC GIẢ</li>
-                                    <li className="tab-link" data-tab="tab-3">ĐÁNH GIÁ TỪ CHUYÊN GIA</li>
-                                    <li className="tab-link" data-tab="tab-4">BÁO CHÍ NÓI GÌ VỀ CUỐN SÁCH</li>
+                                    <li className="tab-link current" data-tab={`tab-1-${book.id}`}>Chi tiết</li>
+                                    <li className="tab-link" data-tab={`tab-2-${book.id}`}>REVIEW ĐỘC GIẢ</li>
+                                    <li className="tab-link" data-tab={`tab-3-${book.id}`}>ĐÁNH GIÁ TỪ CHUYÊN GIA</li>
+                                    <li className="tab-link" data-tab={`tab-4-${book.id}`}>BÁO CHÍ NÓI GÌ VỀ CUỐN SÁCH</li>
                                 </ul>
                             </div>
 
-                            <div id="tab-1" className="tab-content content_extab current">
+                            <div id={`tab-1-${book.id}`} className="tab-content content_extab current">
                                 <div className="rte product_getcontent">
                                     <div className="ba-text-fpt has-height">
-                                        <table className="table table-bordered table-detail table-striped" id="chi-tiet">
+                                        <table className="table table-bordered table-detail table-striped" id={`chi-tiet-${book.id}`}>
                                             <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <span>Công ty phát hành</span>
-                                                    </td>
-                                                    <td className="last">
-                                                        <span>Alpha Books</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <span>Ngày xuất bản</span>
-                                                    </td>
-                                                    <td className="last">
-                                                        <span>2022-05-01</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <span>Kích thước</span>
-                                                    </td>
-                                                    <td className="last">
-                                                        <span>13x20.5 cm</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <span>Loại bìa</span>
-                                                    </td>
-                                                    <td className="last">
-                                                        <span>Bìa mềm, tay gấp</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <span>Số trang</span>
-                                                    </td>
-                                                    <td className="last">
-                                                        <span>340</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <span>Tác giả</span>
-                                                    </td>
-                                                    <td className="last">
-                                                        George H.Ross
-                                                    </td>
-                                                </tr>
+                                                {bookDetail.publisher && (
+                                                    <tr>
+                                                        <td><span>Công ty phát hành</span></td>
+                                                        <td className="last"><span>{bookDetail.publisher}</span></td>
+                                                    </tr>
+                                                )}
+                                                {bookDetail.publishDate && (
+                                                    <tr>
+                                                        <td><span>Ngày xuất bản</span></td>
+                                                        <td className="last"><span>{bookDetail.publishDate}</span></td>
+                                                    </tr>
+                                                )}
+                                                {bookDetail.dimensions && (
+                                                    <tr>
+                                                        <td><span>Kích thước</span></td>
+                                                        <td className="last"><span>{bookDetail.dimensions}</span></td>
+                                                    </tr>
+                                                )}
+                                                {bookDetail.coverType && (
+                                                    <tr>
+                                                        <td><span>Loại bìa</span></td>
+                                                        <td className="last"><span>{bookDetail.coverType}</span></td>
+                                                    </tr>
+                                                )}
+                                                {bookDetail.pageCount && (
+                                                    <tr>
+                                                        <td><span>Số trang</span></td>
+                                                        <td className="last"><span>{bookDetail.pageCount}</span></td>
+                                                    </tr>
+                                                )}
+                                                {book.author && (
+                                                    <tr>
+                                                        <td><span>Tác giả</span></td>
+                                                        <td className="last"><span>{book.author}</span></td>
+                                                    </tr>
+                                                )}
                                             </tbody>
                                         </table>
                                     </div>
@@ -312,6 +401,7 @@ function BookDetail() {
                             </div>
                         </div>
                     </div>
+
                     <div className="row">
                         <div className="col-12">
                             <div className="section-related-product e-tabs">
@@ -323,61 +413,68 @@ function BookDetail() {
                                     </div>
                                     <div id="tab-4" className="tab-content current">
                                         <div className="sliderelated">
-                                            <div className="swiper-container swiper_related swiper-container-initialized swiper-container-horizontal">
-                                                <div
-                                                    className="swiper-wrapper"
-                                                    id="swiper-wrapper-b5f886eb10ba41018d"
-                                                    aria-live="polite"
-                                                    style={{ transform: 'translate3d(0px, 0px, 0px)' }}
-                                                >
-                                                    <div
-                                                        className="item swiper-slide"
-                                                        style={{ width: '218.8px', marginRight: '20px' }}
-                                                        role="group"
-                                                        aria-label="5 / 5"
-                                                    >
-                                                        <div className="item_product_main">
-                                                            <form
-                                                                action="/cart/add"
-                                                                method="post"
-                                                                className="variants product-action wishItem"
-                                                                data-cart-form=""
-                                                                data-id="product-actions-6577396"
-                                                                encType="multipart/form-data"
+                                            <div className="swiper-container swiper_related">
+                                                <div className="swiper-wrapper">
+                                                    {relatedBooks.length > 0 ? (
+                                                        relatedBooks.map((relatedBook) => (
+                                                            <div
+                                                                className="item swiper-slide"
+                                                                style={{ width: '218.8px', marginRight: '20px' }}
+                                                                role="group"
+                                                                key={relatedBook.id}
                                                             >
-                                                                <a
-                                                                    className="image_thumb"
-                                                                    href="/dau-tu-bat-dong-san-cach-thuc-khoi-nghiep-va-thu-loi-nhuan-lon"
-                                                                    title="Đầu Tư Bất Động Sản - Cách Thức Khởi Nghiệp Và Thu Lợi Nhuận Lớn"
-                                                                >
-                                                                    <img
-                                                                        width="199"
-                                                                        height="199"
-                                                                        src="https://bizweb.dktcdn.net/100/197/269/products/dau-tu-bat-dong-san-outline-1-6-21-01.jpg?v=1676195799617"
-                                                                        alt="Đầu Tư Bất Động Sản - Cách Thức Khởi Nghiệp Và Thu Lợi Nhuận Lớn"
-                                                                        className="lazyload img-responsive center-block loaded"
-                                                                    />
-                                                                </a>
-                                                                <div className="info-product">
-                                                                    <h3 className="product-name">
+                                                                <div className="item_product_main">
+                                                                    <form
+                                                                        action="/cart/add"
+                                                                        method="post"
+                                                                        className="variants product-action wishItem"
+                                                                        data-cart-form=""
+                                                                        data-id={`product-actions-${relatedBook.id}`}
+                                                                        encType="multipart/form-data"
+                                                                    >
                                                                         <a
-                                                                            href="/dau-tu-bat-dong-san-cach-thuc-khoi-nghiep-va-thu-loi-nhuan-lon"
-                                                                            title="Đầu Tư Bất Động Sản - Cách Thức Khởi Nghiệp Và Thu Lợi Nhuận Lớn"
+                                                                            className="image_thumb"
+                                                                         
+                                                                            href={`/book/detail/${relatedBook.id}`}
+                                                                            title={relatedBook.title}
                                                                         >
-                                                                            Đầu Tư Bất Động Sản - Cách Thức Khởi Nghiệp Và Thu Lợi Nhuận Lớn
+                                                                            <img
+                                                                                width="199"
+                                                                                height="199"
+                                                                                src={relatedBook.img}
+                                                                                alt={relatedBook.title}
+                                                                                className="lazyload img-responsive center-block"
+                                                                            />
                                                                         </a>
-                                                                    </h3>
-                                                                    <div className="price-box">
-                                                                        <span className="price">135.200₫</span>
-                                                                        <span className="compare-price">169.000₫</span>
-                                                                    </div>
-                                                                  
+                                                                        <div className="info-product">
+                                                                            <h3 className="product-name">
+                                                                            
+                                                                                <a href={`/books/detail/${relatedBook.id}`} title={relatedBook.title}>
+                                                                                    {relatedBook.title}
+                                                                                </a>
+                                                                            </h3>
+                                                                            <div className="price-box">
+                                                                                <span className="price">
+                                                                                    {(
+                                                                                        relatedBook.coupon && typeof relatedBook.coupon === 'string' && relatedBook.coupon.includes('%')
+                                                                                            ? relatedBook.price - (relatedBook.price * parseInt(relatedBook.coupon) / 100)
+                                                                                            : relatedBook.price
+                                                                                    ).toLocaleString("vi-VN")}
+                                                                                    đ
+                                                                                </span>
+
+                                                                                <span className="compare-price">{relatedBook.price.toLocaleString("vi-VN")}đ</span>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
                                                                 </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
+                                                            </div>
+                                                        ))
+                                                    ) : (
+                                                        <div>No related books found</div>
+                                                    )}
                                                 </div>
-                                                <span className="swiper-notification" aria-live="assertive" aria-atomic="true" />
                                             </div>
                                         </div>
                                     </div>
@@ -388,6 +485,7 @@ function BookDetail() {
                 </div>
             </div>
         </div>
+
     )
 }
 export default BookDetail;

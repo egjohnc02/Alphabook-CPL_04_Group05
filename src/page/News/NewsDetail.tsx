@@ -24,17 +24,15 @@ const NewsDetail: React.FC = () => {
     const [contentDetail, setContentDetail] =useState<ContentDetail>()
     const regexParagraph = /<p>(.*?)<\/p>/g;
     const regexImage = /<img>(.*?)<\/img>/g;
-    const regexBr = /<br\s*\/?>/g;
 
 
 
 // Hàm này xử lý nội dung và thay thế thẻ <img> và <p>
     const parseContent = (content: string) => {
       // Thay thế các thẻ <img> thành thẻ <img src="URL" />
-      const replacedImages = content.replace(regexImage, (match, url) => `<img src="${url}" alt="Image" style="width: 100%" class="img-content mb-3"/> `);
+      const replacedImages = content.replace(regexImage, (_match, url) => `<img src="${url}" alt="Image" style="width: 100%" class="img-content mb-3"/> `);
       // Thay thế các thẻ <p> bằng các thẻ <p> HTML bình thường
-      const replacedParagraphs = replacedImages.replace(regexParagraph, (match, text) => `<p>${text}</p>`);
-      const replacedBr = replacedParagraphs.replace(regexBr, (match, text) => `<br>`);
+      const replacedParagraphs = replacedImages.replace(regexParagraph, (_match, text) => `<p>${text}</p>`);
       return replacedParagraphs;
     };
   
@@ -62,7 +60,7 @@ const NewsDetail: React.FC = () => {
         };
         getContentById();
         fetchNews(); // Gọi hàm fetchNews
-    }, []);
+    }, [id]);
     
     const handleClick = () => {
         navigate("/news")

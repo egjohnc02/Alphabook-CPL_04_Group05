@@ -1,10 +1,33 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import bgLogin from '../../assets/header/bg_header.webp';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { db } from '../../firebase/firebase.tsx'; // Đảm bảo rằng firebaseConfig đã được cấu hình đúng
+import { doc, getDoc } from 'firebase/firestore';
 
 
-const Header: React.FC = () =>{
+const Header: React.FC = () => {
     const location = useLocation();
+    const { id } = useParams(); // Lấy id sách từ URL (nếu có)
+    const [bookTitle, setBookTitle] = useState<string>('');
+
+    useEffect(() => {
+        // Chỉ truy vấn sách khi có id
+        if (id) {
+            const fetchBookName = async () => {
+                const bookRef = doc(db, 'Books', id);
+                const bookDoc = await getDoc(bookRef);
+
+                if (bookDoc.exists()) {
+                    setBookTitle(bookDoc.data()?.title || 'Tên sách không có');
+                } else {
+                    setBookTitle('Sách không tìm thấy');
+                }
+            };
+
+            fetchBookName();
+        }
+    }, [id]);
+
     let pageName = '';
     switch (location.pathname) {
         case '/home':
@@ -55,26 +78,31 @@ const Header: React.FC = () =>{
             pageName = 'Liên hệ';
             break;
         case '/news':
-                pageName = 'Tin tức';
-                break;
+            pageName = 'Tin tức';
+            break;
+
         // case `${location.pathname}`:
         //         pageName = 'Content News';
         //             break;
         case '/event':
-                pageName = 'Sự Kiện';
-                break;
+            pageName = 'Sự Kiện';
+            break;
 
         case '/customer':
-                pageName = 'Trang khách hàng';
-                break;
+            pageName = 'Trang khách hàng';
+            break;
 
         case '/cart':
-                pageName = 'Giỏ hàng';
-                break;
-          
+            pageName = 'Giỏ hàng';
+            break;
+
         case '/book':
             pageName = 'Tất cả sản phẩm';
             break;
+        case '/book/detail':
+            pageName = 'Chi tiết sách';
+            break;
+
 
             
         default:
@@ -82,24 +110,30 @@ const Header: React.FC = () =>{
     }
 
     return (
-        <div style={{paddingBottom :'50px'}}>
+        <div style={{ paddingBottom: '50px' }}>
             <div className="position-relative text-center">
-            <img
-                src={bgLogin}
-                alt="Example"
-                className="img-fluid"
-                style={{ maxWidth: '100%' }}
-            />
-            <div className="position-absolute top-50 start-50  translate-middle">
-            <nav>
-                <Link to="/home" className='text-decoration-none '>
-                    <span>Trang chủ</span>
-                </Link>
-            </nav>
-            <h1 className='text-orange'>{pageName}</h1>
+                <img
+                    src={bgLogin}
+                    alt="Example"
+                    className="img-fluid"
+                    style={{ maxWidth: '100%' }}
+                />
+                <div className="position-absolute top-50 start-50  translate-middle">
+                    <nav>
+                        <Link to="/home" className='text-decoration-none '>
+                            <span>Trang chủ</span>
+                        </Link>
+                    </nav>
+                    <h1 className="text-orange">
+                        {pageName}
+                        {/* Nếu đang ở trang chi tiết sách, hiển thị tên sách */}
+                        {location.pathname.includes('/book/detail') && bookTitle && (
+                            <span>: {bookTitle}</span>
+                        )}
+                    </h1>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
     )
 }
 
