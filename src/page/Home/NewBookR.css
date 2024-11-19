@@ -1,0 +1,144 @@
+
+.section_new .slide-new {
+    position: relative;
+}
+@media (max-width: 768px) {
+    .section_new .slide-new .left {
+        text-align: left;  /* Thay đổi căn chỉnh văn bản trên các màn hình nhỏ */
+    }
+    .section_new .slide-new .image_product {
+        padding: 20px;  /* Giảm padding trên các màn hình nhỏ */
+    }
+}
+
+
+.section_new .slide-new .left .product-name {
+    font-family: 'megante';
+    text-align: right;
+    font-size: 1.9rem;
+    margin: 0;
+    text-transform: uppercase;
+    line-height: 1.5;
+    width: 100%;  /* Đặt chiều rộng bằng 100% để nó chiếm toàn bộ chiều rộng */
+    max-width: 100%; /* Nếu cần thiết, bạn có thể bỏ giới hạn max-width */
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+
+  
+.section_new .slide-new .left .product-name a {
+    color: #f47920;
+    text-decoration: none;
+    display: inline-block; /* Cho phép liên kết có chiều cao và chiều rộng riêng */
+
+}
+
+.section_new .slide-new .left .product-vendor {
+    color: #616161;
+    display: flex;
+    margin-bottom: 19px;
+    justify-content: flex-end;
+}
+
+.section_new .slide-new .left .product-desc {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 8;
+    -webkit-box-orient: vertical;
+}
+
+.section_new .slide-new .left .price-box {
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 20px;
+    color: #f47920;
+}
+
+.section_new .slide-new .left .book {
+    display: inline-block;
+    width: 230px;
+    line-height: 60px;
+    border-radius: 30px;
+    font-size: 22px;
+    background: #f47920;
+    color: #FFF;
+    text-align: center;
+    text-decoration: none;
+}
+
+a {
+    color: var(--text-color);
+}
+
+.section_new .slide-new .image_product {
+    height: 620px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #f47920;
+    padding: 30px;
+}
+.section_new .slide-new .image_thumb img {
+    border-radius: 15px;
+    height: 100%;
+
+}
+/* Đảm bảo toàn bộ slide có chiều cao đồng đều */
+.slick-slide {
+    display: flex;
+    justify-content: center;
+    align-items: stretch; /* Đảm bảo chiều cao đều */
+  }
+  
+  /* Mỗi item trong slider sẽ có chiều cao đầy đủ */
+  .slider-item {
+    width: 100%;
+    display: flex;
+    flex-direction: column; /* Sắp xếp các phần tử theo chiều dọc */
+    height: 100%;
+    padding: 10px;
+  }
+  
+  /* Row sẽ có layout flex, giúp các cột đồng đều chiều cao */
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch; /* Căn chỉnh các phần tử con có chiều cao giống nhau */
+  }
+  
+  /* Cột chứa sách mới phát hành và sách cùng thể loại có chiều cao bằng nhau */
+
+  
+  /* Đảm bảo hình ảnh và thông tin có kích thước đồng đều */
+  .image_product img {
+    width: 100%;
+    height: auto;
+  }
+  
+  /* Đảm bảo các phần tử trong từng cột có chiều cao đồng đều */
+  
+  /* Căn chỉnh sách cùng thể loại bên phải */
+  .item_product_main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+  
+  .book {
+    align-self: center;
+  }
+  .section_new .slide-new .left .price-box {
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 20px;
+    color: #f47920;
+}
+.section_new .slide-new .left .price-box .compare-price {
+    font-weight: initial;
+    font-size: 20px;
+    color: #616161;
+    margin-left: 20px;
+    text-decoration: line-through;
+}
