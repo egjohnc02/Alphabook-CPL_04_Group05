@@ -98,7 +98,11 @@ const LoginForm: React.FC = () => {
       {!isForgotPassword ? (
         <form onSubmit={login}>
           <h4>Đăng nhập tài khoản</h4>
-          <p className="text-danger">{message}</p>
+          {message && (
+            <p className={`text-${message.includes("thành công") ? "success" : "danger"}`}>
+              {message}
+            </p>
+          )}
           {loading && <p>Đang xử lý...</p>}
           <label className="text-body-secondary" htmlFor="email">
             Email<i style={{ color: "red" }}>*</i>

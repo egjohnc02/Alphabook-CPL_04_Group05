@@ -18,12 +18,12 @@ import customer3 from '../../assets/home/customer_3_ava.webp'
 import customer4 from '../../assets/home/customer_4_ava.webp'
 import Carousel from 'react-bootstrap/Carousel';
 import { Link, useNavigate } from "react-router-dom";
+import TopSelling from "./TopSelling"
+import NewBookRelease from "./NewBookRelease";
 import './Home.css'
 import { useEffect, useState } from "react";
 import {NewsItem, getLimitedNews,Event, getLimitedEvents } from "../News/NewsData";
 import { Card } from "react-bootstrap";
-
-
 
 const Home: React.FC = () => {
     const navigate = useNavigate();
@@ -32,7 +32,7 @@ const Home: React.FC = () => {
 
     useEffect(() => {
         const fetchNews = async () => {
-            let news = await getLimitedNews();
+            const news = await getLimitedNews();
             setListNewsCaroual(news); // Cập nhật listNews với dữ liệu nhận được
             console.log(news)
         };
@@ -65,6 +65,7 @@ const Home: React.FC = () => {
     }
 
     AutoScrollToTop();
+
     return (
         <div>
             <Carousel>
@@ -104,13 +105,8 @@ const Home: React.FC = () => {
                     </Link>
                 </div>
             </div>
+            <TopSelling />
 
-            <div className="text-center mt-4 bg-warning bg-opacity-10 p-5">
-                <Link to='/' className="text-decoration-none text-dark hover-text-orange">
-                    <h3 className="fw-bold">Top Sản phẩm bán chạy</h3>
-                </Link>
-                <q className="text-danger">No data</q>
-            </div>
 
             <div className="d-flex justify-content-center align-items-center my-5 gap-4">
                 <Link to="/">
@@ -120,20 +116,15 @@ const Home: React.FC = () => {
                     <img src={banner2} alt="Banner 2" />
                 </a>
             </div>
-
+            <section className="section_new">
+            <div className="container">
             <div className="my-5 text-center" id="sachMoiPhatHanh">
                 <Link to='/' className="text-decoration-none text-dark hover-text-orange">
                     <h3 className="bg-title fw-bold">Sách mới phát hành</h3>
                 </Link>
-                <q className="text-danger">No data</q>
+                <NewBookRelease />
             </div>
-
-            <div className="my-5 text-center bg-warning bg-opacity-10 py-5">
-                <Link to='/' className="text-decoration-none text-dark hover-text-orange">
-                    <h3 className="bg-title fw-bold">Sách dành cho bạn</h3>
-                </Link>
-                <q className="text-danger">No data</q>
-            </div>
+            </div></section>
             <div className="my-5 text-center">
                 <h3 className="bg-title fw-bold">TỦ SÁCH</h3>
                 <div className="col">
@@ -152,7 +143,7 @@ const Home: React.FC = () => {
                 <div className="my-3">
                     <q className="text-danger">No data</q>
                 </div>
-                <Link to='/category/harvard-business-review'>
+                <Link to='/book'>
                     <button className="bg-orange text-light p-3 px-4 border-0 rounded-pill">Xem tất cả</button>
                 </Link>
             </div>
