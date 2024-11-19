@@ -51,7 +51,6 @@ const LoginForm: React.FC = () => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-
       const userDoc = await getDoc(doc(db, "Users", user.uid));
       if (userDoc.exists()) {
         const userData = userDoc.data();
@@ -62,6 +61,8 @@ const LoginForm: React.FC = () => {
       setMessage("Đăng nhập thành công!");
       setLoading(false);
       localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("useId", user.uid)
+
       setTimeout(() => {
         navigate('/home');
       }, 1000);
