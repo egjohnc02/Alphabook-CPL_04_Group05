@@ -35,7 +35,6 @@ import NewsDetail from './page/News/NewsDetail';
 
 import EventLayout from './page/News/EventLayout';
 
-
 function AppContent() {
   const location = useLocation();
 

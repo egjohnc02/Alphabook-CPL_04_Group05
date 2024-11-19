@@ -124,7 +124,7 @@ const Home: React.FC = () => {
                 <div className="my-3">
                     <q className="text-danger">No data</q>
                 </div>
-                <Link to='/category/harvard-business-review'>
+                <Link to='/book'>
                     <button className="bg-orange text-light p-3 px-4 border-0 rounded-pill">Xem tất cả</button>
                 </Link>
             </div>

@@ -4,7 +4,7 @@ import { auth } from "../../../firebase/firebase";
 import { signOut } from "firebase/auth";
 import ThongTinTaiKhoan from "./ThongTinTaiKhoan/ThongTinTaiKhoan";
 import DonHang from "./DonHang/DonHang";
-import DoiMatKhau from "./DoiMatKhau/DoiMatKhau";
+import DoiMatKhau from "../../../components/Account/DoiMatKhau/DoiMatKhau";
 import SoDiaChi from "./SoDiaChi/SoDiaChi";
 import AutoScrollToTop from "../../../utils/AutoScrollToTop";
 
