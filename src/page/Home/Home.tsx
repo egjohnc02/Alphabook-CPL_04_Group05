@@ -17,12 +17,34 @@ import customer2 from '../../assets/home/customer_2_ava.webp'
 import customer3 from '../../assets/home/customer_3_ava.webp'
 import customer4 from '../../assets/home/customer_4_ava.webp'
 import Carousel from 'react-bootstrap/Carousel';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TopSelling from "./TopSelling"
 import NewBookRelease from "./NewBookRelease";
 import './Home.css'
+import { useEffect, useState } from "react";
+import {NewsItem, getLimitedNews } from "../News/NewsData";
+import { Card } from "react-bootstrap";
 
 const Home: React.FC = () => {
+    const navigate = useNavigate();
+    const [listNewsCaroual, setListNewsCaroual] = useState<NewsItem[]>([]);
+    useEffect(() => {
+        const fetchNews = async () => {
+            const news = await getLimitedNews();
+            setListNewsCaroual(news); // Cập nhật listNews với dữ liệu nhận được
+            console.log(news)
+        };
+
+        fetchNews(); // Gọi hàm fetchNews
+    }, []);
+
+    const handleNewsDetail = (e: React.MouseEvent<HTMLButtonElement>) => {
+        const value = e.currentTarget.getAttribute("value-card");
+        if (value) {
+            // Điều hướng đến trang chi tiết
+            navigate(`/news/detail/${value}`);
+        }
+    }
     AutoScrollToTop();
 
     return (
@@ -208,7 +230,7 @@ const Home: React.FC = () => {
                     </Carousel>
                 </div>
             </div>
-            {/* <div className="container d-flex justify-content-center mb-5 gap-5">
+            <div className="container d-flex justify-content-center mb-5 gap-5">
                 <div className="w-50 container">
                     <Link to='/news' className="text-decoration-none">
                         <h3 className="fw-bold text-center bg-title hover-text-orange text-dark">TIN TỨC</h3>
@@ -304,7 +326,7 @@ const Home: React.FC = () => {
                     </Link>
                     <Carousel interval={3000} className="testimonial-carousel py-3"></Carousel>
                 </div>
-            </div> */}
+            </div>
         </div>
     )
 }

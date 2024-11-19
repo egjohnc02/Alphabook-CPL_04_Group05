@@ -34,8 +34,25 @@ const settings = {
     prevArrow: <div className="swiper-button-prev">Previous</div>, // Cung cấp các nút tùy chỉnh
     nextArrow: <div className="swiper-button-next">Next</div>, // Cung cấp các nút tùy chỉnh
 };
-interface BookWithDetails extends Book, Partial<BookDetail> { } // Sửa lại kiểu dữ liệu, làm cho BookDetail trở thành tùy chọn
 
+interface BookDetail {
+    publisher: string;
+    pages: number;
+    language: string;
+  }
+  
+  interface Book {
+    id: string;
+    title: string;
+    author: string;
+  }
+  
+  interface BookWithDetails extends Book {
+    publisher?: string;
+    pages?: number;
+    language?: string;
+  }
+  
 const NewBookRelease: React.FC = () => {
     const [booksWithDetails, setBooksWithDetails] = useState<BookWithDetails[]>([]);
     const [relatedBooks, setRelatedBooks] = useState<Book[]>([]);

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { doc, getDoc } from "firebase/firestore";
 import { db } from '../../firebase/firebase';
-import { Container, Card, Row, Col } from 'react-bootstrap';
+import { Container, Card, Row } from 'react-bootstrap';
 
 interface EventData {
   img: string;
