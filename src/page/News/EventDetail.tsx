@@ -39,13 +39,14 @@ function EventDetail() {
         <Card.Header><strong>Chi tiết sự kiện</strong></Card.Header>
         <Card.Body>
           <Row>
-            <Col xs={4}>
-              <img src={event.img} alt={event.title} className="img-fluid" />
-            </Col>
-            <Col xs={8}>
               <h3>{event.title}</h3>
-              <p>{event.content}</p>
-            </Col>
+              <br></br>
+              <img src={event.img} alt={event.title} className="img-fluid" />
+            
+            
+             
+              <p style={{ marginTop: '10px' }}>{event.content}</p>
+            
           </Row>
         </Card.Body>
       </Card>
