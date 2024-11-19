@@ -20,7 +20,7 @@ import Carousel from 'react-bootstrap/Carousel';
 import { Link, useNavigate } from "react-router-dom";
 import './Home.css'
 import { useEffect, useState } from "react";
-import {NewsItem, getLimitedNews } from "../News/NewsData";
+import {NewsItem, getLimitedNews,Event, getLimitedEvents } from "../News/NewsData";
 import { Card } from "react-bootstrap";
 
 
@@ -28,6 +28,8 @@ import { Card } from "react-bootstrap";
 const Home: React.FC = () => {
     const navigate = useNavigate();
     const [listNewsCaroual, setListNewsCaroual] = useState<NewsItem[]>([]);
+    const [listNewsCaroual2, setListNewsCaroual2] = useState<Event[]>([]);
+
     useEffect(() => {
         const fetchNews = async () => {
             let news = await getLimitedNews();
@@ -38,11 +40,27 @@ const Home: React.FC = () => {
         fetchNews(); // Gọi hàm fetchNews
     }, []);
 
+    useEffect(() => {
+        const fetchEvent = async () => {
+            let event = await getLimitedEvents ();
+            setListNewsCaroual2(event); // Cập nhật Event với dữ liệu nhận được
+            console.log(event)
+        };
+
+        fetchEvent(); // Gọi hàm fetchEvent
+    }, []);
     const handleNewsDetail = (e: React.MouseEvent<HTMLButtonElement>) => {
         const value = e.currentTarget.getAttribute("value-card");
         if (value) {
             // Điều hướng đến trang chi tiết
             navigate(`/news/detail/${value}`);
+        }
+    }
+    const handleEventDetail = (e: React.MouseEvent<HTMLButtonElement>) => {
+        const value = e.currentTarget.getAttribute("value-card2");
+        if (value) {
+            // Điều hướng đến trang chi tiết
+            navigate(`/event/${value}`);
         }
     }
 
@@ -330,11 +348,94 @@ const Home: React.FC = () => {
                     </Carousel>
                 </div>
 
+
                 <div className="w-50 container">
                     <Link to='/news' className="text-decoration-none">
                         <h3 className="fw-bold text-center bg-title hover-text-orange text-dark">SỰ KIỆN</h3>
                     </Link>
-                    <Carousel interval={3000} className="testimonial-carousel py-3"></Carousel>
+                    <Carousel interval={3000} indicators={false} controls={false} className="testimonial-carousel py-3">
+                        <Carousel.Item>
+                            <div className="d-flex gap-1">
+                                <div className="new-item w-50">
+                                    {listNewsCaroual2.length && (
+                                        <Card value-card2={listNewsCaroual2[0].id} onClick={handleEventDetail}>
+                                            <div className="card-img-container" style={{ overflow: "hidden" }}>
+                                                <Card.Img className="card-img" variant="top" src={listNewsCaroual2[0].img} />
+                                            </div>
+                                            <Card.Body className="p-0">
+                                                <Card.Title className="fs-5 pt-1">
+                                                    <a href="#" className="text-decoration-none hover-text-orange">
+                                                        {listNewsCaroual2[0].title}
+                                                    </a>
+                                                </Card.Title>
+                                                <Card.Text className="text-muted fs-6">
+                                                    {listNewsCaroual2[0].content}
+                                                </Card.Text>
+                                            </Card.Body>
+                                        </Card>)}
+                                </div>
+
+                                <div className="new-item w-50">
+                                    {listNewsCaroual2.length && (
+                                        <Card value-card2={listNewsCaroual2[1].id} onClick={handleEventDetail}>
+                                            <div className="card-img-container" style={{ overflow: "hidden" }}>
+                                                <Card.Img className="card-img" variant="top" src={listNewsCaroual2[1].img} />
+                                            </div>
+                                            <Card.Body className="p-0">
+                                                <Card.Title className="fs-5 pt-1">
+                                                    <a href="#" className="text-decoration-none hover-text-orange">
+                                                        {listNewsCaroual2[1].title}
+                                                    </a>
+                                                </Card.Title>
+                                                <Card.Text className="text-muted fs-6">
+                                                    {listNewsCaroual2[1].content}
+                                                </Card.Text>
+                                            </Card.Body>
+                                        </Card>)}
+                                </div>
+                            </div>
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <div className="d-flex gap-1">
+                            <div className="new-item w-50">
+                                    {listNewsCaroual2.length && (
+                                        <Card value-card2={listNewsCaroual2[2].id} onClick={handleEventDetail}>
+                                            <div className="card-img-container" style={{ overflow: "hidden" }}>
+                                                <Card.Img className="card-img" variant="top" src={listNewsCaroual2[2].img} />
+                                            </div>
+                                            <Card.Body className="p-0">
+                                                <Card.Title className="fs-5 pt-1">
+                                                    <a href="#" className="text-decoration-none hover-text-orange">
+                                                        {listNewsCaroual2[2].title}
+                                                    </a>
+                                                </Card.Title>
+                                                <Card.Text className="text-muted fs-6">
+                                                    {listNewsCaroual2[2].content}
+                                                </Card.Text>
+                                            </Card.Body>
+                                        </Card>)}
+                                </div>
+                                <div className="new-item w-50">
+                                    {listNewsCaroual2.length && (
+                                        <Card value-card2={listNewsCaroual2[3].id} onClick={handleEventDetail}>
+                                            <div className="card-img-container" style={{ overflow: "hidden" }}>
+                                                <Card.Img className="card-img" variant="top" src={listNewsCaroual2[3].img} />
+                                            </div>
+                                            <Card.Body className="p-0">
+                                                <Card.Title className="fs-5 pt-1">
+                                                    <a href="#" className="text-decoration-none hover-text-orange">
+                                                        {listNewsCaroual2[3].title}
+                                                    </a>
+                                                </Card.Title>
+                                                <Card.Text className="text-muted fs-6">
+                                                    {listNewsCaroual2[3].content}
+                                                </Card.Text>
+                                            </Card.Body>
+                                        </Card>)}
+                                </div>
+                            </div>
+                        </Carousel.Item>
+                    </Carousel>            
                 </div>
             </div>
         </div>
