@@ -64,8 +64,7 @@ function AppContent() {
         <Route path="/news" element={<New />} />
 
         <Route path="/news/detail/:id" element={<NewsDetail />} />
-        <Route path="/event" element={<Event />} />
-        <Route path="/event/:id" element={<EventDetail />} />
+        
 
         <Route path="/event" element={<EventLayout />}>
           <Route index element={<Event />} />
