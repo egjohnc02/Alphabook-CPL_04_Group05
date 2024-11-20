@@ -29,6 +29,10 @@ const Header: React.FC = () => {
     }, [id]);
 
     let pageName = '';
+    if (location.pathname.includes('/event/')) {
+        pageName = 'Sự kiện';
+    }
+    else
     switch (location.pathname) {
         case '/home':
             pageName = 'Trang chủ';
@@ -74,6 +78,7 @@ const Header: React.FC = () => {
             pageName = 'CHÍNH SÁCH ĐỔI / TRẢ / HOÀN TIỀN';
             break;
 
+
         case '/contact':
             pageName = 'Liên hệ';
             break;
@@ -86,7 +91,7 @@ const Header: React.FC = () => {
         case '/event':
             pageName = 'Sự Kiện';
             break;
-
+          
         case '/customer':
             pageName = 'Trang khách hàng';
             break;
@@ -100,6 +105,10 @@ const Header: React.FC = () => {
             break;
         case '/book/detail':
             pageName = 'Chi tiết sách';
+            break;
+
+        case '/subscribe':
+            pageName = 'Nâng cấp tài khoản';
             break;
 
         default:
@@ -120,6 +129,12 @@ const Header: React.FC = () => {
                         <Link to="/home" className='text-decoration-none '>
                             <span>Trang chủ</span>
                         </Link>
+                            {/* Nếu đang ở sự kiện, thêm liên kết Sự kiện */}
+                    {location.pathname.includes('/event/') && (
+                        <Link to="/event" className="text-decoration-none ms-3">
+                            <span>Sự kiện</span>
+                        </Link>
+                    )}
                     </nav>
                     <h1 className="text-orange">
                         {pageName}

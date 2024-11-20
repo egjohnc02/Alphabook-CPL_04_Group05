@@ -38,6 +38,7 @@ const Register: React.FC = () => {
           LastName: lname,
           PhoneNumber: phone,
           email: user.email,
+          Role: "customer"
         });
         setMessage("Đăng ký thành công! Vui lòng kiểm tra email để xác nhận tài khoản.");
 
