@@ -44,7 +44,7 @@ const Register: React.FC = () => {
         localStorage.setItem("isLoggedIn", "true");
         localStorage.setItem("userName", `${fname} ${lname}`);
         localStorage.setItem("PhoneNumber", `${phone}`);
-        
+        localStorage.setItem("useId", user.uid)
         setMessage("Đăng ký thành công!");
         setTimeout(() => navigate('/home'), 1000);
       }
