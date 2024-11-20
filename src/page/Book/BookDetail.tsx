@@ -2,7 +2,7 @@ import './styleBookDetail.css'
 import { useState, useEffect } from "react";
 
 import { useNavigate, useParams } from 'react-router-dom';  // Import useParams để lấy id từ URL
-import { addDoc, arrayRemove, arrayUnion, collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore";
+import { arrayRemove, arrayUnion, collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore";
 import { db } from "../../firebase/firebase.tsx";
 interface Book {
     id: string;

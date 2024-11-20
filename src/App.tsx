@@ -34,6 +34,7 @@ import EventDetail from './page/News/EventDetail';
 import NewsDetail from './page/News/NewsDetail';
 
 import EventLayout from './page/News/EventLayout';
+import Admin from './page/Account/Admin/Admin';
 
 function AppContent() {
   const location = useLocation();
@@ -71,6 +72,7 @@ function AppContent() {
           <Route path=":id" element={<EventDetail />} />
         </Route>
         <Route path="/customer" element={<ProtectedRoute><Customer /></ProtectedRoute>} />
+        <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/book" element={<Book />}/>
         <Route path="/book/:category" element={<Book />} />
