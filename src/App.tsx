@@ -35,6 +35,7 @@ import NewsDetail from './page/News/NewsDetail';
 
 import EventLayout from './page/News/EventLayout';
 import Admin from './page/Account/Admin/Admin';
+import Subscribe from './page/subscribe/Subscribe';
 
 function AppContent() {
   const location = useLocation();
@@ -77,6 +78,7 @@ function AppContent() {
         <Route path="/book" element={<Book />}/>
         <Route path="/book/:category" element={<Book />} />
         <Route path="/book/detail/:id" element={<BookDetailPage />} />
+        <Route path="/subscribe" element={<Subscribe />} />
       </Routes>
       <BackToTop />
       <ContactButton />

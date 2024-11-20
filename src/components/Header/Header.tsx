@@ -107,6 +107,10 @@ const Header: React.FC = () => {
             pageName = 'Chi tiết sách';
             break;
 
+        case '/subscribe':
+            pageName = 'Nâng cấp tài khoản';
+            break;
+
         default:
             pageName = 'Trang không tồn tại';
     }

@@ -3,6 +3,7 @@ import logo from '../../assets/logo.webp';
 import './Navbar.css'
 import React from 'react';
 import { useEffect } from 'react';
+import premiumIcon from '../../assets/sub/premium.png'
 
 const Navbar: React.FC = () => {
   const isLoggedIn = localStorage.getItem("isLoggedIn");
@@ -11,8 +12,7 @@ const Navbar: React.FC = () => {
 
   useEffect(() => {
     const updatedUserRole = localStorage.getItem("userRole");
-    if (updatedUserRole !== userRole) {
-    }
+    if (updatedUserRole !== userRole) { /* empty */ }
   }, [userRole]);
   return (
     <div className="bg-white sticky-top border-bottom container-fluid">
@@ -90,11 +90,11 @@ const Navbar: React.FC = () => {
             </Link>
           </div>
         <div className='d-flex'>
-          <Link to='/search' className='text-decoration-none text-dark fw-medium'>
+          <Link to='/subscribe' className='text-decoration-none text-dark fw-medium'>
             <div className='border-end border-black border-1 pe-3'>
-              <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
-                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-              </svg>
+              <div className='premium-icon'>
+                <img src={premiumIcon} alt="premiumIcon" width={23}/>
+              </div>
             </div>
           </Link>
 
