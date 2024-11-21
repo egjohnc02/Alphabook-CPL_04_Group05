@@ -1,0 +1,52 @@
+h2.bg-danger {
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+    }
+    100% {
+      box-shadow: 0 0 35px rgba(255, 0, 0, 1);
+    }
+  }
+  
+  
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+  }
+  
+  .text-danger.fs-5 {
+    font-weight: bold;
+  }  
+
+  .card .btn {
+    background: linear-gradient(45deg, #ff7f50, #ff4500);
+    border: none;
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 69, 0, 0.3);
+    cursor: pointer;
+  }
+  
+  .card .btn:hover {
+    background: linear-gradient(45deg, #ff4500, #ff7f50);
+    box-shadow: 0 6px 20px rgba(255, 69, 0, 0.5);
+    transform: scale(1.05);
+  }
+  
+  .card .btn:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 10px rgba(255, 69, 0, 0.2);
+  }
+  
+  
