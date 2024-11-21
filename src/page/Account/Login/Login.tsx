@@ -49,40 +49,45 @@ const LoginForm: React.FC = () => {
     setLoading(true);
     setMessage("");
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-
-      const userDoc = await getDoc(doc(db, "Users", user.uid));
-      if (userDoc.exists()) {
-        const userData = userDoc.data();
-        localStorage.setItem("userName", `${userData.FirstName} ${userData.LastName}`);
-        localStorage.setItem("phoneNumber", userData.PhoneNumber);
-      }
-
-      setMessage("Đăng nhập thành công!");
-      setLoading(false);
-      localStorage.setItem("isLoggedIn", "true");
-      setTimeout(() => {
-        navigate('/home');
-      }, 1000);
-    } catch (error) {
-      setLoading(false);
-      if (error instanceof FirebaseError) {
-        switch(error.code) {
-          case 'auth/wrong-password':
-            setMessage("Sai email hoặc mật khẩu, vui lòng nhập lại!");
-            break;
-
-          case 'auth/user-not-found':
-            setMessage("Sai email hoặc mật khẩu, vui lòng nhập lại!");
-            break;
-          
-          default:
-            setMessage("Đăng nhập thất bại, vui lòng thử lại sau.");
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+        const userDoc = await getDoc(doc(db, "Users", user.uid));
+        
+        if (userDoc.exists()) {
+            const userData = userDoc.data();
+            localStorage.setItem("userName", `${userData.FirstName} ${userData.LastName}`);
+            localStorage.setItem("phoneNumber", userData.PhoneNumber);
+            const isAdmin = email === "admin@fu.edu.vn";
+            localStorage.setItem("userRole", isAdmin ? "admin" : "user");
         }
-      }
+
+        setMessage("Đăng nhập thành công!");
+        setLoading(false);
+        localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem("useId", user.uid);
+
+        setTimeout(() => {
+            if (email === "admin@fu.edu.vn") {
+                navigate('/admin');
+            } else {
+                navigate('/home');
+            }
+        }, 1000);
+    } catch (error) {
+        setLoading(false);
+        if (error instanceof FirebaseError) {
+            switch(error.code) {
+                case 'auth/wrong-password':
+                case 'auth/user-not-found':
+                    setMessage("Sai email hoặc mật khẩu, vui lòng nhập lại!");
+                    break;
+                
+                default:
+                    setMessage("Đăng nhập thất bại, vui lòng thử lại sau.");
+            }
+        }
     }
-  };
+};
 
   const handleForgotPassword = () => {
     setIsForgotPassword(true);
@@ -98,7 +103,11 @@ const LoginForm: React.FC = () => {
       {!isForgotPassword ? (
         <form onSubmit={login}>
           <h4>Đăng nhập tài khoản</h4>
-          <p className="text-danger">{message}</p>
+          {message && (
+            <p className={`text-${message.includes("thành công") ? "success" : "danger"}`}>
+              {message}
+            </p>
+          )}
           {loading && <p>Đang xử lý...</p>}
           <label className="text-body-secondary" htmlFor="email">
             Email<i style={{ color: "red" }}>*</i>

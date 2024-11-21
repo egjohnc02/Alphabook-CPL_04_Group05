@@ -1,13 +1,28 @@
 import React, { useEffect, useRef, useState } from "react";
 import './cart.css'
 
-import {Col, Form, ListGroup, Row } from "react-bootstrap";
+import { Col, Form, ListGroup, Row } from "react-bootstrap";
 import thumbnailItemCart from '../../assets/thumnail_item_cart.webp'
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { db } from "../../firebase/firebase.tsx";
+interface CartItem {
+    bookId: string;
+    bookImg: string;
+    bookPrice: string;
+    bookTitle: string;
+    quantity: string;
+}
 
+interface UserCart {
+    listCart: CartItem[];
+}
 const Cart: React.FC = () => {
     const [viewportSize, setViewportSize] = useState('');
     const currentWidth = useRef(window.innerWidth);
     const [checkbox, setCheckBox] = useState(false)
+    // Update cart
+    const [listCart, setListCart] = useState<CartItem[]>([]);
+
 
     useEffect(() => {
         const handleResize = () => {
@@ -22,6 +37,22 @@ const Cart: React.FC = () => {
             }
         };
 
+        const fetchCartByUserId = async () => {
+            const userId = localStorage.getItem("useId") as string;
+            const cartDocRef = doc(db, "Cart", userId);
+            const cartSnapshot = await getDoc(cartDocRef);
+
+            if (cartSnapshot.exists()) {
+                const cartData = cartSnapshot.data() as UserCart;
+                console.log("Cart Data:", cartData.listCart);
+                setListCart(cartData.listCart); // Cập nhật state listCart
+            } else {
+                console.log("No cart found for the given document ID");
+                setListCart([]); // Nếu không tìm thấy, set mảng rỗng
+            }
+        };
+
+        fetchCartByUserId();
         handleResize(); // Kiểm tra kích thước khi component mount
 
         window.addEventListener('resize', handleResize);
@@ -31,6 +62,137 @@ const Cart: React.FC = () => {
     const handleCheckbox = (e: { target: { checked: boolean | ((prevState: boolean) => boolean); }; }) => {
         setCheckBox(e.target.checked)
     }
+
+    //Xử lý logic cart
+    // Hàm lấy trường "name" của một document từ collection "Books"
+    const getBookTitleById = async (bookId: string): Promise<string | null> => {
+        const bookDocRef = doc(db, "Books", bookId); // Truy cập document theo ID
+        const bookDocSnapshot = await getDoc(bookDocRef); // Lấy dữ liệu document
+
+        if (bookDocSnapshot.exists()) {
+            const bookData = bookDocSnapshot.data(); // Lấy dữ liệu trong document
+            return bookData.name || null; // Trả về trường "name" hoặc null nếu không có
+        } else {
+            console.log("No document found for the given ID");
+            return null;
+        }
+    };
+    // Xử lý total price
+    const calculateTotalPrice = (cartItems: CartItem[]): number => {
+        return cartItems.reduce((total, item) => {
+            const itemPrice = parseFloat(item.bookPrice) || 0; // Chuyển giá thành số, mặc định là 0 nếu lỗi
+            const itemQuantity = parseInt(item.quantity, 10) || 0; // Chuyển số lượng thành số nguyên, mặc định là 0 nếu lỗi
+            return total + itemPrice * itemQuantity; // Cộng dồn giá trị của từng mục
+        }, 0); // Giá trị khởi tạo của `total` là 0
+    };
+    // Xử lý button xóa
+    const handleDelete = async (bookId: string) => {
+        try {
+            const userId = localStorage.getItem("useId");
+            if (!userId) {
+                console.log("No userId found in localStorage");
+                return;
+            }
+            const cartDocRef = doc(db, "Cart", userId);
+            const cartSnapshot = await getDoc(cartDocRef);
+
+            if (cartSnapshot.exists()) {
+                const cartData = cartSnapshot.data() as UserCart;
+                // Lọc bỏ sản phẩm có bookId cần xóa
+                const updatedListCart = cartData.listCart.filter((item) => item.bookId !== bookId);
+                // Cập nhật Firestore với danh sách mới
+                await setDoc(cartDocRef, { listCart: updatedListCart });
+                // Cập nhật state listCart
+                setListCart(updatedListCart);
+                console.log("Product deleted successfully:", bookId);
+            } else {
+                console.log("No cart found for the given userId:", userId);
+                setListCart([]); // Nếu không tìm thấy, set mảng rỗng
+            }
+        } catch (error) {
+            console.error("Error deleting product:", error);
+        }
+    };
+    // Hàm bọc lại handleDelete
+    const handleDeleteClick = (bookId: string) => {
+    // Gọi handleDelete một cách bất đồng bộ
+    handleDelete(bookId).catch((error) => console.error("Error deleting item:", error));
+  };
+
+    //Xử lý + - 
+    // Hàm xử lý tăng số lượng
+    const handleIncrease = async (bookId: string) => {
+        try {
+            const userId = localStorage.getItem("useId");
+            if (!userId) return;
+            const cartDocRef = doc(db, "Cart", userId);
+            const cartSnapshot = await getDoc(cartDocRef);
+            if (cartSnapshot.exists()) {
+                const cartData = cartSnapshot.data() as UserCart;
+
+                // Tìm sản phẩm cần thay đổi
+                const updatedListCart = cartData.listCart.map((item) => {
+                    if (item.bookId == bookId) {
+                        let updatedQuantity = parseInt(item.quantity);
+                        updatedQuantity += 1;
+                        // Trả về sản phẩm đã thay đổi
+                        return { ...item, quantity: updatedQuantity.toString() };
+                    }
+                    return item; // Không thay đổi sản phẩm khác
+                });
+
+                // Cập nhật Firestore với danh sách mới
+                await setDoc(cartDocRef, { listCart: updatedListCart });
+                // Cập nhật state listCart
+                setListCart(updatedListCart);
+                console.log("Quantity updated successfully for bookId:", bookId);
+            }
+        } catch (error) {
+        }
+    };
+    const handleIncreaseClick =(bookId: string) =>{
+        handleIncrease(bookId).catch((error) =>console.log("error", error))
+    }
+    // Hàm xử lý giảm số lượng
+    const handleDecrease = async (bookId: string) => {
+        try {
+            const userId = localStorage.getItem("useId");
+            if (!userId) return;
+            const cartDocRef = doc(db, "Cart", userId);
+            const cartSnapshot = await getDoc(cartDocRef);
+            if (cartSnapshot.exists()) {
+                const cartData = cartSnapshot.data() as UserCart;
+
+                // Tìm sản phẩm cần thay đổi
+                const updatedListCart = cartData.listCart.map((item) => {
+                    if (item.bookId == bookId) {
+                        let updatedQuantity = parseInt(item.quantity);
+                        if(updatedQuantity === 1){
+                            handleDelete(bookId)
+                        }else{
+                            updatedQuantity -= 1;
+                        }
+                        // Trả về sản phẩm đã thay đổi
+                        return { ...item, quantity: updatedQuantity.toString() };
+                    }
+                    return item; // Không thay đổi sản phẩm khác
+                });
+
+                // Cập nhật Firestore với danh sách mới
+                await setDoc(cartDocRef, { listCart: updatedListCart });
+                // Cập nhật state listCart
+                setListCart(updatedListCart);
+                console.log("Quantity updated successfully for bookId:", bookId);
+            }
+        } catch (error) {
+        }
+    };
+    const handleDecreaseClick =(bookId: string) =>{
+        handleDecrease(bookId).catch((error) =>console.log("error", error))
+    }
+
+
+  
     return (
         <>
             <div className="container container-sm container-md container-lg d-flex flex-column">
@@ -45,112 +207,60 @@ const Cart: React.FC = () => {
                                 <p className="label-2">Thành tiền</p>
                             </ListGroup>
                             {viewportSize == 'lg' && (
-                                <>  
+                                <>
                                     <div className="overflow-auto">
-                                    <ListGroup.Item>
-                                        <div className="item-cart d-flex align-items-center ps-2 pb-3 border-2 border-bottom">
-                                            <div className="info-1 d-flex">
-                                                <img src={thumbnailItemCart} alt="item-img-cart" className="me-2"></img>
-                                                <div className="ms-4 d-flex flex-column justify-content-center align-items-start">
-                                                    <p className="title-info-1 text-muted p-0 m-0 text-nowrap">Nhà lãnh đạo 360</p>
-                                                    <div className="btn p-0 m-0 bg-none border-0 text-danger">Xóa</div>
+                                        {listCart.map((item, index) => (
+                                            <ListGroup.Item key={index}> {/* key ở đây là bắt buộc để tránh lỗi */}
+                                                <div className="item-cart d-flex align-items-center ps-2 pb-3 border-2 border-bottom">
+                                                    <div className="info-1 d-flex">
+                                                        <img src={item.bookImg} alt="item-img-cart" className="me-2" height={'100px'} width={'80px'} />
+                                                        <div className="ms-4 d-flex flex-column justify-content-center align-items-start">
+                                                            <p className="title-info-1 text-muted p-0 m-0 text-nowrap overflow-hidden" style={{ width: '200px' }}>{item.bookTitle}</p>
+                                                            <div className="btn p-0 m-0 bg-none border-0 text-danger"  onClick={() => handleDeleteClick(item.bookId)}>Xóa</div>
+                                                        </div>
+                                                    </div>
+                                                    <p className="info-2-price text-danger fw-bolder ps-1 pt-3">{item.bookPrice}</p>
+                                                    <div className="infor-3-count d-flex bg-prrimary align-items-center">
+                                                        <button className="btn border p-0" onClick={() =>handleDecreaseClick(item.bookId)}><i className="fa-solid fa-minus p-1"></i></button>
+                                                        <p className="m-0 px-2">{item.quantity}</p>
+                                                        <button className="btn border p-0" onClick={() =>handleIncreaseClick(item.bookId)}><i className="fa-solid fa-plus p-1"></i></button>
+                                                    </div>
+                                                    <div className="info-4-total-price">
+                                                        <p className="text-danger fw-bolder p-0 m-0">{parseFloat(item.quantity) * parseFloat(item.bookPrice)}</p>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <p className="info-2-price text-danger fw-bolder ps-1 pt-3">143.200 </p>
-                                            <div className="infor-3-count d-flex bg-prrimary align-items-center">
-                                                <button className="btn border p-0"><i className="fa-solid fa-minus p-1"></i></button>
-                                                <p className="m-0 px-2 ">3</p>
-                                                <button className="btn border p-0"><i className="fa-solid fa-plus p-1"></i></button>
-                                            </div>
-                                            <div className="info-4-total-price">
-                                                <p className="text-danger fw-bolder p-0 m-0">429.600 </p>
-                                            </div>
-                                        </div>
-                                    </ListGroup.Item>
+                                            </ListGroup.Item>
+                                        ))}
 
-                                    <ListGroup.Item>
-                                        <div className="item-cart d-flex align-items-center ps-2 pb-3 border-2 border-bottom">
-                                            <div className="info-1 d-flex">
-                                                <img src={thumbnailItemCart} alt="item-img-cart" className="me-2"></img>
-                                                <div className="ms-4 d-flex flex-column justify-content-center align-items-start">
-                                                    <p className="title-info-1 text-muted p-0 m-0 text-nowrap">Nhà lãnh đạo 360</p>
-                                                    <div className="btn p-0 m-0 bg-none border-0 text-danger">Xóa</div>
-                                                </div>
-                                            </div>
-                                            <p className="info-2-price text-danger fw-bolder ps-1 pt-3">143.200 </p>
-                                            <div className="infor-3-count d-flex bg-prrimary align-items-center">
-                                                <button className="btn border p-0"><i className="fa-solid fa-minus p-1"></i></button>
-                                                <p className="m-0 px-2 ">3</p>
-                                                <button className="btn border p-0"><i className="fa-solid fa-plus p-1"></i></button>
-                                            </div>
-                                            <div className="info-4-total-price">
-                                                <p className="text-danger fw-bolder p-0 m-0">429.600 </p>
-                                            </div>
-                                        </div>
-                                    </ListGroup.Item>
+
                                     </div>
                                 </>
                             )}
                             {viewportSize == 'md' && (
                                 <>
                                     <div className="overflow-scroll ">
-                                    <ListGroup.Item>
-                                        <div className="item-cart d-flex ps-2 pb-3 border-2 border-bottom">
-                                            <div className="info-1 d-flex">
-                                                <img src={thumbnailItemCart} alt="item-img-cart" className="me-2"></img>
-                                                <div className="ms-4 d-flex flex-column align-items-start">
-                                                    <p className="title-info-1 text-muted p-0 m-0 text-nowrap">Nhà lãnh đạo 360</p>
-                                                    <div className="d-flex bg-prrimary align-items-center">
+                                        {listCart.map((item, index) => (
+                                            <ListGroup.Item key={index}> {/* key ở đây là bắt buộc để tránh lỗi */}
+                                                <div className="item-cart d-flex align-items-center ps-2 pb-3 border-2 border-bottom">
+                                                    <div className="info-1 d-flex">
+                                                        <img src={item.bookImg} alt="item-img-cart" className="me-2" height={'100px'} width={'80px'} />
+                                                        <div className="ms-4 d-flex flex-column justify-content-center align-items-start">
+                                                            <p className="title-info-1 text-muted p-0 m-0 text-nowrap overflow-hidden" style={{ width: '200px' }}>{item.bookTitle}</p>
+                                                            <div className="btn p-0 m-0 bg-none border-0 text-danger">Xóa</div>
+                                                        </div>
+                                                    </div>
+                                                    <p className="info-2-price text-danger fw-bolder ps-1 pt-3">{item.bookPrice}</p>
+                                                    <div className="infor-3-count d-flex bg-prrimary align-items-center">
                                                         <button className="btn border p-0"><i className="fa-solid fa-minus p-1"></i></button>
-                                                        <p className="m-0 px-2 ">3</p>
+                                                        <p className="m-0 px-2">{item.quantity}</p>
                                                         <button className="btn border p-0"><i className="fa-solid fa-plus p-1"></i></button>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <p className="text-danger info-2-price fw-bolder p-0 m-0 mt-3">143.200 </p>
-                                                <div className="btn p-0 m-0 bg-none border-0 text-danger">Xóa</div>
-                                            </div>
-                                        </div>
-                                    </ListGroup.Item>
-                                    <ListGroup.Item>
-                                        <div className="item-cart d-flex ps-2 pb-3 border-2 border-bottom">
-                                            <div className="info-1 d-flex">
-                                                <img src={thumbnailItemCart} alt="item-img-cart" className="me-2"></img>
-                                                <div className="ms-4 d-flex flex-column align-items-start">
-                                                    <p className="title-info-1 text-muted p-0 m-0 text-nowrap">Nhà lãnh đạo 360</p>
-                                                    <div className="d-flex bg-prrimary align-items-center">
-                                                        <button className="btn border p-0"><i className="fa-solid fa-minus p-1"></i></button>
-                                                        <p className="m-0 px-2 ">3</p>
-                                                        <button className="btn border p-0"><i className="fa-solid fa-plus p-1"></i></button>
+                                                    <div className="info-4-total-price">
+                                                        <p className="text-danger fw-bolder p-0 m-0">{parseFloat(item.quantity) * parseFloat(item.bookPrice)}</p>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div>
-                                                <p className="text-danger info-2-price fw-bolder p-0 m-0 mt-3">143.200 </p>
-                                                <div className="btn p-0 m-0 bg-none border-0 text-danger">Xóa</div>
-                                            </div>
-                                        </div>
-                                    </ListGroup.Item>
-                                    <ListGroup.Item>
-                                        <div className="item-cart d-flex ps-2 pb-3 border-2 border-bottom">
-                                            <div className="info-1 d-flex">
-                                                <img src={thumbnailItemCart} alt="item-img-cart" className="me-2"></img>
-                                                <div className="ms-4 d-flex flex-column align-items-start">
-                                                    <p className="title-info-1 text-muted p-0 m-0 text-nowrap">Nhà lãnh đạo 360</p>
-                                                    <div className="d-flex bg-prrimary align-items-center">
-                                                        <button className="btn border p-0"><i className="fa-solid fa-minus p-1"></i></button>
-                                                        <p className="m-0 px-2 ">3</p>
-                                                        <button className="btn border p-0"><i className="fa-solid fa-plus p-1"></i></button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <p className="text-danger info-2-price fw-bolder p-0 m-0 mt-3">143.200 </p>
-                                                <div className="btn p-0 m-0 bg-none border-0 text-danger">Xóa</div>
-                                            </div>
-                                        </div>
-                                    </ListGroup.Item>
+                                            </ListGroup.Item>
+                                        ))}
                                     </div>
                                 </>
                             )}
@@ -160,7 +270,7 @@ const Cart: React.FC = () => {
                                 <div className="total-cart mt-4">
                                     <div className="content-total-cart d-flex justify-content-between mb-4">
                                         <p className="text-muted">Tổng tiền:</p>
-                                        <p className="final-price text-danger fw-bolder">588.800 </p>
+                                        <p className="final-price text-danger fw-bolder">{calculateTotalPrice(listCart)}</p>
                                     </div>
                                     <div className="button-card text-white d-flex justify-content-center align-items-center bg-orange rounded-1 mb-3" style={{ height: '55px' }}>
                                         Thanh toán

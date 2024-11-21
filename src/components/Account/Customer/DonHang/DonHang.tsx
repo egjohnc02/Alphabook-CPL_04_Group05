@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 
 const DonHang: React.FC = () => {
-  // State lưu danh sách đơn hàng
   const [orders, setOrders] = useState<any[]>([]);
 
   useEffect(() => {

@@ -1,8 +1,8 @@
 import './styleBookDetail.css'
 import { useState, useEffect } from "react";
 
-import { useParams } from 'react-router-dom';  // Import useParams để lấy id từ URL
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { useNavigate, useParams } from 'react-router-dom';  // Import useParams để lấy id từ URL
+import { arrayRemove, arrayUnion, collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore";
 import { db } from "../../firebase/firebase.tsx";
 interface Book {
     id: string;
@@ -22,12 +22,25 @@ interface BookDetail {
     publishDate: string;
     publisher: string;
 }
+interface CartItem {
+    bookId: string;
+    bookImg: string;
+    bookPrice: string;
+    bookTitle: string;
+    quantity: string;
+}
+  
+  interface UserCart {
+    listCart: CartItem[];
+  }
 function BookDetail() {
     const { id } = useParams();
     const [book, setBook] = useState<Book | null>(null);
     const [bookDetail, setBookDetail] = useState<BookDetail | null>(null);
     const [relatedBooks, setRelatedBooks] = useState<Book[]>([]); // Sách cùng thể loại
-
+    // Xử lý cart
+    const navigate = useNavigate();
+    const [listCart, setListCart] = useState<UserCart[]>([]);
 
     useEffect(() => {
         const fetchBook = async () => {
@@ -68,6 +81,24 @@ function BookDetail() {
         };
 
         fetchBookDetail();
+
+        const fetchCartByUserId = async () => {
+            const userId = localStorage.getItem("useId") as string
+            const cartDocRef = doc(db, "Cart", userId); 
+            const cartSnapshot = await getDoc(cartDocRef);
+          
+            if (cartSnapshot.exists()) {
+              const cartData = cartSnapshot.data() as UserCart; // Map dữ liệu thành interface
+              console.log("Cart Data:", cartData.listCart);
+              return cartData.listCart; // Trả về danh sách sản phẩm
+            } else {
+              console.log("No cart found for the given document ID");
+              return [];
+            }
+          };
+          
+          fetchCartByUserId();
+                
     }, [book]);  // Fetch details when the book changes
 
 
@@ -102,6 +133,83 @@ function BookDetail() {
 
     if (!book || !bookDetail) {
         return <div>Loading...</div>; // Render loading if book or book detail is not available yet
+    }
+
+    //Xử lý add to cart
+    // Check tồn tại cart hay chưa 
+    // Hàm kiểm tra và tạo document nếu chưa tồn tại
+    const createCartDocumentIfNotExists = async (userId: string): Promise<void> => {
+        try {
+        // Tham chiếu đến document trong collection "Cart"
+        const cartDocRef = doc(db, "Cart", userId);
+
+        const cartDocSnapshot = await getDoc(cartDocRef);
+        if (cartDocSnapshot.exists()) {
+            console.log("Cart document already exists for userId:", userId);
+        } else {
+        const defaultData = {
+        listCart: [],
+      };
+
+      // Tạo document mới
+      await setDoc(cartDocRef, defaultData);
+    }
+  } catch (error) {
+  }
+};
+
+    // Lấy dữ liệu cart của user theo userID
+    const handleAddToCart = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        
+        const userId = localStorage.getItem("useId");
+            if (!userId) return; // Đảm bảo rằng userId không null
+        createCartDocumentIfNotExists(userId)
+        const formData = new FormData(e.target as HTMLFormElement);
+        const bookId = formData.get("bookId") as string;
+        const quantity = parseInt(formData.get("quantity") as string, 10);
+        const bookTitle = formData.get("bookTitle") as string;
+        const bookImg = formData.get("bookImg") as string;
+        const bookPrice = formData.get("bookPrice") as string;
+        const cartDocRef = doc(db, "Cart", userId);
+        // Lấy dữ liệu hiện tại
+        const cartSnapshot = await getDoc(cartDocRef);
+        if (!cartSnapshot.exists()) return;
+
+        const cartData = cartSnapshot.data() as UserCart;
+        // Kiểm tra sản phẩm đã tồn tại chưa
+        const existingItem = cartData.listCart.find(item => item.bookId === bookId);
+
+        if (existingItem) {
+            // Xóa sản phẩm cũ
+            await updateDoc(cartDocRef, {
+                listCart: arrayRemove(existingItem),
+            });
+            // Cập nhật số lượng mới và thêm lại
+            const updatedItem = { ...existingItem, quantity: (parseInt(existingItem.quantity) + quantity).toString() };
+            await updateDoc(cartDocRef, {
+                listCart: arrayUnion(updatedItem),
+            });
+
+            console.log(`Updated item in cart: ${JSON.stringify(updatedItem)}`);
+        } else {
+            // Thêm sản phẩm mới
+            const newItem = { bookId, bookTitle, bookImg, bookPrice, quantity: quantity.toString() };
+            await updateDoc(cartDocRef, {
+                listCart: arrayUnion(newItem),
+            });
+
+            console.log(`Added new item to cart: ${JSON.stringify(newItem)}`);
+        }
+    };
+
+        
+        
+
+    const handleCheckLogin = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        localStorage.getItem("isLoggedIn") == "true" ? handleAddToCart(e) : navigate(`/login`);
     }
     return (
         <div className="container">
@@ -230,7 +338,11 @@ function BookDetail() {
                             </table>
                         </div>
 
-                        <form encType="multipart/form-data" id="add-to-cart-form" data-cart-form="" action="/cart/add" method="post" className="wishItem">
+                        <form id="add-to-cart-form" onSubmit={(e) => handleCheckLogin(e)} className="wishItem">
+                            <input type="text" value={book.id} name="bookId" hidden></input>
+                            <input type="text" value={book.title} name="bookTitle" hidden></input>
+                            <input type="text" value={book.img} name="bookImg" hidden></input>
+                            <input type="text" value={book.price} name="bookPrice" hidden></input>
                             <div className="form-product">
                                 <div className="box-variant clearfix d-none">
                                     <input type="hidden" id="one_variant" name="variantId"
@@ -281,7 +393,7 @@ function BookDetail() {
                                         </div>
                                     </div>
                                     <div className="btn-mua">
-                                        <button type="submit" data-role="addtocart" className="btn btn-lg btn-gray btn-cart btn_buy add_to_cart">
+                                        <button  className="btn btn-lg btn-gray btn-cart btn_buy add_to_cart">
                                             <i className="fa-solid fa-cart-shopping" style={{ paddingRight: '20px' }}></i>
                                             MUA NGAY
                                         </button>
