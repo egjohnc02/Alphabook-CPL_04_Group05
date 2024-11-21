@@ -22,7 +22,7 @@ const LoginWith: React.FC = () => {
 
       localStorage.setItem("userName", user.displayName || "");
       localStorage.setItem("isLoggedIn", "true");
-
+      localStorage.setItem("useId", user.uid)
       navigate('/home');
     } catch (error) {
       window.alert("Lỗi đăng nhập:"+ error);

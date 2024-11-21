@@ -41,7 +41,8 @@ function BookDetail() {
     // Xử lý cart
     const navigate = useNavigate();
     const [listCart, setListCart] = useState<UserCart[]>([]);
-
+    const [isActive, setIsActive] = useState<boolean>(false);
+    const [quantity, setQuantity] = useState<number>(1)
     useEffect(() => {
         const fetchBook = async () => {
             const bookCollection = collection(db, "Books");
@@ -203,13 +204,25 @@ function BookDetail() {
             console.log(`Added new item to cart: ${JSON.stringify(newItem)}`);
         }
     };
-
-        
-        
-
     const handleCheckLogin = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         localStorage.getItem("isLoggedIn") == "true" ? handleAddToCart(e) : navigate(`/login`);
+    }
+
+    // Xử lý pop-up khi click vào mua hàng
+    const handlePopUp = () =>{
+            setIsActive(true); 
+            console.log("pop-up")
+    }
+    // Sau 2 giây ẩn popup
+    setTimeout(() => {
+        setIsActive(false);
+      }, 400);
+    // lấy thông tin quantity
+    const handleGetQuantity = () =>{
+        const result = document.getElementById('qty') as HTMLInputElement;
+        const qty = parseInt(result.value, 10);
+        setQuantity(qty)
     }
     return (
         <div className="container">
@@ -353,7 +366,7 @@ function BookDetail() {
                                     <div className="qty-ant clearfix custom-btn-number">
                                         <label>Số lượng:</label>
                                         <div className="custom custom-btn-numbers clearfix input_number_product">
-                                            <button
+                                        <button
                                                 onClick={(e) => {
                                                     e.preventDefault();
                                                     const result = document.getElementById('qty') as HTMLInputElement;
@@ -393,7 +406,12 @@ function BookDetail() {
                                         </div>
                                     </div>
                                     <div className="btn-mua">
-                                        <button  className="btn btn-lg btn-gray btn-cart btn_buy add_to_cart">
+                                    {isActive && (
+                                        <div className="pop-up-cart">
+                                            <i className="fa-solid fa-plus fa text-orange"></i><i className="fa-solid fa-cart-plus fa-2x text-orange"></i>
+                                            </div>
+                                    )}
+                                        <button  className="btn btn-lg btn-gray btn-cart btn_buy add_to_cart" onClick={() => handlePopUp()}>
                                             <i className="fa-solid fa-cart-shopping" style={{ paddingRight: '20px' }}></i>
                                             MUA NGAY
                                         </button>
