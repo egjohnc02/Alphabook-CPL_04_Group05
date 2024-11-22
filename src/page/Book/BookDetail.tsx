@@ -245,7 +245,6 @@ function BookDetail() {
     }
 
 
-    // Xử lý pop-up khi click vào mua hàng
     const handlePopUp = () =>{
             setIsActive(true); 
             console.log("pop-up")
@@ -322,20 +321,11 @@ function BookDetail() {
                 </div>
 
                 <div key={book.id} className="col-12 col-md-12 col-lg-6 details-pro">
-                    {/* Tên sách */}
                     <h1 className="title-head">{book.title}</h1>
                     <div className="flex-vd">
-                        {/* Tên tác giả */}
                         <div className="vendor">
                             <span>Tác giả:</span> {book.author || 'Chưa cập nhật'}
-                        </div>
-
-                        {/* Mã sản phẩm (có thể lấy từ bookDetails nếu có) */}
-                        {/* <div className="skuuu sku-product d-none">
-                            <span className="variant-sku" itemProp="sku" content={book.sku || 'Chưa có SKU'}>
-                                Mã sản phẩm: <strong>{book.sku}</strong>
-                            </span>
-                        </div> */}
+                        </div>   
                     </div>
 
                     <div className="group-action-button">
@@ -437,7 +427,6 @@ function BookDetail() {
                                         </div>
                                     </div>
                                     <div className="btn-mua">
-
                                     {isActive && (
                                         <div className="pop-up-cart">
                                             <p className='text-orange'><i className="fa-solid fa-plus fa text-orange"></i>{quantity}<i className="fa-solid fa-cart-plus fa-2x text-orange"></i></p>
@@ -625,7 +614,7 @@ function BookDetail() {
                             </div>
                         </div>
                     </div>
-                    <Comment bookId={book.id} />
+                    <Comment bookId={book.id} id={''} name={''} email={''} title={''} comment={''} />
                     <div className="row">
                         <div className="col-12">
                             <div className="section-related-product e-tabs">
