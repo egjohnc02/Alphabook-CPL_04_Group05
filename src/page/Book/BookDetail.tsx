@@ -40,6 +40,7 @@ interface BookReview {
     ExpertR: string[];
     PressR: string[];
 }
+
 function BookDetail() {
     const { id } = useParams();
     const [book, setBook] = useState<Book | null>(null);
@@ -50,8 +51,8 @@ function BookDetail() {
 
     // Xử lý cart
     const navigate = useNavigate();
-    const [listCart, setListCart] = useState<UserCart[]>([]);
-
+    const [isActive, setIsActive] = useState<boolean>(false);
+    const [quantity, setQuantity] = useState<number>(1)
     useEffect(() => {
         const fetchBook = async () => {
             const bookCollection = collection(db, "Books");
@@ -200,11 +201,13 @@ function BookDetail() {
         createCartDocumentIfNotExists(userId)
         const formData = new FormData(e.target as HTMLFormElement);
         const bookId = formData.get("bookId") as string;
-        const quantity = parseInt(formData.get("quantity") as string, 10);
+        const quantityForm = quantity;
+        const quantity1 = formData.get("quantity");
         const bookTitle = formData.get("bookTitle") as string;
         const bookImg = formData.get("bookImg") as string;
         const bookPrice = formData.get("bookPrice") as string;
         const cartDocRef = doc(db, "Cart", userId);
+        console.log("quantity", quantity1 + bookTitle + bookPrice)
         // Lấy dữ liệu hiện tại
         const cartSnapshot = await getDoc(cartDocRef);
         if (!cartSnapshot.exists()) return;
@@ -219,7 +222,7 @@ function BookDetail() {
                 listCart: arrayRemove(existingItem),
             });
             // Cập nhật số lượng mới và thêm lại
-            const updatedItem = { ...existingItem, quantity: (parseInt(existingItem.quantity) + quantity).toString() };
+            const updatedItem = { ...existingItem, quantity: (parseInt(existingItem.quantity) + quantityForm).toString() };
             await updateDoc(cartDocRef, {
                 listCart: arrayUnion(updatedItem),
             });
@@ -227,7 +230,7 @@ function BookDetail() {
             console.log(`Updated item in cart: ${JSON.stringify(updatedItem)}`);
         } else {
             // Thêm sản phẩm mới
-            const newItem = { bookId, bookTitle, bookImg, bookPrice, quantity: quantity.toString() };
+            const newItem = { bookId, bookTitle, bookImg, bookPrice, quantity: quantityForm.toString() };
             await updateDoc(cartDocRef, {
                 listCart: arrayUnion(newItem),
             });
@@ -236,15 +239,21 @@ function BookDetail() {
         }
     };
 
-
     const handleCheckLogin = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         localStorage.getItem("isLoggedIn") == "true" ? handleAddToCart(e) : navigate(`/login`);
     }
 
 
-
-
+    // Xử lý pop-up khi click vào mua hàng
+    const handlePopUp = () =>{
+            setIsActive(true); 
+            console.log("pop-up")
+    }
+    // Sau 2 giây ẩn popup
+    setTimeout(() => {
+        setIsActive(false);
+      }, 400);
     return (
         <div className="container">
             <div className="row">
@@ -387,12 +396,12 @@ function BookDetail() {
                                     <div className="qty-ant clearfix custom-btn-number">
                                         <label>Số lượng:</label>
                                         <div className="custom custom-btn-numbers clearfix input_number_product">
-                                            <button
+                                        <button
                                                 onClick={(e) => {
                                                     e.preventDefault();
                                                     const result = document.getElementById('qty') as HTMLInputElement;
                                                     const qty = parseInt(result.value, 10);
-                                                    if (!isNaN(qty) && qty > 1) result.value = (qty - 1).toString();
+                                                    if (!isNaN(qty) && qty > 1) setQuantity(qty - 1);
                                                 }}
                                                 className="btn-minus btn-cts"
                                                 type="button"
@@ -406,10 +415,11 @@ function BookDetail() {
                                                 id="qty"
                                                 name="quantity"
                                                 size={4}
-                                                value="1"
+                                                value={quantity}
                                                 maxLength={3}
                                                 onChange={(e) => {
-                                                    if (parseInt(e.target.value, 10) === 0) e.target.value = '1';
+                                                    if (parseInt(e.target.value, 10) === 0) setQuantity(1);
+                                                    setQuantity(parseInt(e.target.value, 10))
                                                 }}
                                             />
                                             <button
@@ -417,7 +427,7 @@ function BookDetail() {
                                                     e.preventDefault();
                                                     const result = document.getElementById('qty') as HTMLInputElement;
                                                     const qty = parseInt(result.value, 10);
-                                                    if (!isNaN(qty)) result.value = (qty + 1).toString();
+                                                    if (!isNaN(qty)) setQuantity(qty+1);
                                                 }}
                                                 className="btn-plus btn-cts"
                                                 type="button"
@@ -427,7 +437,13 @@ function BookDetail() {
                                         </div>
                                     </div>
                                     <div className="btn-mua">
-                                        <button className="btn btn-lg btn-gray btn-cart btn_buy add_to_cart">
+
+                                    {isActive && (
+                                        <div className="pop-up-cart">
+                                            <p className='text-orange'><i className="fa-solid fa-plus fa text-orange"></i>{quantity}<i className="fa-solid fa-cart-plus fa-2x text-orange"></i></p>
+                                            </div>
+                                    )}
+                                        <button  className="btn btn-lg btn-gray btn-cart btn_buy add_to_cart" onClick={() => handlePopUp()}>
                                             <i className="fa-solid fa-cart-shopping" style={{ paddingRight: '20px' }}></i>
                                             MUA NGAY
                                         </button>

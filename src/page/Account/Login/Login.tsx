@@ -70,7 +70,7 @@ const LoginForm: React.FC = () => {
             if (email === "admin@fu.edu.vn") {
                 navigate('/admin');
             } else {
-                navigate('/home');
+                navigate('/customer');
             }
         }, 1000);
     } catch (error) {
