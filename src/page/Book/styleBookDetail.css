@@ -253,7 +253,26 @@
 .details-pro .btn-mua {
     display: flex;
     margin-top: 25px;
+    position: relative;
 }
+.pop-up-cart i{
+    size: 5rem;
+    line-height: 30px;
+}
+.details-pro .pop-up-cart {
+    position: absolute;
+    top: -50%;
+    right: 50%;
+    z-index: 10;
+    animation: move 0.5s linear forwards;
+}
+@keyframes move {
+    from{
+        transform: translateY(0%);}
+    to{
+        transform: translateY(-170%);}
+}
+
 
 .details-pro .btn-mua button {
     background: #f47920;

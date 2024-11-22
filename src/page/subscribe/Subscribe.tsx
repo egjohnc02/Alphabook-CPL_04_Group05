@@ -1,13 +1,38 @@
 import { useState, useEffect } from "react";
 import AutoScrollToTop from "../../utils/AutoScrollToTop";
-import { useNavigate } from "react-router-dom";
 import './Subscribe.css'
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { auth, db } from "../../firebase/firebase";
+import { useNavigate } from "react-router-dom";
 
 const Subscribe = () => {
+
+    interface CartItem {
+        bookId: string;
+        bookImg: string;
+        bookPrice: string;
+        bookTitle: string;
+        quantity: number;
+    }
+
     const [timeLeft, setTimeLeft] = useState(12345);
-    const navigate = useNavigate();
-    const isLoggedIn = !!localStorage.getItem("Users");
-    console.log("Đã đăng nhập:", isLoggedIn);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userId, setUserId] = useState<string | null>(null);
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+            if (user) {
+                setIsLoggedIn(true);
+                setUserId(user.uid);
+            } else {
+                setIsLoggedIn(false);
+                setUserId(null);
+            }
+        });
+
+        return () => unsubscribe();
+    }, []);
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -23,6 +48,60 @@ const Subscribe = () => {
         return `${hours.toString().padStart(2, "0")}:${minutes
             .toString()
             .padStart(2, "0")}:${remainingSeconds.toString().padStart(2, "0")}`;
+    };
+
+    const handleSubscribe = async () => {
+        if (isLoggedIn && userId) {
+            try {
+                const userId = auth.currentUser?.uid;
+                if (!userId) {
+                    alert("Vui lòng đăng nhập để tiếp tục!");
+                    return;
+                }
+    
+                const cartDocRef = doc(db, "Cart", userId);
+                const cartDoc = await getDoc(cartDocRef);
+                
+                const newSubscribeItem = {
+                    bookId: "premium-subscription",
+                    bookImg: "https://img.freepik.com/premium-vector/vip-card-with-gold-crown-blue-background_961004-499.jpg",
+                    bookPrice: "50000",
+                    bookTitle: "Gói cao cấp - Subscription",
+                    quantity: "1"
+                };
+                
+                if (cartDoc.exists()) {
+                    const cartData = cartDoc.data();
+                    const existingItems = cartData.listCart || [];
+                    
+                    const existingItemIndex = existingItems.findIndex(
+                        (item: CartItem) => item.bookId === "premium-subscription"
+                    );
+    
+                    if (existingItemIndex !== -1) {
+                        alert("Gói này đã có trong giỏ hàng của bạn!");
+                        return;
+                    }
+    
+                    await setDoc(cartDocRef, {
+                        listCart: [...existingItems, newSubscribeItem]
+                    });
+                } else {
+                    await setDoc(cartDocRef, {
+                        listCart: [newSubscribeItem]
+                    });
+                }
+    
+                alert("Đã thêm gói cao cấp vào giỏ hàng!");
+                navigate('/cart');
+            } catch (error) {
+                console.error("Lỗi khi thêm gói vào giỏ hàng:", error);
+                alert("Không thể thêm gói vào giỏ hàng. Vui lòng thử lại sau.");
+            }
+        } else {
+            alert("Vui lòng đăng nhập để đăng ký gói cao cấp!");
+            navigate("/login");
+        }
     };
 
     return (
@@ -71,6 +150,7 @@ const Subscribe = () => {
                         <h5 className="card-title bg-gradient bg-danger p-3 rounded text-white">
                             Gói cao cấp
                         </h5>
+                        <img src="https://img.freepik.com/premium-vector/vip-card-with-gold-crown-blue-background_961004-499.jpg" alt="Gói cao cấp" className="img-fluid mb-3" />
                         <div>
                             <span className="card-text text-secondary">Giá hàng tháng</span>
                             <span>
@@ -108,17 +188,7 @@ const Subscribe = () => {
                             <span className="card-text text-secondary">Truy cập ebook</span>
                             <span>Bạn có thể truy cập và đọc sách online hoặc có thể tải về bản pdf.</span>
                         </div>
-                        <button
-                            className="btn my-2"
-                            onClick={() => {
-                                const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-                                if (isLoggedIn) {
-                                    window.location.href = "/cart";
-                                } else {
-                                    window.location.href = "/login";
-                                }
-                            }}
-                            >
+                        <button className="btn my-2 update-btn" onClick={handleSubscribe}>
                             Đăng ký ngay
                         </button>
                     </div>
