@@ -47,7 +47,7 @@ const Register: React.FC = () => {
         localStorage.setItem("PhoneNumber", `${phone}`);
         localStorage.setItem("useId", user.uid)
         setMessage("Đăng ký thành công!");
-        setTimeout(() => navigate('/home'), 1000);
+        setTimeout(() => navigate('/customer'), 1000);
       }
     } catch (error) {
       if (error instanceof FirebaseError) {

@@ -40,7 +40,6 @@ function BookDetail() {
     const [relatedBooks, setRelatedBooks] = useState<Book[]>([]); // Sách cùng thể loại
     // Xử lý cart
     const navigate = useNavigate();
-    const [listCart, setListCart] = useState<UserCart[]>([]);
     const [isActive, setIsActive] = useState<boolean>(false);
     const [quantity, setQuantity] = useState<number>(1)
     useEffect(() => {
