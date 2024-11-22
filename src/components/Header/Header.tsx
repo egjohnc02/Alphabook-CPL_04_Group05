@@ -111,6 +111,11 @@ const Header: React.FC = () => {
             pageName = 'Nâng cấp tài khoản';
             break;
 
+
+        case '/admin':
+            pageName = 'Trang quản trị viên';
+            break;
+
         default:
             pageName = 'Trang không tồn tại';
     }

@@ -34,7 +34,6 @@ const Home: React.FC = () => {
         const fetchNews = async () => {
             const news = await getLimitedNews();
             setListNewsCaroual(news); // Cập nhật listNews với dữ liệu nhận được
-            console.log(news)
         };
 
         fetchNews(); // Gọi hàm fetchNews
@@ -44,7 +43,6 @@ const Home: React.FC = () => {
         const fetchEvent = async () => {
             const event = await getLimitedEvents ();
             setListNewsCaroual2(event); // Cập nhật Event với dữ liệu nhận được
-            console.log(event)
         };
 
         fetchEvent(); // Gọi hàm fetchEvent
