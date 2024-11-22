@@ -219,14 +219,14 @@ const Cart: React.FC = () => {
                                                             <div className="btn p-0 m-0 bg-none border-0 text-danger"  onClick={() => handleDeleteClick(item.bookId)}>Xóa</div>
                                                         </div>
                                                     </div>
-                                                    <p className="info-2-price text-danger fw-bolder ps-1 pt-3">{item.bookPrice}</p>
+                                                    <p className="info-2-price text-danger fw-bolder ps-1 pt-3">{parseFloat(item.bookPrice).toLocaleString("vi-VN")}</p>
                                                     <div className="infor-3-count d-flex bg-prrimary align-items-center">
                                                         <button className="btn border p-0" onClick={() =>handleDecreaseClick(item.bookId)}><i className="fa-solid fa-minus p-1"></i></button>
                                                         <p className="m-0 px-2">{item.quantity}</p>
                                                         <button className="btn border p-0" onClick={() =>handleIncreaseClick(item.bookId)}><i className="fa-solid fa-plus p-1"></i></button>
                                                     </div>
                                                     <div className="info-4-total-price">
-                                                        <p className="text-danger fw-bolder p-0 m-0">{parseFloat(item.quantity) * parseFloat(item.bookPrice)}</p>
+                                                        <p className="text-danger fw-bolder p-0 m-0">{(parseFloat(item.quantity) * parseFloat(item.bookPrice)).toLocaleString("vi-VN")}</p>
                                                     </div>
                                                 </div>
                                             </ListGroup.Item>
@@ -249,14 +249,14 @@ const Cart: React.FC = () => {
                                                             <div className="btn p-0 m-0 bg-none border-0 text-danger">Xóa</div>
                                                         </div>
                                                     </div>
-                                                    <p className="info-2-price text-danger fw-bolder ps-1 pt-3">{item.bookPrice}</p>
+                                                    <p className="info-2-price text-danger fw-bolder ps-1 pt-3">{parseFloat(item.bookPrice).toLocaleString("vi-VN")}</p>
                                                     <div className="infor-3-count d-flex bg-prrimary align-items-center">
                                                         <button className="btn border p-0"><i className="fa-solid fa-minus p-1"></i></button>
                                                         <p className="m-0 px-2">{item.quantity}</p>
                                                         <button className="btn border p-0"><i className="fa-solid fa-plus p-1"></i></button>
                                                     </div>
                                                     <div className="info-4-total-price">
-                                                        <p className="text-danger fw-bolder p-0 m-0">{parseFloat(item.quantity) * parseFloat(item.bookPrice)}</p>
+                                                        <p className="text-danger fw-bolder p-0 m-0">{(parseFloat(item.quantity) * parseFloat(item.bookPrice)).toLocaleString("vi-VN")}</p>
                                                     </div>
                                                 </div>
                                             </ListGroup.Item>
@@ -270,7 +270,7 @@ const Cart: React.FC = () => {
                                 <div className="total-cart mt-4">
                                     <div className="content-total-cart d-flex justify-content-between mb-4">
                                         <p className="text-muted">Tổng tiền:</p>
-                                        <p className="final-price text-danger fw-bolder">{calculateTotalPrice(listCart)}</p>
+                                        <p className="final-price text-danger fw-bolder">{calculateTotalPrice(listCart).toLocaleString("vi-VN")}</p>
                                     </div>
                                     <div className="button-card text-white d-flex justify-content-center align-items-center bg-orange rounded-1 mb-3" style={{ height: '55px' }}>
                                         Thanh toán
