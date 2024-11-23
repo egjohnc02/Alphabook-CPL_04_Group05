@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../../firebase/firebase";
 import { signOut } from "firebase/auth";
-import ThongTinTaiKhoan from "../../../components/Account/Customer/ThongTinTaiKhoan/ThongTinTaiKhoan";
-import DonHang from "../../../components/Account/Customer/DonHang/DonHang";
+import ThongTinTaiKhoan from "./ThongTinTaiKhoan/ThongTinTaiKhoan";
+import DonHang from "./DonHang/DonHang";
 import DoiMatKhau from "../../../components/Account/DoiMatKhau/DoiMatKhau";
-import SoDiaChi from "../../../components/Account/Customer/SoDiaChi/SoDiaChi";
+import SoDiaChi from "./SoDiaChi/SoDiaChi";
 import AutoScrollToTop from "../../../utils/AutoScrollToTop";
 
 const Customer: React.FC = () => {

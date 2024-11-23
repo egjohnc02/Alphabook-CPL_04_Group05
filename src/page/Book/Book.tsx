@@ -21,12 +21,13 @@ function Book() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedPriceRange, setSelectedPriceRange] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [sortOption, setSortOption] = useState<string>("Mặc định");
-  const [searchQuery, setSearchQuery] = useState(""); // Add state for search query
+  const [sortOption, setSortOption] = useState<string>('Mặc định'); // Add state for sorting
 
   const [book, setBook] = useState<Book[]>([]);
 
   const itemsPerPage = 9;
+
+
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -57,10 +58,6 @@ function Book() {
     setSortOption(option);
   };
 
-  const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(event.target.value);
-  };
-
   // Hàm lọc sách theo price range
   const filterBooksByPriceRange = (books: Book[], selectedPriceRange: string) => {
     switch (selectedPriceRange) {
@@ -84,16 +81,16 @@ function Book() {
   const sortedBooks = (books: Book[], sortOption: string) => {
     const sortedBooksArray = [...books];
     switch (sortOption) {
-      case "Tên A-Z":
+      case 'Tên A-Z':
         sortedBooksArray.sort((a, b) => a.title.localeCompare(b.title));
         break;
-      case "Tên Z-A":
+      case 'Tên Z-A':
         sortedBooksArray.sort((a, b) => b.title.localeCompare(a.title));
         break;
-      case "Giá tăng dần":
+      case 'Giá tăng dần':
         sortedBooksArray.sort((a, b) => a.price - b.price);
         break;
-      case "Giá giảm dần":
+      case 'Giá giảm dần':
         sortedBooksArray.sort((a, b) => b.price - a.price);
         break;
       default:
@@ -101,7 +98,6 @@ function Book() {
     }
     return sortedBooksArray;
   };
-
   const filterBooksByCategory = (books: Book[], selectedCategory: string | null) => {
     if (!selectedCategory) return books;
     return books.filter((book) => {
@@ -110,27 +106,14 @@ function Book() {
           cat.toLowerCase().replace(/\s+/g, "-").includes(selectedCategory.toLowerCase().replace(/\s+/g, "-"))
         );
       }
-      return book.category
-        .toLowerCase()
-        .replace(/\s+/g, "-")
-        .includes(selectedCategory.toLowerCase().replace(/\s+/g, "-"));
+      return book.category.toLowerCase().replace(/\s+/g, "-").includes(selectedCategory.toLowerCase().replace(/\s+/g, "-"));
     });
   };
-
-  const filterBooksBySearch = (books: Book[], searchQuery: string) => {
-    if (!searchQuery) return books;
-    const query = searchQuery.toLowerCase();
-    return books.filter((book) => {
-      return book.title.toLowerCase().includes(query);
-    });
-  };
-
   const filteredAndPagedBooks = (
     books: Book[],
     sortOption: string,
     selectedCategory: string | null,
     selectedPriceRange: string,
-    searchQuery: string, // Add searchQuery parameter
     currentPage: number,
     itemsPerPage: number
   ) => {
@@ -138,43 +121,47 @@ function Book() {
       return [];
     }
 
+
     const sortedBooksArray = sortedBooks(books, sortOption);
+
 
     const categoryFilteredBooks = selectedCategory
       ? sortedBooksArray.filter((book) => {
-          if (Array.isArray(book.category)) {
-            return book.category.some((cat) =>
-              cat
-                .toLowerCase()
-                .replace(/\s+/g, "-")
-                .includes(selectedCategory.toLowerCase().replace(/\s+/g, "-"))
-            );
-          }
-          return book.category
-            .toLowerCase()
-            .replace(/\s+/g, "-")
-            .includes(selectedCategory.toLowerCase().replace(/\s+/g, "-"));
-        })
+        if (Array.isArray(book.category)) {
+          return book.category.some((cat) =>
+            cat
+              .toLowerCase()
+              .replace(/\s+/g, "-")
+              .includes(selectedCategory.toLowerCase().replace(/\s+/g, "-"))
+          );
+        }
+        return book.category
+          .toLowerCase()
+          .replace(/\s+/g, "-")
+          .includes(selectedCategory.toLowerCase().replace(/\s+/g, "-"));
+      })
       : sortedBooksArray;
 
-    const priceFilteredBooks = filterBooksByPriceRange(categoryFilteredBooks, selectedPriceRange);
 
-    const searchFilteredBooks = filterBooksBySearch(priceFilteredBooks, searchQuery); // Filter by search query
+    const filteredBooks = filterBooksByPriceRange(
+      categoryFilteredBooks,
+      selectedPriceRange
+    );
+
 
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = currentPage * itemsPerPage;
-    return searchFilteredBooks.slice(startIndex, endIndex); // Return the searchFilteredBooks
+    return filteredBooks.slice(startIndex, endIndex);
   };
 
+
   const totalPages = Math.ceil(
-    filterBooksBySearch( // Add search filter to totalPages calculation
-      filterBooksByPriceRange(
-        filterBooksByCategory(sortedBooks(book, sortOption), selectedCategory),
-        selectedPriceRange
-      ),
-      searchQuery
+    filterBooksByPriceRange(
+      filterBooksByCategory(sortedBooks(book, sortOption), selectedCategory),
+      selectedPriceRange
     ).length / itemsPerPage
   );
+
 
   console.log("Total Pages:", totalPages);
   const currentBooks = filteredAndPagedBooks(
@@ -182,7 +169,6 @@ function Book() {
     sortOption,
     selectedCategory,
     selectedPriceRange,
-    searchQuery, // Pass searchQuery to filteredAndPagedBooks
     currentPage,
     itemsPerPage
   );
@@ -224,17 +210,7 @@ function Book() {
               <div className="main_container collection col-lg-9 col-md-12 col-sm-12">
                 <div className="warp-srt-title">
                   <h1 className="title-module d-none">Tất cả sản phẩm</h1>
-                  <div className="sort-search-container d-flex justify-content-between align-items-center">
-                    <SortOptions onSortOptionChange={handleSortOptionChange} />
-                    <div className="search-box">
-                      <input
-                        type="text"
-                        placeholder="Tìm kiếm sách..."
-                        value={searchQuery}
-                        onChange={handleSearchInputChange}
-                      />
-                    </div>
-                  </div>
+                  <SortOptions onSortOptionChange={handleSortOptionChange} />
                 </div>
                 <div className="category-products products">
                   <section className="products-view products-view-grid collection_reponsive">
@@ -253,6 +229,8 @@ function Book() {
                                 </a>
                                 <div className="info-product">
                                   <h3 className="product-name">
+
+
                                     <a href={`/book/detail/${item.id}`} title={item.title}>
                                       {item.title}
                                     </a>
@@ -260,18 +238,15 @@ function Book() {
                                   <div className="price-box">
                                     <span className="price">
                                       {(
-                                        item.coupon &&
-                                        typeof item.coupon === "string" &&
-                                        item.coupon.includes("%")
-                                          ? item.price - (item.price * parseInt(item.coupon)) / 100
+                                        item.coupon && typeof item.coupon === 'string' && item.coupon.includes('%')
+                                          ? item.price - (item.price * parseInt(item.coupon) / 100)
                                           : item.price
                                       ).toLocaleString("vi-VN")}
                                       đ
                                     </span>
 
-                                    <span className="compare-price">
-                                      {item.price.toLocaleString("vi-VN")}đ
-                                    </span>
+                                    <span className="compare-price">{item.price.toLocaleString("vi-VN")}đ</span>
+
                                   </div>
                                 </div>
                               </form>
