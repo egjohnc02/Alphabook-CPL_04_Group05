@@ -15,6 +15,13 @@ export interface NewsItem {
   img: string;
   title: string;
 }
+export interface Event {
+  Date?: string;
+  content: string;
+  id: string,
+  img: string;
+  title: string;
+}
 // Hàm lấy tất cả dữ liệu từ collection "News"
 const getAllNews = async (): Promise<NewsItem[]> => {
   const newsData = collection(db, "News");
@@ -28,6 +35,14 @@ const getLimitedNews = async (): Promise<NewsItem[]> => {
   const newsQuery = query(newsData, limit(4)); // Lấy tối đa 4 phần tử
   const newsSnapshot = await getDocs(newsQuery);
   const newsList: NewsItem[] = newsSnapshot.docs.map(doc => doc.data() as NewsItem);
+  return newsList;
+};
+// Lấy 4 phần tử để hiển thị event cua carousel
+const getLimitedEvents = async (): Promise<Event[]> => {
+  const newsData = collection(db, "event");
+  const newsQuery = query(newsData, limit(4)); // Lấy tối đa 4 phần tử
+  const newsSnapshot = await getDocs(newsQuery);
+  const newsList: Event[] = newsSnapshot.docs.map(doc => doc.data() as Event);
   return newsList;
 };
 
@@ -67,4 +82,4 @@ const getAllEventNews = async (): Promise<NewsItem[]> => {
   const eventNewsList: NewsItem[] = eventNewsSnapshot.docs.map(doc => doc.data() as NewsItem);
   return eventNewsList;
 };
-export { getAllNews, getAllHotNews, getAllPressNews, getAllRecruitmentNews, getAllInternalNews, getAllEventNews,getLimitedNews };
+export { getAllNews, getAllHotNews, getAllPressNews, getAllRecruitmentNews, getAllInternalNews, getAllEventNews,getLimitedNews,getLimitedEvents };
