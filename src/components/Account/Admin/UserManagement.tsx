@@ -41,14 +41,14 @@ const UserManagement: React.FC = () => {
       {loading ? (
         <p>Đang tải dữ liệu...</p>
       ) : (
+        <div className="overflow-y-scroll" style={{maxHeight: 500}}>
         <table className="table table-striped">
           <thead className="thead-dark">
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">Họ và Tên</th>
-              <th scope="col">Email</th>
-              <th scope="col">Role</th>
-              <th scope="col">Số Điện Thoại</th>
+              <th scope="col" className="bg-orange text-white">#</th>
+              <th scope="col" className="bg-orange text-white">Họ và Tên</th>
+              <th scope="col" className="bg-orange text-white">Email</th>
+              <th scope="col" className="bg-orange text-white">Số Điện Thoại</th>
             </tr>
           </thead>
           <tbody>
@@ -58,7 +58,6 @@ const UserManagement: React.FC = () => {
                   <td>{index + 1}</td>
                   <td>{`${user.FirstName} ${user.LastName}`}</td>
                   <td>{user.email}</td>
-                  <td>{user.Role}</td>
                   <td>{user.PhoneNumber || "Không có"}</td>
                 </tr>
               ))
@@ -71,6 +70,7 @@ const UserManagement: React.FC = () => {
             )}
           </tbody>
         </table>
+        </div>
       )}
     </div>
   );

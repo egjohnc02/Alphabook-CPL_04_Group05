@@ -20,34 +20,39 @@ const DonHang: React.FC = () => {
     useEffect(() => {
         const fetchOrders = async () => {
             const user = auth.currentUser;
-
+    
             if (user) {
                 const ordersRef = collection(db, "DonHang");
                 const snapshot = await getDocs(ordersRef);
-
+    
                 const userOrders = snapshot.docs
                     .map((doc) => ({ orderId: doc.id, ...doc.data() } as Order))
-                    .filter((order) => order.userId === user.uid);
+                    .filter((order) => order.userId === user.uid)
+                    .sort(
+                        (a, b) => new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime()
+                    );
                 setOrders(userOrders);
             }
         };
-
+    
         fetchOrders();
     }, []);
+    
 
     return (
-      <div className="container mt-4">
-      <h2>Danh sách đơn hàng</h2>
+      <div className="container">
+      <p className="fs-4">Danh sách đơn hàng</p>
       {orders.length > 0 ? (
-          <table className="table table-striped">
+        <div className="overflow-y-scroll" style={{maxHeight: 500}}>
+            <table className="table table-striped">
               <thead className="thead-dark">
                   <tr>
-                      <th scope="col">Sản phẩm</th>
-                      <th scope="col">Ngày</th>
-                      <th scope="col">Địa chỉ</th>
-                      <th scope="col">Mã đơn hàng</th>
-                      <th scope="col">Giá trị đơn hàng</th>
-                      <th scope="col">TT thanh toán</th>
+                      <th scope="col" className="bg-orange text-white">Sản phẩm</th>
+                      <th scope="col" className="bg-orange text-white">Ngày</th>
+                      <th scope="col" className="bg-orange text-white">Địa chỉ</th>
+                      <th scope="col" className="bg-orange text-white">Mã đơn hàng</th>
+                      <th scope="col" className="bg-orange text-white">Giá trị đơn hàng</th>
+                      <th scope="col" className="bg-orange text-white">Trạng thái</th>
                   </tr>
               </thead>
               <tbody>
@@ -65,12 +70,13 @@ const DonHang: React.FC = () => {
                           <td>{new Date(order.orderDate).toLocaleString()}</td>
                           <td>{order.address}</td>
                           <td>{order.orderId}</td>
-                          <td>{order.totalPrice} VNĐ</td>
+                          <td>{order.totalPrice.toLocaleString("vi-VN")}₫</td>
                           <td>{order.status}</td>
                       </tr>
                   ))}
               </tbody>
           </table>
+        </div>
       ) : (
           <p>Không có đơn hàng nào.</p>
       )}
