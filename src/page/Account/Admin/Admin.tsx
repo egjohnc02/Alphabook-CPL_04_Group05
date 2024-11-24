@@ -2,14 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../../firebase/firebase";
 import { signOut } from "firebase/auth";
-import UserManagement from "../../../components/Account/Admin/UserManagement"; // Component quản lý người dùng
-import OrderManagement from "../../../components/Account/Admin/OrderManagement.tsx"; // Component quản lý đơn hàng
-import DoiMatKhau from "../../../components/Account/DoiMatKhau/DoiMatKhau"; // Component đổi mật khẩu
+import UserManagement from "../../../components/Account/Admin/UserManagement";
+import OrderManagement from "../../../components/Account/Admin/OrderManagement.tsx";
+import DoiMatKhau from "../../../components/Account/DoiMatKhau/DoiMatKhau";
 import AutoScrollToTop from "../../../utils/AutoScrollToTop";
+import HTXBManagement from "../../../components/Account/Admin/HTXBManagement.tsx";
 
 const Admin: React.FC = () => {
   const navigate = useNavigate();
-  const [currentView, setCurrentView] = useState<"UserManagement" | "OrderManagement" | "DoiMatKhau">("UserManagement");
+  const [currentView, setCurrentView] = useState<"UserManagement" | "OrderManagement" | "DoiMatKhau" | "HTXBManagement">("UserManagement");
   const [userName, setUserName] = useState("");
 
   useEffect(() => {
@@ -36,6 +37,8 @@ const Admin: React.FC = () => {
         return <UserManagement />;
       case "OrderManagement":
         return <OrderManagement />;
+      case "HTXBManagement":
+          return <HTXBManagement />;
       case "DoiMatKhau":
         return <DoiMatKhau />;
       default:
@@ -65,6 +68,13 @@ const Admin: React.FC = () => {
           style={{ cursor: "pointer" }}
         >
           Quản lý đơn hàng
+        </p>
+        <p
+          className="text-dark hover-text-orange text-decoration-none"
+          onClick={() => setCurrentView("HTXBManagement")}
+          style={{ cursor: "pointer" }}
+        >
+          Quản lý HTXB
         </p>
         <p
           className="text-dark hover-text-orange text-decoration-none"

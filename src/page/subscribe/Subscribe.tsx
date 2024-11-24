@@ -51,56 +51,54 @@ const Subscribe = () => {
     };
 
     const handleSubscribe = async () => {
-        if (isLoggedIn && userId) {
-            try {
-                const userId = auth.currentUser?.uid;
-                if (!userId) {
-                    alert("Vui lòng đăng nhập để tiếp tục!");
-                    return;
-                }
-    
-                const cartDocRef = doc(db, "Cart", userId);
-                const cartDoc = await getDoc(cartDocRef);
-                
-                const newSubscribeItem = {
-                    bookId: "premium-subscription",
-                    bookImg: "https://img.freepik.com/premium-vector/vip-card-with-gold-crown-blue-background_961004-499.jpg",
-                    bookPrice: "50000",
-                    bookTitle: "Gói cao cấp - Subscription",
-                    quantity: "1"
-                };
-                
-                if (cartDoc.exists()) {
-                    const cartData = cartDoc.data();
-                    const existingItems = cartData.listCart || [];
-                    
-                    const existingItemIndex = existingItems.findIndex(
-                        (item: CartItem) => item.bookId === "premium-subscription"
-                    );
-    
-                    if (existingItemIndex !== -1) {
-                        alert("Gói này đã có trong giỏ hàng của bạn!");
-                        return;
-                    }
-    
-                    await setDoc(cartDocRef, {
-                        listCart: [...existingItems, newSubscribeItem]
-                    });
-                } else {
-                    await setDoc(cartDocRef, {
-                        listCart: [newSubscribeItem]
-                    });
-                }
-    
-                alert("Đã thêm gói cao cấp vào giỏ hàng!");
-                navigate('/cart');
-            } catch (error) {
-                console.error("Lỗi khi thêm gói vào giỏ hàng:", error);
-                alert("Không thể thêm gói vào giỏ hàng. Vui lòng thử lại sau.");
-            }
-        } else {
+        if (!isLoggedIn || !userId) {
             alert("Vui lòng đăng nhập để đăng ký gói cao cấp!");
             navigate("/login");
+            return;
+        }
+
+        try {
+            const cartDocRef = doc(db, "Cart", userId);
+            const cartDoc = await getDoc(cartDocRef);
+            
+            if (cartDoc.exists()) {
+                const cartData = cartDoc.data();
+                const existingItems = cartData.listCart || [];
+                
+                if (existingItems.some((item: CartItem) => item.bookId === "premium-subscription")) {
+                    alert("Gói này đã có trong giỏ hàng của bạn!");
+                    return;
+                }
+
+                const subscriptionRef = doc(db, "Subscriptions", "premium");
+                const subscriptionDoc = await getDoc(subscriptionRef);
+                
+                if (subscriptionDoc.exists()) {
+                    await setDoc(cartDocRef, {
+                        listCart: [...existingItems, subscriptionDoc.data()]
+                    });
+                    
+                    alert("Đã thêm gói cao cấp vào giỏ hàng!");
+                    navigate('/cart');
+                } else {
+                    throw new Error("Không tìm thấy thông tin gói cao cấp");
+                }
+            } else {
+                const subscriptionRef = doc(db, "Subscriptions", "premium");
+                const subscriptionDoc = await getDoc(subscriptionRef);
+                
+                if (subscriptionDoc.exists()) {
+                    await setDoc(cartDocRef, {
+                        listCart: [subscriptionDoc.data()]
+                    });
+                    
+                    alert("Đã thêm gói cao cấp vào giỏ hàng!");
+                    navigate('/cart');
+                }
+            }
+        } catch (error) {
+            console.error("Lỗi khi thêm gói vào giỏ hàng:", error);
+            alert("Không thể thêm gói vào giỏ hàng. Vui lòng thử lại sau.");
         }
     };
 
@@ -150,7 +148,6 @@ const Subscribe = () => {
                         <h5 className="card-title bg-gradient bg-danger p-3 rounded text-white">
                             Gói cao cấp
                         </h5>
-                        <img src="https://img.freepik.com/premium-vector/vip-card-with-gold-crown-blue-background_961004-499.jpg" alt="Gói cao cấp" className="img-fluid mb-3" />
                         <div>
                             <span className="card-text text-secondary">Giá hàng tháng</span>
                             <span>
