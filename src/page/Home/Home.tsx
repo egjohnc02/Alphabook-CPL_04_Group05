@@ -34,7 +34,6 @@ const Home: React.FC = () => {
         const fetchNews = async () => {
             const news = await getLimitedNews();
             setListNewsCaroual(news); // Cập nhật listNews với dữ liệu nhận được
-            console.log(news)
         };
 
         fetchNews(); // Gọi hàm fetchNews
@@ -42,9 +41,8 @@ const Home: React.FC = () => {
 
     useEffect(() => {
         const fetchEvent = async () => {
-            let event = await getLimitedEvents ();
+            const event = await getLimitedEvents ();
             setListNewsCaroual2(event); // Cập nhật Event với dữ liệu nhận được
-            console.log(event)
         };
 
         fetchEvent(); // Gọi hàm fetchEvent
@@ -125,28 +123,6 @@ const Home: React.FC = () => {
                 <NewBookRelease />
             </div>
             </div></section>
-            <div className="my-5 text-center">
-                <h3 className="bg-title fw-bold">TỦ SÁCH</h3>
-                <div className="col">
-                    <div className="d-flex justify-content-center gap-2">
-                        <button className="text-opacity-10 fw-semibold hover-text-orange hover-border-orange p-2 rounded-pill border-0">Harvard Business Review</button>
-                        <button className="text-opacity-10 fw-semibold hover-text-orange hover-border-orange p-2 rounded-pill border-0">Quản trị doanh nghiệp</button>
-                        <button className="text-opacity-10 fw-semibold hover-text-orange hover-border-orange p-2 rounded-pill border-0">Alpha Lead</button>
-                        <button className="text-opacity-10 fw-semibold hover-text-orange hover-border-orange p-2 rounded-pill border-0">Tài chính - Đầu tư - Chứng khoán</button>
-                        <button className="text-opacity-10 fw-semibold hover-text-orange hover-border-orange p-2 rounded-pill border-0">Công nghệ & Chuyển đổi số</button>
-                    </div>
-                    <div className="d-flex justify-content-center gap-2">
-                        <button className="text-opacity-10 fw-semibold hover-text-orange hover-border-orange p-2 rounded-pill border-0">Marketing & Bán hàng</button>
-                        <button className="text-opacity-10 fw-semibold hover-text-orange hover-border-orange p-2 rounded-pill border-0">Kỹ năng</button>
-                    </div>
-                </div>
-                <div className="my-3">
-                    <q className="text-danger">No data</q>
-                </div>
-                <Link to='/book'>
-                    <button className="bg-orange text-light p-3 px-4 border-0 rounded-pill">Xem tất cả</button>
-                </Link>
-            </div>
             <div className="text-light my-5 p-5" style={{ background: `URL(${serviceBg})` }}>
                 <div className="d-flex gap-3">
                     <div className="w-25">

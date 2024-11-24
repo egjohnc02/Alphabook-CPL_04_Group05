@@ -60,7 +60,7 @@ G5_HN24_CPL_FE_04/
 
 <a name="trangchu"></a>
 ### 1. Trang chủ 
-`Inprogress 😢`
+`Done 😁`
 
 #### Function:
 - Render page
@@ -77,7 +77,7 @@ G5_HN24_CPL_FE_04/
 <a name="tusach"></a>
 ### 3. Tủ sách
 
-`Not started 😭`
+`Done 😁`
 
 #### Function:
 - Render page
@@ -87,7 +87,7 @@ G5_HN24_CPL_FE_04/
 <a name="dichvuHTXB"></a>
 ### 4. Dịch vụ HTXB
 
-`Inprogress 😢`
+`Done 😁`
 
 #### Function:
 - Render page only
@@ -95,7 +95,7 @@ G5_HN24_CPL_FE_04/
 <a name="tintucvasukien"></a>
 ### 5. Tin tức - Sự kiện
 
-`Not started 😭`
+`Done 😁`
 
 #### Function:
 - Render page
@@ -114,7 +114,7 @@ G5_HN24_CPL_FE_04/
 <a name="siso"></a>
 ### 7. Đăng Nhập và Đăng Ký
 
-`Inprogress 😢`
+`Done 😁`
 
 #### Function:
 - Render page
@@ -152,7 +152,7 @@ G5_HN24_CPL_FE_04/
 
 <a name="navbar"></a>
 ### 3. Header
-`Not started 😭`
+`Done 😁`
 
 #### Function:
 - Render header

@@ -38,15 +38,16 @@ const Register: React.FC = () => {
           LastName: lname,
           PhoneNumber: phone,
           email: user.email,
+          Role: "customer"
         });
         setMessage("Đăng ký thành công! Vui lòng kiểm tra email để xác nhận tài khoản.");
 
         localStorage.setItem("isLoggedIn", "true");
         localStorage.setItem("userName", `${fname} ${lname}`);
         localStorage.setItem("PhoneNumber", `${phone}`);
-        
+        localStorage.setItem("useId", user.uid)
         setMessage("Đăng ký thành công!");
-        setTimeout(() => navigate('/home'), 1000);
+        setTimeout(() => navigate('/customer'), 1000);
       }
     } catch (error) {
       if (error instanceof FirebaseError) {

@@ -1,9 +1,10 @@
 import './styleBookDetail.css'
 import { useState, useEffect } from "react";
 
-import { useParams } from 'react-router-dom';  // Import useParams để lấy id từ URL
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { useNavigate, useParams } from 'react-router-dom';  // Import useParams để lấy id từ URL
+import { arrayRemove, arrayUnion, collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore";
 import { db } from "../../firebase/firebase.tsx";
+import Comment from './BookComment.tsx';
 interface Book {
     id: string;
     author: string;
@@ -22,13 +23,35 @@ interface BookDetail {
     publishDate: string;
     publisher: string;
 }
+interface CartItem {
+    bookId: string;
+    bookImg: string;
+    bookPrice: string;
+    bookTitle: string;
+    quantity: string;
+}
+
+interface UserCart {
+    listCart: CartItem[];
+}
+interface BookReview {
+    id: string;
+    ReaderR: string[];
+    ExpertR: string[];
+    PressR: string[];
+}
 function BookDetail() {
     const { id } = useParams();
     const [book, setBook] = useState<Book | null>(null);
     const [bookDetail, setBookDetail] = useState<BookDetail | null>(null);
-    const [relatedBooks, setRelatedBooks] = useState<Book[]>([]); // Sách cùng thể loại
+    const [relatedBooks, setRelatedBooks] = useState<Book[]>([]);
+    const [activeTab, setActiveTab] = useState("tab-1");
+    const [bookReview, setBookReview] = useState<BookReview | null>(null);
 
-
+    // Xử lý cart
+    const navigate = useNavigate();
+    const [isActive, setIsActive] = useState<boolean>(false);
+    const [quantity, setQuantity] = useState<number>(1)
     useEffect(() => {
         const fetchBook = async () => {
             const bookCollection = collection(db, "Books");
@@ -68,7 +91,47 @@ function BookDetail() {
         };
 
         fetchBookDetail();
+
+        const fetchCartByUserId = async () => {
+            const userId = localStorage.getItem("useId") as string
+            const cartDocRef = doc(db, "Cart", userId);
+            const cartSnapshot = await getDoc(cartDocRef);
+
+            if (cartSnapshot.exists()) {
+                const cartData = cartSnapshot.data() as UserCart; // Map dữ liệu thành interface
+                console.log("Cart Data:", cartData.listCart);
+                return cartData.listCart; // Trả về danh sách sản phẩm
+            } else {
+                console.log("No cart found for the given document ID");
+                return [];
+            }
+        };
+
+        fetchCartByUserId();
+
+        const fetchBookReview = async () => {
+            if (book && book.id) {
+                try {
+                    const bookReviewCollection = collection(db, "BookReview");
+                    const q1 = query(bookReviewCollection, where("id", "==", book.id));
+                    const bookReviewSnapshot = await getDocs(q1);
+                    const bookReviewData = bookReviewSnapshot.docs.map(doc => ({
+                        id: doc.id,
+                        ...doc.data(),
+                    })) as BookReview[];
+
+                    if (bookReviewData.length > 0) {
+                        setBookReview(bookReviewData[0]);
+                    }
+                } catch (error) {
+                    console.error("Error fetching book review:", error);
+                }
+            }
+        };
+
+        fetchBookReview();
     }, [book]);  // Fetch details when the book changes
+
 
 
 
@@ -92,7 +155,7 @@ function BookDetail() {
                 // Lọc bỏ sách hiện tại (đang hiển thị chi tiết) ra khỏi danh sách liên quan
                 const filteredRelatedBooks = relatedBookData.filter((relatedBook) => relatedBook.id !== book.id);
 
-                console.log(filteredRelatedBooks);  // Kiểm tra danh sách sách liên quan đã được lọc chưa
+
                 setRelatedBooks(filteredRelatedBooks);  // Cập nhật sách liên quan sau khi lọc
             }
         };
@@ -103,6 +166,91 @@ function BookDetail() {
     if (!book || !bookDetail) {
         return <div>Loading...</div>; // Render loading if book or book detail is not available yet
     }
+
+    //Xử lý add to cart
+    // Check tồn tại cart hay chưa 
+    // Hàm kiểm tra và tạo document nếu chưa tồn tại
+    const createCartDocumentIfNotExists = async (userId: string): Promise<void> => {
+        try {
+            // Tham chiếu đến document trong collection "Cart"
+            const cartDocRef = doc(db, "Cart", userId);
+
+            const cartDocSnapshot = await getDoc(cartDocRef);
+            if (cartDocSnapshot.exists()) {
+                console.log("Cart document already exists for userId:", userId);
+            } else {
+                const defaultData = {
+                    listCart: [],
+                };
+
+                // Tạo document mới
+                await setDoc(cartDocRef, defaultData);
+            }
+        } catch (error) {
+        }
+    };
+
+    // Lấy dữ liệu cart của user theo userID
+    const handleAddToCart = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+
+        const userId = localStorage.getItem("useId");
+        if (!userId) return; // Đảm bảo rằng userId không null
+        createCartDocumentIfNotExists(userId)
+        const formData = new FormData(e.target as HTMLFormElement);
+        const bookId = formData.get("bookId") as string;
+        const quantityForm = quantity;
+        const quantity1 = formData.get("quantity");
+        const bookTitle = formData.get("bookTitle") as string;
+        const bookImg = formData.get("bookImg") as string;
+        const bookPrice = formData.get("bookPrice") as string;
+        const cartDocRef = doc(db, "Cart", userId);
+        console.log("quantity", quantity1 + bookTitle + bookPrice)
+        // Lấy dữ liệu hiện tại
+        const cartSnapshot = await getDoc(cartDocRef);
+        if (!cartSnapshot.exists()) return;
+
+        const cartData = cartSnapshot.data() as UserCart;
+        // Kiểm tra sản phẩm đã tồn tại chưa
+        const existingItem = cartData.listCart.find(item => item.bookId === bookId);
+
+        if (existingItem) {
+            // Xóa sản phẩm cũ
+            await updateDoc(cartDocRef, {
+                listCart: arrayRemove(existingItem),
+            });
+            // Cập nhật số lượng mới và thêm lại
+            const updatedItem = { ...existingItem, quantity: (parseInt(existingItem.quantity) + quantityForm).toString() };
+            await updateDoc(cartDocRef, {
+                listCart: arrayUnion(updatedItem),
+            });
+
+            console.log(`Updated item in cart: ${JSON.stringify(updatedItem)}`);
+        } else {
+            // Thêm sản phẩm mới
+            const newItem = { bookId, bookTitle, bookImg, bookPrice, quantity: quantityForm.toString() };
+            await updateDoc(cartDocRef, {
+                listCart: arrayUnion(newItem),
+            });
+
+            console.log(`Added new item to cart: ${JSON.stringify(newItem)}`);
+        }
+    };
+
+    const handleCheckLogin = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        localStorage.getItem("isLoggedIn") == "true" ? handleAddToCart(e) : navigate(`/login`);
+    }
+
+    const handlePopUp = () =>{
+            setIsActive(true); 
+            console.log("pop-up")
+    }
+    // Sau 2 giây ẩn popup
+    setTimeout(() => {
+        setIsActive(false);
+      }, 400);
     return (
         <div className="container">
             <div className="row">
@@ -230,7 +378,11 @@ function BookDetail() {
                             </table>
                         </div>
 
-                        <form encType="multipart/form-data" id="add-to-cart-form" data-cart-form="" action="/cart/add" method="post" className="wishItem">
+                        <form id="add-to-cart-form" onSubmit={(e) => handleCheckLogin(e)} className="wishItem">
+                            <input type="text" value={book.id} name="bookId" hidden></input>
+                            <input type="text" value={book.title} name="bookTitle" hidden></input>
+                            <input type="text" value={book.img} name="bookImg" hidden></input>
+                            <input type="text" value={book.price} name="bookPrice" hidden></input>
                             <div className="form-product">
                                 <div className="box-variant clearfix d-none">
                                     <input type="hidden" id="one_variant" name="variantId"
@@ -241,12 +393,12 @@ function BookDetail() {
                                     <div className="qty-ant clearfix custom-btn-number">
                                         <label>Số lượng:</label>
                                         <div className="custom custom-btn-numbers clearfix input_number_product">
-                                            <button
+                                        <button
                                                 onClick={(e) => {
                                                     e.preventDefault();
                                                     const result = document.getElementById('qty') as HTMLInputElement;
                                                     const qty = parseInt(result.value, 10);
-                                                    if (!isNaN(qty) && qty > 1) result.value = (qty - 1).toString();
+                                                    if (!isNaN(qty) && qty > 1) setQuantity(qty - 1);
                                                 }}
                                                 className="btn-minus btn-cts"
                                                 type="button"
@@ -260,10 +412,11 @@ function BookDetail() {
                                                 id="qty"
                                                 name="quantity"
                                                 size={4}
-                                                value="1"
+                                                value={quantity}
                                                 maxLength={3}
                                                 onChange={(e) => {
-                                                    if (parseInt(e.target.value, 10) === 0) e.target.value = '1';
+                                                    if (parseInt(e.target.value, 10) === 0) setQuantity(1);
+                                                    setQuantity(parseInt(e.target.value, 10))
                                                 }}
                                             />
                                             <button
@@ -271,7 +424,7 @@ function BookDetail() {
                                                     e.preventDefault();
                                                     const result = document.getElementById('qty') as HTMLInputElement;
                                                     const qty = parseInt(result.value, 10);
-                                                    if (!isNaN(qty)) result.value = (qty + 1).toString();
+                                                    if (!isNaN(qty)) setQuantity(qty+1);
                                                 }}
                                                 className="btn-plus btn-cts"
                                                 type="button"
@@ -281,7 +434,12 @@ function BookDetail() {
                                         </div>
                                     </div>
                                     <div className="btn-mua">
-                                        <button type="submit" data-role="addtocart" className="btn btn-lg btn-gray btn-cart btn_buy add_to_cart">
+                                    {isActive && (
+                                        <div className="pop-up-cart">
+                                            <p className='text-orange'><i className="fa-solid fa-plus fa text-orange"></i>{quantity}<i className="fa-solid fa-cart-plus fa-2x text-orange"></i></p>
+                                            </div>
+                                    )}
+                                        <button  className="btn btn-lg btn-gray btn-cart btn_buy add_to_cart" onClick={() => handlePopUp()}>
                                             <i className="fa-solid fa-cart-shopping" style={{ paddingRight: '20px' }}></i>
                                             MUA NGAY
                                         </button>
@@ -295,7 +453,7 @@ function BookDetail() {
                         </form>
 
                         <ul className="social-media__item-list list--unstyled" role="list">
-                            <li>Chia sẻ ngay: </li>
+                            <li style={{ listStyle: 'none' }}>Chia sẻ ngay: </li>
                             <li className="social-media__item social-media__item--facebook">
                                 <a
                                     title="Chia sẻ lên Facebook"
@@ -342,19 +500,40 @@ function BookDetail() {
                     </div>
                 </div>
 
-                <div className="col-12 product-content">
-                    <div key={book.id} className="row">
+                <div key={book.id}className="col-12 product-content">
+                    <div  className="row">
                         <div className="col-lg-12 col-12">
                             <div className="product-tab e-tabs not-dqtab">
                                 <ul className="tabs tabs-title clearfix">
-                                    <li className="tab-link current" data-tab={`tab-1-${book.id}`}>Chi tiết</li>
-                                    <li className="tab-link" data-tab={`tab-2-${book.id}`}>REVIEW ĐỘC GIẢ</li>
-                                    <li className="tab-link" data-tab={`tab-3-${book.id}`}>ĐÁNH GIÁ TỪ CHUYÊN GIA</li>
-                                    <li className="tab-link" data-tab={`tab-4-${book.id}`}>BÁO CHÍ NÓI GÌ VỀ CUỐN SÁCH</li>
+                                    <li
+                                        className={`tab-link ${activeTab === "tab-1" ? "current" : ""}`}
+                                        onClick={() => setActiveTab("tab-1")}
+                                    >
+                                        Chi tiết
+                                    </li>
+                                    <li
+                                        className={`tab-link ${activeTab === "tab-2" ? "current" : ""}`}
+                                        onClick={() => setActiveTab("tab-2")}
+
+                                    >
+                                        REVIEW ĐỘC GIẢ
+                                    </li>
+                                    <li
+                                        className={`tab-link ${activeTab === "tab-3" ? "current" : ""}`}
+                                        onClick={() => setActiveTab("tab-3")}
+                                    >
+                                        ĐÁNH GIÁ TỪ CHUYÊN GIA
+                                    </li>
+                                    <li
+                                        className={`tab-link ${activeTab === "tab-4" ? "current" : ""}`}
+                                        onClick={() => setActiveTab("tab-4")}
+                                    >
+                                        BÁO CHÍ NÓI GÌ VỀ CUỐN SÁCH
+                                    </li>
                                 </ul>
                             </div>
 
-                            <div id={`tab-1-${book.id}`} className="tab-content content_extab current">
+                            <div id={`tab-1-${book.id}`} className={`tab-content content_extab ${activeTab === "tab-1" ? "current" : ""}`}>
                                 <div className="rte product_getcontent">
                                     <div className="ba-text-fpt has-height">
                                         <table className="table table-bordered table-detail table-striped" id={`chi-tiet-${book.id}`}>
@@ -400,9 +579,49 @@ function BookDetail() {
                                     </div>
                                 </div>
                             </div>
+
+                            <div id={`tab-2-${book.id}`} className={`tab-content content_extab ${activeTab === "tab-2" ? "current" : ""}`}>
+                                <div className="rte">
+                                    {bookReview && Array.isArray(bookReview.ReaderR) && bookReview.ReaderR.filter(review => review.trim() !== "").length > 0 ? (
+                                        <ul>
+                                            {bookReview.ReaderR.map((review, index) => (
+                                                <li key={index} style={{ listStyle: "none", marginBottom: "10px" }}>{review}</li>
+                                            ))}
+                                        </ul>
+                                    ) : (
+                                        <p>Nội dung đang được cập nhật...</p>
+                                    )}
+                                </div>
+                            </div>
+                            <div id={`tab-3-${book.id}`} className={`tab-content content_extab ${activeTab === "tab-3" ? "current" : ""}`}>
+                                <div className="rte">
+                                    {bookReview && Array.isArray(bookReview.ExpertR) && bookReview.ExpertR.filter(review => review.trim() !== "").length > 0 ? (
+                                        <ul>
+                                            {bookReview.ExpertR.map((review, index) => (
+                                                <li key={index} style={{ listStyle: "none", marginBottom: "10px" }}>{review}</li>
+                                            ))}
+                                        </ul>
+                                    ) : (
+                                        <p>Nội dung đang được cập nhật...</p>
+                                    )}
+                                </div>
+                            </div>
+                            <div id={`tab-4-${book.id}`} className={`tab-content content_extab ${activeTab === "tab-4" ? "current" : ""}`}>
+                                <div className="rte">
+                                    {bookReview && Array.isArray(bookReview.PressR) && bookReview.PressR.filter(review => review.trim() !== "").length > 0 ? (
+                                        <ul>
+                                            {bookReview.PressR.map((review, index) => (
+                                                <li key={index} style={{ listStyle: "none", marginBottom: "10px" }}>{review}</li>
+                                            ))}
+                                        </ul>
+                                    ) : (
+                                        <p>Nội dung đang được cập nhật...</p>
+                                    )}
+                                </div>
+                            </div>
                         </div>
                     </div>
-
+                    <Comment bookId={book.id} id={''} name={''} email={''} title={''} comment={''} />
                     <div className="row">
                         <div className="col-12">
                             <div className="section-related-product e-tabs">
@@ -435,7 +654,7 @@ function BookDetail() {
                                                                     >
                                                                         <a
                                                                             className="image_thumb"
-                                                                         
+
                                                                             href={`/book/detail/${relatedBook.id}`}
                                                                             title={relatedBook.title}
                                                                         >
@@ -449,7 +668,7 @@ function BookDetail() {
                                                                         </a>
                                                                         <div className="info-product">
                                                                             <h3 className="product-name">
-                                                                            
+
                                                                                 <a href={`/books/detail/${relatedBook.id}`} title={relatedBook.title}>
                                                                                     {relatedBook.title}
                                                                                 </a>
@@ -483,6 +702,7 @@ function BookDetail() {
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
