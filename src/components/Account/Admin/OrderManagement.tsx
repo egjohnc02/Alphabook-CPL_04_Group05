@@ -10,6 +10,8 @@ interface Order {
   totalPrice: number;
   status: string;
   items: { bookTitle: string; quantity: string; bookPrice: string }[];
+  address: string,
+  phoneNumber: string,
 }
 
 const OrderManagement: React.FC = () => {
@@ -99,14 +101,23 @@ const OrderManagement: React.FC = () => {
                           <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                          <ul>
-                            {order.items.map((item, index) => (
-                              <li key={index}>
-                                {item.quantity} x {item.bookTitle} ={" "}
-                                {item.bookPrice}₫
-                              </li>
-                            ))}
-                          </ul>
+                            <p><strong>Họ và tên:</strong> {order.userName}</p>
+                            <p><strong>Mã đơn hàng:</strong> {order.id}</p>
+                            <p><strong>Số điện thoại:</strong> {order.phoneNumber}</p>
+                            <p><strong>Địa chỉ:</strong> {order.address}</p>
+                            <div>
+                              <p><strong>Sản phẩm:</strong>
+                              <ul>
+                                {order.items.map((item, index) => (
+                                  <li key={index}>
+                                    {item.quantity} x {item.bookTitle} ={" "}
+                                    {parseFloat(item.bookPrice).toLocaleString("vi-VN")}₫
+                                  </li>
+                                ))}
+                                <p className="text-end"><strong>Tổng tiền: </strong> {order.totalPrice.toLocaleString("vi-VN")}₫</p>
+                                </ul>
+                                </p>
+                            </div>
                         </div>
                         <div className="modal-footer">
                           <button
