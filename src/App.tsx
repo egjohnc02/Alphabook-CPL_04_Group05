@@ -78,7 +78,7 @@ function AppContent() {
         <Route path="/book" element={<Book />}/>
         <Route path="/book/:category" element={<Book />} />
         <Route path="/book/detail/:id" element={<BookDetailPage />} />
-        <Route path="/book/detail/readonline/:id" element={<Rob />} />
+        <Route path="/book/detail/readonline/:id" element={<Rob id={''} coverType={''} dimensions={''} pageCount={''} publishDate={''} publisher={''} url={''} />} />
         <Route path="/subscribe" element={<Subscribe />} />
       </Routes>
       <BackToTop />

@@ -6,6 +6,7 @@ import { arrayRemove, arrayUnion, collection, doc, getDoc, getDocs, query, setDo
 import { db } from "../../firebase/firebase.tsx";
 import Comment from './BookComment.tsx';
 import Button from 'react-bootstrap/Button';
+
 interface Book {
     id: string;
     author: string;
@@ -455,7 +456,6 @@ function BookDetail() {
                                        
                                     </div>
                                     <Button variant="primary" style={{ marginTop: '10px'}}  onClick={() => handleTitleClick(book.id)}>Đọc online</Button>{' '}
-                                    
                                 </div>
                             </div>
                         </form>
