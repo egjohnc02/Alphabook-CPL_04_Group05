@@ -30,14 +30,12 @@ const PremiumSubscriptionManagement = () => {
 
     try {
       const docRef = await addDoc(collection(db, "PremiumCodes"), newCodeData);
-      console.log("Mã mới đã được thêm vào Firestore:", docRef.id);
-
       setCodes((prevCodes) => [
         ...prevCodes,
         { id: docRef.id, ...newCodeData },
       ]);
     } catch (error) {
-      console.error("Lỗi khi tạo mã cao cấp:", error);
+      console.error(error);
     }
   };
 
@@ -62,11 +60,9 @@ const PremiumSubscriptionManagement = () => {
           id: doc.id,
           ...doc.data(),
         })) as PremiumCode[];
-
-        console.log("Dữ liệu mã từ Firestore:", codesList);
         setCodes(codesList);
       } catch (error) {
-        console.error("Lỗi khi tải mã từ Firestore:", error);
+        console.error(error);
       } finally {
         setLoading(false);
       }
