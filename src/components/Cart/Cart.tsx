@@ -345,7 +345,7 @@ const Cart: React.FC = () => {
                                                 <p className="final-price text-danger fw-bolder">{calculateTotalPrice(listCart).toLocaleString("vi-VN")}</p>
                                             </div>
                                             <button className="btn w-100 text-white bg-orange rounded-1 mb-3 p-3" onClick={handlePayment}>
-                                                Đặt sách
+                                                Thanh toán
                                             </button>
                                         </div>
                                     </Col>

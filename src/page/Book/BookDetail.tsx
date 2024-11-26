@@ -5,6 +5,8 @@ import { useNavigate, useParams } from 'react-router-dom';  // Import useParams 
 import { arrayRemove, arrayUnion, collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore";
 import { db } from "../../firebase/firebase.tsx";
 import Comment from './BookComment.tsx';
+import Button from 'react-bootstrap/Button';
+
 interface Book {
     id: string;
     author: string;
@@ -251,6 +253,9 @@ function BookDetail() {
     setTimeout(() => {
         setIsActive(false);
       }, 400);
+      const handleTitleClick = (eventId: string) => {
+        navigate(`/book/detail/readonline/${eventId}`);
+      };
     return (
         <div className="container">
             <div className="row">
@@ -443,11 +448,14 @@ function BookDetail() {
                                             <i className="fa-solid fa-cart-shopping" style={{ paddingRight: '20px' }}></i>
                                             MUA NGAY
                                         </button>
+                                        
                                         <a href="tel:0932329959" className="call-pro">
                                             <i className="fa-solid fa-phone" style={{ paddingRight: '20px' }}></i>
                                             Gọi ngay đặt hàng
                                         </a>
+                                       
                                     </div>
+                                    <Button variant="primary" style={{ marginTop: '10px'}}  onClick={() => handleTitleClick(book.id)}>Đọc online</Button>{' '}
                                 </div>
                             </div>
                         </form>

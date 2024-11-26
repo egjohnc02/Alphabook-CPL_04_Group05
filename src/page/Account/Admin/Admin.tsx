@@ -7,10 +7,11 @@ import OrderManagement from "../../../components/Account/Admin/OrderManagement.t
 import DoiMatKhau from "../../../components/Account/DoiMatKhau/DoiMatKhau";
 import AutoScrollToTop from "../../../utils/AutoScrollToTop";
 import HTXBManagement from "../../../components/Account/Admin/HTXBManagement.tsx";
+import SubManagement from "../../../components/Account/Admin/SubManagement.tsx";
 
 const Admin: React.FC = () => {
   const navigate = useNavigate();
-  const [currentView, setCurrentView] = useState<"UserManagement" | "OrderManagement" | "DoiMatKhau" | "HTXBManagement">("UserManagement");
+  const [currentView, setCurrentView] = useState<"UserManagement" | "OrderManagement" | "DoiMatKhau" | "HTXBManagement" | "SubManagement">("UserManagement");
   const [userName, setUserName] = useState("");
 
   useEffect(() => {
@@ -41,6 +42,8 @@ const Admin: React.FC = () => {
           return <HTXBManagement />;
       case "DoiMatKhau":
         return <DoiMatKhau />;
+      case "SubManagement":
+        return <SubManagement />
       default:
         return <UserManagement />;
     }
@@ -75,6 +78,13 @@ const Admin: React.FC = () => {
           style={{ cursor: "pointer" }}
         >
           Quản lý HTXB
+        </p>
+        <p
+          className="text-dark hover-text-orange text-decoration-none"
+          onClick={() => setCurrentView("SubManagement")}
+          style={{ cursor: "pointer" }}
+        >
+          Quản lý gói cao cấp
         </p>
         <p
           className="text-dark hover-text-orange text-decoration-none"
