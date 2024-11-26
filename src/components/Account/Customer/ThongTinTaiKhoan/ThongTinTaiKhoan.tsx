@@ -90,8 +90,7 @@ const ThongTinTaiKhoan: React.FC = () => {
           clearInterval(intervalId);
         } else {
           const days = Math.floor(timeLeft / (1000 * 3600 * 24));
-          const hours = Math.floor((timeLeft % (1000 * 3600 * 24)) / (1000 * 3600));
-          setTimeRemaining(`${days} ngày ${hours} giờ`);
+          setTimeRemaining(`${days} ngày`);
         }
       }, 1000);
 
@@ -205,7 +204,7 @@ const ThongTinTaiKhoan: React.FC = () => {
       <div className="row mb-3">
         <div className="col-12">
           <p>
-            <strong>Trạng thái thành viên:</strong>
+            <strong>Thành viên:</strong>
             {isPremium ? (
               <span className="text-success ms-2">
                 Thành viên cao cấp
@@ -216,7 +215,7 @@ const ThongTinTaiKhoan: React.FC = () => {
                 )}
               </span>
             ) : (
-              <span className="text-warning ms-2">
+              <span className=" text-secondary ms-2">
                 Thành viên cơ bản
               </span>
             )}
@@ -226,7 +225,7 @@ const ThongTinTaiKhoan: React.FC = () => {
 
       {!isPremium && (
         <div className="row">
-          <div className="col-md-6">
+          <div>
             <div className="input-group">
               <input
                 type="text"

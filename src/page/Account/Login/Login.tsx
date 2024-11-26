@@ -78,6 +78,8 @@ const LoginForm: React.FC = () => {
         if (error instanceof FirebaseError) {
             switch(error.code) {
                 case 'auth/wrong-password':
+                  setMessage("Sai email hoặc mật khẩu, vui lòng nhập lại!");
+                    break;
                 case 'auth/user-not-found':
                     setMessage("Sai email hoặc mật khẩu, vui lòng nhập lại!");
                     break;
