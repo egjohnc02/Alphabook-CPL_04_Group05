@@ -86,7 +86,7 @@ const Home: React.FC = () => {
             </Carousel>
 
 
-            <div className="d-flex justify-content-center align-items-center px-5 gap-5 mx-5 container">
+            <div className="d-flex justify-content-center align-items-center gap-5 container">
                 <Link to='/introduce'>
                     <img src={aboutImg} alt="About" />
                 </Link>
