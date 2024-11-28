@@ -9,10 +9,11 @@ import AutoScrollToTop from "../../../utils/AutoScrollToTop";
 import HTXBManagement from "../../../components/Account/Admin/HTXBManagement.tsx";
 import SubManagement from "../../../components/Account/Admin/SubManagement.tsx";
 import EventManagement from "../../../components/Account/Admin/EventManagement";
+import NewsManagement from "../../../components/Account/Admin/NewsManagement.tsx";
 
 const Admin: React.FC = () => {
   const navigate = useNavigate();
-  const [currentView, setCurrentView] = useState<"UserManagement" | "OrderManagement" | "DoiMatKhau" | "HTXBManagement"| "EventManagement"|"SubManagement">("UserManagement");
+  const [currentView, setCurrentView] = useState<"UserManagement" | "OrderManagement" | "DoiMatKhau" | "HTXBManagement"| "EventManagement"|"SubManagement" | "NewsManagement">("UserManagement");
   const [userName, setUserName] = useState("");
 
   useEffect(() => {
@@ -49,6 +50,8 @@ const Admin: React.FC = () => {
 
       case "EventManagement":
         return <EventManagement />;
+      case "NewsManagement":
+        return <NewsManagement />
       default:
         return <UserManagement />;
     }
@@ -97,6 +100,13 @@ const Admin: React.FC = () => {
           style={{ cursor: "pointer" }}
         >
           Đổi mật khẩu
+        </p>
+        <p
+          className="text-dark hover-text-orange text-decoration-none"
+          onClick={() => setCurrentView("NewsManagement")}
+          style={{ cursor: "pointer" }}
+        >
+          Quản lý tin tức
         </p>
         <p
           className="text-dark hover-text-orange text-decoration-none"
