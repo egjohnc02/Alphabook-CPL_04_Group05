@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { auth, db } from "../../../../firebase/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, query, updateDoc, where, Timestamp } from "firebase/firestore";
 import { sendEmailVerification } from "firebase/auth";
 
 type Address = {
@@ -17,48 +17,86 @@ const ThongTinTaiKhoan: React.FC = () => {
   const [phoneNumber, setPhoneNumber] = useState<string | null>(null);
   const [address, setAddress] = useState<string | null>(null);
   const [isEmailVerified, setIsEmailVerified] = useState(false);
+  const [activationCode, setActivationCode] = useState<string>("");
+  const [isPremium, setIsPremium] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [expiryTime, setExpiryTime] = useState<Date | null>(null);
+  const [timeRemaining, setTimeRemaining] = useState<string>("");
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+
+  const formatAddress = (address?: Address) => {
+    if (!address) return null;
+    return [
+      address.address,
+      address.ward,
+      address.district,
+      address.province,
+    ]
+      .filter((part) => part)
+      .join(", ");
+  };
+
+  const fetchUserData = async () => {
+    const user = auth.currentUser;
+
+    if (user) {
+      setIsEmailVerified(user.emailVerified);
+
+      try {
+        const userRef = doc(db, "Users", user.uid);
+        const userDoc = await getDoc(userRef);
+
+        if (userDoc.exists()) {
+          const data = userDoc.data();
+
+          setUserName(`${data.FirstName || ""} ${data.LastName || ""}`.trim());
+          const defaultAddress = (data.addresses as Address[] || []).find((addr) => addr.isDefault);
+
+          if (defaultAddress) {
+            setPhoneNumber(defaultAddress.phone || null);
+            setAddress(formatAddress(defaultAddress));
+          }
+
+          if (data.isPremium && data.expiryDate) {
+            const expiryDate = data.expiryDate.toDate();
+            setIsPremium(true);
+            setExpiryTime(expiryDate);
+          } else {
+            setIsPremium(false);
+            setExpiryTime(null);
+          }
+        } else {
+          console.warn("Tài liệu người dùng không tồn tại.");
+        }
+      } catch (error) {
+        console.error("Lỗi khi lấy dữ liệu người dùng:", error);
+      }
+    }
+  };
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      const user = auth.currentUser;
-
-      if (user) {
-        setIsEmailVerified(user.emailVerified);
-
-        try {
-          const userRef = doc(db, "Users", user.uid);
-          const userDoc = await getDoc(userRef);
-
-          if (userDoc.exists()) {
-            const data = userDoc.data();
-            setUserName(`${data.FirstName || ""} ${data.LastName || ""}`.trim());
-
-            const defaultAddress = (data.addresses as Address[] || []).find((addr) => addr.isDefault);
-
-            if (defaultAddress) {
-              setPhoneNumber(defaultAddress.phone || null);
-
-              const fullAddress = [
-                defaultAddress.address,
-                defaultAddress.ward,
-                defaultAddress.district,
-                defaultAddress.province,
-              ]
-                .filter((part) => part)
-                .join(", ");
-              setAddress(fullAddress || null);
-            }
-          } else {
-            console.warn("Tài liệu người dùng không tồn tại.");
-          }
-        } catch (error) {
-          console.error("Lỗi khi lấy dữ liệu người dùng:", error);
-        }
-      }
-    };
-
     fetchUserData();
-  }, []);
+  }, [refreshTrigger]);
+
+  useEffect(() => {
+    if (expiryTime) {
+      const intervalId = setInterval(() => {
+        const now = new Date();
+        const timeLeft = expiryTime.getTime() - now.getTime();
+
+        if (timeLeft <= 0) {
+          setIsPremium(false);
+          setTimeRemaining("Gói cao cấp đã hết hạn");
+          clearInterval(intervalId);
+        } else {
+          const days = Math.floor(timeLeft / (1000 * 3600 * 24));
+          setTimeRemaining(`${days} ngày`);
+        }
+      }, 1000);
+
+      return () => clearInterval(intervalId);
+    }
+  }, [expiryTime]);
 
   const resendVerificationEmail = () => {
     const user = auth.currentUser;
@@ -69,8 +107,60 @@ const ThongTinTaiKhoan: React.FC = () => {
     }
   };
 
+  const handleActivateCode = async () => {
+    if (!activationCode) {
+      setErrorMessage("Vui lòng nhập mã kích hoạt.");
+      return;
+    }
+
+    try {
+      const premiumCodesRef = collection(db, "PremiumCodes");
+      const q = query(premiumCodesRef, where("code", "==", activationCode));
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        const codeDoc = querySnapshot.docs[0];
+        const codeData = codeDoc.data();
+
+        if (codeData.isUsed) {
+          setErrorMessage("Mã này đã được sử dụng.");
+          return;
+        }
+
+        const user = auth.currentUser;
+        if (user) {
+          const userRef = doc(db, "Users", user.uid);
+
+          const expiryDate = new Date();
+          expiryDate.setDate(expiryDate.getDate() + 30);
+
+          await updateDoc(userRef, {
+            isPremium: true,
+            expiryDate: Timestamp.fromDate(expiryDate)
+          });
+
+          await updateDoc(codeDoc.ref, {
+            isUsed: true,
+            usedBy: user.email,
+            usedAt: Timestamp.now()
+          });
+
+          setRefreshTrigger(prev => prev + 1);
+          setActivationCode("");
+          setErrorMessage("");
+          alert("Mã kích hoạt thành công. Bạn đã có gói cao cấp!");
+        }
+      } else {
+        setErrorMessage("Mã không hợp lệ. Vui lòng kiểm tra lại.");
+      }
+    } catch (error) {
+      console.error("Lỗi khi kích hoạt mã:", error);
+      setErrorMessage("Có lỗi xảy ra. Vui lòng thử lại.");
+    }
+  };
+
   return (
-    <div>
+    <div className="container">
       <p className="fs-4">Thông tin tài khoản</p>
 
       <p>
@@ -109,6 +199,53 @@ const ThongTinTaiKhoan: React.FC = () => {
         <p>
           <span className="fw-bolder">Địa chỉ:</span> {address}
         </p>
+      )}
+
+      <div className="row mb-3">
+        <div className="col-12">
+          <p>
+            <strong>Thành viên:</strong>
+            {isPremium ? (
+              <span className="text-success ms-2">
+                Thành viên cao cấp
+                {expiryTime && (
+                  <small className="text-muted ms-2">
+                    (Còn {timeRemaining})
+                  </small>
+                )}
+              </span>
+            ) : (
+              <span className=" text-secondary ms-2">
+                Thành viên cơ bản
+              </span>
+            )}
+          </p>
+        </div>
+      </div>
+
+      {!isPremium && (
+        <div className="row">
+          <div>
+            <div className="input-group">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Nhập mã kích hoạt"
+                value={activationCode}
+                onChange={(e) => setActivationCode(e.target.value)}
+              />
+              <button
+                className="btn btn-primary"
+                onClick={handleActivateCode}
+              >
+                Kích hoạt
+              </button>
+            </div>
+            {errorMessage && (
+              <p className="text-danger mt-2">{errorMessage}</p>
+            )}
+          </div>
+        </div>
       )}
     </div>
   );

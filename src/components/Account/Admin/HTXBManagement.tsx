@@ -131,7 +131,7 @@ const HTXBManagement: React.FC = () => {
           </div>
         ) : (
           <div className="text-center py-4 text-gray-500">
-            Không có yêu cầu tư vấn nào.
+            Không có yêu cầu nào.
           </div>
         )}
       </div>

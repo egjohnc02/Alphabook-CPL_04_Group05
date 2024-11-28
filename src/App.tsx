@@ -30,7 +30,7 @@ import Book from './page/Book/Book';
 import BookDetailPage from './page/Book/BookDetail';
 import Event from './page/News/Event';
 import EventDetail from './page/News/EventDetail';
-
+import Rob from './page/Book/Rob';
 import NewsDetail from './page/News/NewsDetail';
 
 import EventLayout from './page/News/EventLayout';
@@ -78,6 +78,7 @@ function AppContent() {
         <Route path="/book" element={<Book />}/>
         <Route path="/book/:category" element={<Book />} />
         <Route path="/book/detail/:id" element={<BookDetailPage />} />
+        <Route path="/book/detail/readonline/:id" element={<Rob id={''} coverType={''} dimensions={''} pageCount={''} publishDate={''} publisher={''} url={''} />} />
         <Route path="/subscribe" element={<Subscribe />} />
       </Routes>
       <BackToTop />
