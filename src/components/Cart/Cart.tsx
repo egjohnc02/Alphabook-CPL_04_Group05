@@ -293,74 +293,16 @@ const Cart: React.FC = () => {
                                                                     <div className="btn p-0 m-0 bg-none border-0 text-danger" onClick={() => handleDeleteClick(item.bookId)}>Xóa</div>
                                                                 </div>
                                                             </div>
-                                                            <p className="info-2-price text-danger fw-bolder ps-1 pt-3">{item.bookPrice}</p>
+                                                            <p className="info-2-price text-danger fw-bolder ps-1 pt-3">{parseFloat(item.bookPrice).toLocaleString("vi-VN")}</p>
                                                             <div className="infor-3-count d-flex bg-prrimary align-items-center">
                                                                 <button className="btn border p-0" onClick={() => handleDecreaseClick(item.bookId)}><i className="fa-solid fa-minus p-1"></i></button>
                                                                 <p className="m-0 px-2">{item.quantity}</p>
                                                                 <button className="btn border p-0" onClick={() => handleIncreaseClick(item.bookId)}><i className="fa-solid fa-plus p-1"></i></button>
                                                             </div>
                                                             <div className="info-4-total-price">
-                                                                <p className="text-danger fw-bolder p-0 m-0">{parseFloat(item.quantity) * parseFloat(item.bookPrice)}</p>
+                                                                <p className="text-danger fw-bolder p-0 m-0">{(parseFloat(item.quantity) * parseFloat(item.bookPrice)).toLocaleString("vi-VN")}</p>
                                                             </div>
                                                         </div>
-
-                                                    </div>
-                                                    <p className="info-2-price text-danger fw-bolder ps-1 pt-3">{parseFloat(item.bookPrice).toLocaleString("vi-VN")}</p>
-                                                    <div className="infor-3-count d-flex bg-prrimary align-items-center">
-                                                        <button className="btn border p-0" onClick={() =>handleDecreaseClick(item.bookId)}><i className="fa-solid fa-minus p-1"></i></button>
-                                                        <p className="m-0 px-2">{item.quantity}</p>
-                                                        <button className="btn border p-0" onClick={() =>handleIncreaseClick(item.bookId)}><i className="fa-solid fa-plus p-1"></i></button>
-                                                    </div>
-                                                    <div className="info-4-total-price">
-                                                        <p className="text-danger fw-bolder p-0 m-0">{(parseFloat(item.quantity) * parseFloat(item.bookPrice)).toLocaleString("vi-VN")}</p>
-                                                    </div>
-                                                </div>
-                                            </ListGroup.Item>
-                                        ))}
-
-
-                                    </div>
-                                </>
-                            )}
-                            {viewportSize == 'md' && (
-                                <>
-                                    <div className="overflow-scroll ">
-                                        {listCart.map((item, index) => (
-                                            <ListGroup.Item key={index}> {/* key ở đây là bắt buộc để tránh lỗi */}
-                                                <div className="item-cart d-flex align-items-center ps-2 pb-3 border-2 border-bottom">
-                                                    <div className="info-1 d-flex">
-                                                        <img src={item.bookImg} alt="item-img-cart" className="me-2" height={'100px'} width={'80px'} />
-                                                        <div className="ms-4 d-flex flex-column justify-content-center align-items-start">
-                                                            <p className="title-info-1 text-muted p-0 m-0 text-nowrap overflow-hidden" style={{ width: '200px' }}>{item.bookTitle}</p>
-                                                            <div className="btn p-0 m-0 bg-none border-0 text-danger">Xóa</div>
-                                                        </div>
-                                                    </div>
-                                                    <p className="info-2-price text-danger fw-bolder ps-1 pt-3">{parseFloat(item.bookPrice).toLocaleString("vi-VN")}</p>
-                                                    <div className="infor-3-count d-flex bg-prrimary align-items-center">
-                                                        <button className="btn border p-0"><i className="fa-solid fa-minus p-1"></i></button>
-                                                        <p className="m-0 px-2">{item.quantity}</p>
-                                                        <button className="btn border p-0"><i className="fa-solid fa-plus p-1"></i></button>
-                                                    </div>
-                                                    <div className="info-4-total-price">
-                                                        <p className="text-danger fw-bolder p-0 m-0">{(parseFloat(item.quantity) * parseFloat(item.bookPrice)).toLocaleString("vi-VN")}</p>
-                                                    </div>
-                                                </div>
-                                            </ListGroup.Item>
-                                        ))}
-                                    </div>
-                                </>
-                            )}
-                        </ListGroup>
-                        <Row>
-                            <Col lg={4} className="ms-auto">
-                                <div className="total-cart mt-4">
-                                    <div className="content-total-cart d-flex justify-content-between mb-4">
-                                        <p className="text-muted">Tổng tiền:</p>
-                                        <p className="final-price text-danger fw-bolder">{calculateTotalPrice(listCart).toLocaleString("vi-VN")}</p>
-                                    </div>
-                                    <div className="button-card text-white d-flex justify-content-center align-items-center bg-orange rounded-1 mb-3" style={{ height: '55px' }}>
-                                        Thanh toán
-
                                                     </ListGroup.Item>
                                                 ))}
                                             </div>
@@ -386,7 +328,7 @@ const Cart: React.FC = () => {
                                                                 <button className="btn border p-0"><i className="fa-solid fa-plus p-1"></i></button>
                                                             </div>
                                                             <div className="info-4-total-price">
-                                                                <p className="text-danger fw-bolder p-0 m-0">{parseFloat(item.quantity) * parseFloat(item.bookPrice)}</p>
+                                                                <p className="text-danger fw-bolder p-0 m-0">{(parseFloat(item.quantity) * parseFloat(item.bookPrice)).toLocaleString("vi-VN")}</p>
                                                             </div>
                                                         </div>
                                                     </ListGroup.Item>
@@ -400,10 +342,10 @@ const Cart: React.FC = () => {
                                         <div className="total-cart mt-4">
                                             <div className="content-total-cart d-flex justify-content-between mb-4">
                                                 <p className="text-muted">Tổng tiền:</p>
-                                                <p className="final-price text-danger fw-bolder">{calculateTotalPrice(listCart)}</p>
+                                                <p className="final-price text-danger fw-bolder">{calculateTotalPrice(listCart).toLocaleString("vi-VN")}</p>
                                             </div>
                                             <button className="btn w-100 text-white bg-orange rounded-1 mb-3 p-3" onClick={handlePayment}>
-                                                Đặt sách
+                                                Thanh toán
                                             </button>
                                         </div>
                                     </Col>
@@ -427,15 +369,15 @@ const Cart: React.FC = () => {
                                     )}
                                     <div className="mb-3">
                                         <label htmlFor="note" className="form-label">Ghi chú giao hàng</label>
-                                        <textarea 
+                                        <textarea
                                             className="form-control" 
                                             id="note" 
                                             rows={3} 
                                             value={userNote}
                                             onChange={(e) => setUserNote(e.target.value)}>
                                         </textarea>
-
                                     </div>
+                                    <p className="text-danger small fst-italic">* Nếu muốn thay đổi thông tin vui lòng truy cập Sổ địa chỉ của bạn để mặc định</p>
                                 </div>
                             </Col>
                         </>
