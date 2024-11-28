@@ -5,6 +5,8 @@ import { useNavigate, useParams } from 'react-router-dom';  // Import useParams 
 import { arrayRemove, arrayUnion, collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore";
 import { db } from "../../firebase/firebase.tsx";
 import Comment from './BookComment.tsx';
+import Button from 'react-bootstrap/Button';
+
 interface Book {
     id: string;
     author: string;
@@ -40,6 +42,7 @@ interface BookReview {
     ExpertR: string[];
     PressR: string[];
 }
+
 function BookDetail() {
     const { id } = useParams();
     const [book, setBook] = useState<Book | null>(null);
@@ -47,7 +50,27 @@ function BookDetail() {
     const [relatedBooks, setRelatedBooks] = useState<Book[]>([]);
     const [activeTab, setActiveTab] = useState("tab-1");
     const [bookReview, setBookReview] = useState<BookReview | null>(null);
-
+    const [isPremium, setIsPremium] = useState<boolean>(false);
+    
+    useEffect(() => {
+        const fetchUserPremiumStatus = async () => {
+            const userId = localStorage.getItem("useId");
+    
+            if (userId) {
+                const userDocRef = doc(db, "Users", userId);
+                const userDocSnapshot = await getDoc(userDocRef);
+    
+                if (userDocSnapshot.exists()) {
+                    const userData = userDocSnapshot.data();
+                    if (userData && userData.isPremium !== undefined) {
+                        setIsPremium(userData.isPremium);
+                    }
+                }
+            }
+        };
+    
+        fetchUserPremiumStatus();
+    }, []); 
     // Xử lý cart
     const navigate = useNavigate();
     const [isActive, setIsActive] = useState<boolean>(false);
@@ -132,9 +155,6 @@ function BookDetail() {
         fetchBookReview();
     }, [book]);  // Fetch details when the book changes
 
-
-
-
     useEffect(() => {
         const fetchRelatedBooks = async () => {
             if (book) {
@@ -187,6 +207,7 @@ function BookDetail() {
                 await setDoc(cartDocRef, defaultData);
             }
         } catch (error) {
+            console.log(error)
         }
     };
 
@@ -251,6 +272,11 @@ function BookDetail() {
     setTimeout(() => {
         setIsActive(false);
       }, 400);
+      const handleTitleClick = (eventId: string) => {
+        navigate(`/book/detail/readonline/${eventId}`);
+      };
+
+    
     return (
         <div className="container">
             <div className="row">
@@ -443,12 +469,19 @@ function BookDetail() {
                                             <i className="fa-solid fa-cart-shopping" style={{ paddingRight: '20px' }}></i>
                                             MUA NGAY
                                         </button>
+                                        
                                         <a href="tel:0932329959" className="call-pro">
                                             <i className="fa-solid fa-phone" style={{ paddingRight: '20px' }}></i>
                                             Gọi ngay đặt hàng
                                         </a>
+                                       
                                     </div>
-                                </div>
+                                    {isPremium && (
+                                        <Button variant="primary" style={{ marginTop: '10px'}} onClick={() => handleTitleClick(book.id)}>
+                                            Đọc online
+                                        </Button>
+                                    )}                
+                                    </div>
                             </div>
                         </form>
 
@@ -471,7 +504,7 @@ function BookDetail() {
                             <li className="social-media__item social-media__item--pinterest">
                                 <a
                                     title="Chia sẻ lên Pinterest"
-                                    // href="https://pinterest.com/pin/create/button/?url=https://www.alphabooks.vn/donald-trump-chien-luoc-dau-tu-bat-dong-san-tai-ban"
+                                    href="https://pinterest.com/pin/create/button/?url=https://www.alphabooks.vn/donald-trump-chien-luoc-dau-tu-bat-dong-san-tai-ban"
                                     target="_blank"
                                     rel="noopener"
                                     aria-label="Pinterest"
@@ -485,7 +518,7 @@ function BookDetail() {
                             <li className="social-media__item social-media__item--twitter">
                                 <a
                                     title="Chia sẻ lên Twitter"
-                                    // href="https://twitter.com/share?url=https://www.alphabooks.vn/donald-trump-chien-luoc-dau-tu-bat-dong-san-tai-ban"
+                                    href="https://twitter.com/share?url=https://www.alphabooks.vn/donald-trump-chien-luoc-dau-tu-bat-dong-san-tai-ban"
                                     target="_blank"
                                     rel="noopener"
                                     aria-label="Tweet on Twitter"
@@ -621,7 +654,7 @@ function BookDetail() {
                             </div>
                         </div>
                     </div>
-                    <Comment bookId={book.id} id={''} name={''} email={''} title={''} comment={''} />
+                    <Comment bookId={book.id} />
                     <div className="row">
                         <div className="col-12">
                             <div className="section-related-product e-tabs">

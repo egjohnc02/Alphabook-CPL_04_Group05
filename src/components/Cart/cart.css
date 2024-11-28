@@ -14,11 +14,10 @@
     content: 'đ';
     text-decoration: underline;
     color: red;
-    padding-left: 2px;
 }
 .custom-checkbox .form-check-input {
-    border-width: 2px; /* Đặt độ dày của viền */
-    border-color: black; /* Màu sắc của viền */
+    border-width: 2px;
+    border-color: black;
     width: 20px;
     height: 20px;
     
