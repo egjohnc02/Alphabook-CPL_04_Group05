@@ -8,10 +8,11 @@ import DoiMatKhau from "../../../components/Account/DoiMatKhau/DoiMatKhau";
 import AutoScrollToTop from "../../../utils/AutoScrollToTop";
 import HTXBManagement from "../../../components/Account/Admin/HTXBManagement.tsx";
 import SubManagement from "../../../components/Account/Admin/SubManagement.tsx";
+import BookManagement from "../../../components/Account/Admin/BookManagement.tsx";
 
 const Admin: React.FC = () => {
   const navigate = useNavigate();
-  const [currentView, setCurrentView] = useState<"UserManagement" | "OrderManagement" | "DoiMatKhau" | "HTXBManagement" | "SubManagement">("UserManagement");
+  const [currentView, setCurrentView] = useState<"UserManagement" | "OrderManagement" | "DoiMatKhau" | "HTXBManagement" | "SubManagement" | "BookManagement">("UserManagement");
   const [userName, setUserName] = useState("");
 
   useEffect(() => {
@@ -39,11 +40,13 @@ const Admin: React.FC = () => {
       case "OrderManagement":
         return <OrderManagement />;
       case "HTXBManagement":
-          return <HTXBManagement />;
+        return <HTXBManagement />;
       case "DoiMatKhau":
         return <DoiMatKhau />;
       case "SubManagement":
         return <SubManagement />
+      case "BookManagement":
+        return <BookManagement />
       default:
         return <UserManagement />;
     }
@@ -85,6 +88,13 @@ const Admin: React.FC = () => {
           style={{ cursor: "pointer" }}
         >
           Quản lý gói cao cấp
+        </p>
+        <p
+          className="text-dark hover-text-orange text-decoration-none"
+          onClick={() => setCurrentView("BookManagement")}
+          style={{ cursor: "pointer" }}
+        >
+          Quản lý Sach
         </p>
         <p
           className="text-dark hover-text-orange text-decoration-none"
