@@ -8,11 +8,13 @@ import DoiMatKhau from "../../../components/Account/DoiMatKhau/DoiMatKhau";
 import AutoScrollToTop from "../../../utils/AutoScrollToTop";
 import HTXBManagement from "../../../components/Account/Admin/HTXBManagement.tsx";
 import SubManagement from "../../../components/Account/Admin/SubManagement.tsx";
+
+import EventManagement from "../../../components/Account/Admin/EventManagement";
 import BookManagement from "../../../components/Account/Admin/BookManagement.tsx";
 
 const Admin: React.FC = () => {
   const navigate = useNavigate();
-  const [currentView, setCurrentView] = useState<"UserManagement" | "OrderManagement" | "DoiMatKhau" | "HTXBManagement" | "SubManagement" | "BookManagement">("UserManagement");
+  const [currentView, setCurrentView] = useState<"UserManagement" | "OrderManagement" | "DoiMatKhau" | "HTXBManagement"| "EventManagement"|"SubManagement"|"BookManagement">("UserManagement");
   const [userName, setUserName] = useState("");
 
   useEffect(() => {
@@ -43,10 +45,14 @@ const Admin: React.FC = () => {
         return <HTXBManagement />;
       case "DoiMatKhau":
         return <DoiMatKhau />;
+
       case "SubManagement":
         return <SubManagement />
       case "BookManagement":
         return <BookManagement />
+
+      case "EventManagement":
+        return <EventManagement />;
       default:
         return <UserManagement />;
     }
@@ -102,6 +108,13 @@ const Admin: React.FC = () => {
           style={{ cursor: "pointer" }}
         >
           Đổi mật khẩu
+        </p>
+        <p
+          className="text-dark hover-text-orange text-decoration-none"
+          onClick={() => setCurrentView("EventManagement")}
+          style={{ cursor: "pointer" }}
+        >
+          Quản lý sự kiện
         </p>
         <p
           className="text-dark hover-text-orange text-decoration-none"
