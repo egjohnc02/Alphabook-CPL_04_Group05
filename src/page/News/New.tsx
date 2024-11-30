@@ -161,6 +161,8 @@ const New: React.FC = () => {
                 </>
               )}
             </div>
+            </Row>
+            <Row>
             {filterNew.map((value, key) => (
               <Col key={key} sm={12} md={6} lg={4} xl={4} className="mb-4">
                 <Card value-card={value.id} onClick={handleNewsDetail}>

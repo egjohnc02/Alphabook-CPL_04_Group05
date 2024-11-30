@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Container, Modal, Nav, Table } from 'react-bootstrap';
+import { Button, Container, Modal, Nav, Table, Form } from 'react-bootstrap';
 import "./NewsManagement.css"
 import { getAllNews, NewsItem, getAllPressNews, getAllRecruitmentNews, getAllInternalNews } from "../../../page/News/NewsData";
 
 import {db} from "../../../firebase/firebase"
-import { deleteDoc, doc, getDoc } from "firebase/firestore";
-
+import { addDoc, collection, deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 interface ContentDetail {
     id: string;
     title: string;
@@ -13,6 +12,10 @@ interface ContentDetail {
     date:string;
     content:string;
 }
+interface InputItem {
+    type: 'text' | 'img';
+    value: string;
+  }
 const NewsManagement = () => {
     type FilterType = "News" | "Press" | "Internal" | "Recruitment" | "Event";
     const [filter, setFilter] = useState<FilterType>("News");
@@ -118,7 +121,13 @@ const handleClickNavs = (e: React.MouseEvent<HTMLLIElement>) => {
     const [date, setDate] = useState("")
     const [author, setAuthor] = useState("")
     const [title, setTitle] = useState("")
-    const [content, setContent] = useState("")
+    const [idRs, setIdRs] = useState("")
+    const [imageSlideShow, setImageSlideShow] = useState("")
+    //state content
+    const [inputs, setInputs] = useState<InputItem[]>([]); // Quản lý mảng các URL
+    const [inputType, setInputType] = useState<'text' | 'img'>('text'); // Loại input đang chọn
+    const [contentResult, setContentResult] = useState<string>(""); // Mảng lưu trữ các giá trị đã xử lý
+    
     // xử lý pop-up
     const [showAdd, setShowAdd] = useState(false);
     const handleCloseAdd = () => setShowAdd(false);
@@ -128,6 +137,102 @@ const handleClickNavs = (e: React.MouseEvent<HTMLLIElement>) => {
     const handleAddNews = () =>{
         handleShowAdd()
     }
+    //Xu ly input add
+    const handleInputTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.target.value)
+    }
+    const handleInputDate = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setDate(e.target.value)
+    }
+    const handleInputAuthor = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setAuthor(e.target.value)
+    }
+    const handleInputURLImageSlideShow =(e: React.ChangeEvent<HTMLInputElement>) => {
+        setImageSlideShow(e.target.value)
+    }
+    const handleInputId = () => {
+        let id = ""
+        if(filter == 'News') id = 'newId' + (listNews.length + 1)
+        if(filter == 'Press') id = 'pnId' + (listNews.length + 1)
+        if(filter == 'Recruitment') id = 'rnId' + (listNews.length + 1)   
+        setIdRs(id) 
+    }
+    
+    // Xu ly add Content
+    // Hàm xử lý khi nhấn nút Text
+    const handleAddTextInput = () => {
+        setInputs((prevInputs) => [...prevInputs, { type: 'text', value: '' }]); // Thêm một ô input text vào mảng
+        setInputType('text'); // Chọn loại input là Text
+    };
+
+    // Hàm xử lý khi nhấn nút Image
+    const handleAddImgInput = () => {
+        setInputs((prevInputs) => [...prevInputs, { type: 'img', value: '' }]); // Thêm một ô input img vào mảng
+        setInputType('img'); // Chọn loại input là Image
+    };
+    // Hàm thay đổi giá trị input
+    const handleChange = (index: number, value: string) => {
+        const updatedInputs = [...inputs];
+        updatedInputs[index].value = value; // Cập nhật giá trị của input tại vị trí index
+        setInputs(updatedInputs);
+    };
+    // Hàm xử lý nối các giá trị thành mảng và thêm <p>, <img> nếu cần
+    const handleProcessInputs = () => {
+        const processedInputs = inputs.map((input) => {
+            if (input.type === 'text') {
+                return `<p>${input.value}</p>`; // Nếu type là text, thêm <p> vào đầu và </p> vào cuối
+            } else if (input.type === 'img') {
+                return `<img>${input.value}</img>`; // Nếu type là img, thêm <img> vào đầu và </img> vào cuối
+            }
+            return '';
+        });
+        setContentResult(processedInputs.join(''))// Lưu kết quả vào state result
+    };
+    const handleAddNewsToDb = () => {
+        handleInputId();
+        handleProcessInputs();
+    
+        // Tạo biến lưu trữ
+        const newNewsItem = {
+            id: idRs,
+            content: contentResult,
+            img: imageSlideShow,
+            title: title,
+        };
+        const newsItemDetail = {
+            id: idRs,
+            title: title,
+            author: author,
+            date: date,
+            content: contentResult,
+        };
+    
+        // Thêm vào db
+        const addNewsItem = async (): Promise<void> => {
+            try {
+                // Tham chiếu đến collection
+                const newsCollectionRef = collection(db, "News"); // Đảm bảo `filter` được định nghĩa
+                const newsDetailCollectionRef = collection(db, "ContentNewDetail");
+    
+                // 1. Thêm document với ID mặc định (Firebase tự tạo)
+                await addDoc(newsCollectionRef, newNewsItem);
+                await addDoc(newsDetailCollectionRef, newsItemDetail);
+                // 2. Thêm document với ID tùy chỉnh trong collection khác
+                const customDocRef = doc(newsCollectionRef, idRs); // Tạo tham chiếu với ID tùy chỉnh
+                const customDocRef1 = doc(newsDetailCollectionRef, idRs);
+    
+                await setDoc(customDocRef, newNewsItem);
+                await setDoc(customDocRef1, newsItemDetail);
+    
+                console.log("News item added successfully!");
+            } catch (error) {
+                console.error("Error adding news item:", error);
+            }
+        };
+    
+        // Gọi hàm thêm dữ liệu
+        addNewsItem().catch((err) => console.error("Unhandled error:", err));
+    };
     return (
         <>
             <div className='navs d-flex justify-content-between'>
@@ -207,20 +312,70 @@ const handleClickNavs = (e: React.MouseEvent<HTMLLIElement>) => {
                             {/* Modal add */}
             <Modal show={showAdd} onHide={handleCloseAdd} className='modal-add' dialogClassName="modal-90w">
                 <Modal.Header closeButton>
-                <Modal.Title>News Detail</Modal.Title>
+                <Modal.Title>Add News Detail</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                <p>
-            Ipsum molestiae natus adipisci modi eligendi? Debitis amet quae unde
-            commodi aspernatur enim, consectetur. Cumque deleniti temporibus
-            ipsam atque a dolores quisquam quisquam adipisci possimus
-            laboriosam. Quibusdam facilis doloribus debitis! Sit quasi quod
-            accusamus eos quod. Ab quos consequuntur eaque quo rem! Mollitia
-            reiciendis porro quo magni incidunt dolore amet atque facilis ipsum
-            deleniti rem!
-          </p>
+                <Form.Label>Image Slide Show</Form.Label>
+                <Form.Control
+                    required
+                    type="text"
+                    placeholder="Paste link url"
+                    value={imageSlideShow}                   
+                    onChange={handleInputURLImageSlideShow}
+                />
+                <Form.Label>Title</Form.Label>
+                <Form.Control
+                    required
+                    type="text"
+                    placeholder="Title"
+                    value={title}                   
+                    onChange={handleInputTitle}
+                />
+                <Form.Label>Date</Form.Label>
+                <Form.Control
+                    required
+                    type="text"
+                    placeholder="Date"
+                    value={date}
+                    onChange={handleInputDate}
+                    
+                />
+                <Form.Label>Author</Form.Label>
+                <Form.Control
+                    required
+                    type="text"
+                    placeholder="Author"
+                    value={author}
+                    onChange={handleInputAuthor}
+                    
+                />
+                {/* Content */}
+                <hr></hr>
+                <Button variant="outline-success" size="sm" className='me-1 mb-1' onClick={handleAddTextInput}>Content</Button>
+                <Button variant="outline-warning" size="sm" className='me-1 mb-1' onClick={handleAddImgInput}>Image</Button>
+                    {inputs.map((input, index) => (
+                        <div key={index}>
+                            {input.type === 'text' ? (
+                                <Form.Control
+                                    type="text"
+                                    as="textarea"
+                                    value={input.value}
+                                    onChange={(e) => handleChange(index, e.target.value)}
+                                    placeholder="Content"
+                                />
+                            ) : (
+                                <Form.Control
+                                    type="text"
+                                    value={input.value}
+                                    onChange={(e) => handleChange(index, e.target.value)}
+                                    placeholder="Link Url"
+                                />
+                            )}
+                        </div>
+                    ))}
                 </Modal.Body>
-                <Modal.Footer>                   
+                <Modal.Footer> 
+                <Button variant="success" onClick={handleAddNewsToDb}>Submit</Button>                 
                 </Modal.Footer>
             </Modal>
             
