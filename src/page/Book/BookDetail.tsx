@@ -654,7 +654,7 @@ function BookDetail() {
                             </div>
                         </div>
                     </div>
-                    <Comment bookId={book.id} />
+                    <Comment bookId={book.id} id={''} name={''} email={''} title={''} comment={''} />
                     <div className="row">
                         <div className="col-12">
                             <div className="section-related-product e-tabs">
