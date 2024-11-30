@@ -65,7 +65,7 @@ function AppContent() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/news" element={<New />} />
 
-        <Route path="/news/detail/:id" element={<NewsDetail />} />
+        <Route path="/news-detail/:filter/:id" element={<NewsDetail />} />
         
 
         <Route path="/event" element={<EventLayout />}>

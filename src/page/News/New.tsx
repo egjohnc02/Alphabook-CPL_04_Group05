@@ -6,12 +6,12 @@ import introduceImg from '../../assets/introduce/sidebar_image_blog.webp';
 import AutoScrollToTop from '../../utils/AutoScrollToTop';
 import { useParams, useLocation, useNavigate  } from "react-router-dom";
 import { Link } from 'react-router-dom';
-import { getAllNews, getAllHotNews, NewsItem, HotNewsItem, getAllPressNews, getAllRecruitmentNews, getAllInternalNews, getAllEventNews } from "./NewsData";  // Import các hàm và kiểu dữ liệu
+import { getAllNews, getAllHotNews, NewsItem, getAllPressNews, getAllRecruitmentNews, getAllInternalNews, getAllEventNews } from "./NewsData";  // Import các hàm và kiểu dữ liệu
 const New: React.FC = () => {
   type FilterType = "News" | "Press" | "Internal" | "Recruitment" | "Event";
   const [filter, setFilter] = useState<FilterType>("News");
   const [listNews, setListNews] = useState<NewsItem[]>([]);
-  const [listHotNews, setListHotNews] = useState<HotNewsItem[]>([]);
+  const [listHotNews, setListHotNews] = useState<NewsItem[]>([]);
   const [totalPage, setTotalPage] = useState<number>(0)
   const { page } = useParams<{ page: string }>();
   const navigate = useNavigate();
@@ -26,7 +26,8 @@ const New: React.FC = () => {
    // Gọi hàm getAllNews khi component render
    useEffect(() => {
     const fetchNews = async () => {
-      let news = await getAllNews(); 
+      let news = await getAllNews();
+      console.log(news) 
       const hotNews = await getAllHotNews()
       if(event){
         news = await getAllEventNews();
@@ -35,7 +36,6 @@ const New: React.FC = () => {
       setListHotNews(hotNews)
       const totalPageTest = Math.ceil(news.length / 9); // Sử dụng Math.ceil để làm tròn lên
       setTotalPage(totalPageTest);
-      // console.log(news)
     };
     
     fetchNews(); // Gọi hàm fetchNews
@@ -87,8 +87,8 @@ const New: React.FC = () => {
   const handleNewsDetail = (e: React.MouseEvent<HTMLButtonElement>) => {
     const value = e.currentTarget.getAttribute("value-card");
     if (value) {
-      // Điều hướng đến trang chi tiết
-      navigate(`/news/detail/${value}`);
+      // Điều hướng đến trang chi tiết /news-detail/:type/:id
+      navigate(`/news-detail/${filter.toLowerCase()}/${value}`);
     }
   }
   AutoScrollToTop();
@@ -162,9 +162,9 @@ const New: React.FC = () => {
               )}
             </div>
             </Row>
-            <Row>
+            <Row className='d-flex justify-content-start'>
             {filterNew.map((value, key) => (
-              <Col key={key} sm={12} md={6} lg={4} xl={4} className="mb-4">
+              <Col key={key} sm={12} md={6} lg={4} className="mb-4">
                 <Card value-card={value.id} onClick={handleNewsDetail}>
                   <div className="card-img-container" style={{ overflow: "hidden" }}>
                     <Card.Img className="card-img" variant="top" src={value.img} />

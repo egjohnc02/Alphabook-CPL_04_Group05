@@ -3,238 +3,239 @@ import { Button, Container, Modal, Nav, Table, Form } from 'react-bootstrap';
 import "./NewsManagement.css"
 import { getAllNews, NewsItem, getAllPressNews, getAllRecruitmentNews, getAllInternalNews } from "../../../page/News/NewsData";
 
-import {db} from "../../../firebase/firebase"
-import { addDoc, collection, deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
-interface ContentDetail {
-    id: string;
-    title: string;
-    author:string;
-    date:string;
-    content:string;
-}
-interface InputItem {
-    type: 'text' | 'img';
-    value: string;
-  }
+import { db } from "../../../firebase/firebase"
+import { addDoc, collection, deleteDoc, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+
 const NewsManagement = () => {
     type FilterType = "News" | "Press" | "Internal" | "Recruitment" | "Event";
-    const [filter, setFilter] = useState<FilterType>("News");
-    const [listNews, setListNews] = useState<NewsItem[]>([]);
+    const [filter, setFilter] = useState<FilterType>("News"); // navs
+    const [listNews, setListNews] = useState<NewsItem[]>([]); // list new
+    const [totalPage, setTotalPage] = useState<number>(0)
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    // detail
     
-//=================== Get data
-useEffect(() => {
-    const fetchNewsFilter = async () => {
-        let news: NewsItem[] = []; // Định nghĩa kiểu dữ liệu cho news
-        if (filter === "Internal") {
-            news = await getAllInternalNews();
-        }
-        if (filter === "Press") {
-            news = await getAllPressNews();
-        }
-        if (filter === "Recruitment") {
-            news = await getAllRecruitmentNews();
-        }
-        if (filter === "News") {
-            news = await getAllNews()
-        }
-        setListNews(news);
+    const [contentDetail, setContentDetail] = useState<NewsItem>()
+    const [dbType, setDbType] = useState <"News" | "PressNews" | "RecruitmentNews" | "HotNews">("News")
+    // const [contentDetail, setContentDetail] = useState<NewsItem>()
+
+    //=================== Get data
+    useEffect(() => {
+        const fetchNewsFilter = async () => {
+            let news: NewsItem[] = []; 
+            if (filter === "Press") {
+                news = await getAllPressNews();
+                setDbType("PressNews")
+            }
+            if (filter === "Recruitment") {
+                news = await getAllRecruitmentNews();
+                setDbType("RecruitmentNews")
+            }
+            if (filter === "News") {
+                news = await getAllNews()
+                setDbType("News")
+            }
+            setListNews(news);
+            const totalPageTest = Math.ceil(news.length / 9);
+            setTotalPage(totalPageTest);
+            console.log(news)
+        };
+        fetchNewsFilter(); 
+
+    }, [filter]);
+
+    const handleClickNavs = (e: React.MouseEvent<HTMLLIElement>) => {
+        const value = e.currentTarget.getAttribute("data-value") as FilterType;
+        if (value) setFilter(value);
     };
-    fetchNewsFilter(); // Gọi hàm fetchNews
-
-}, [filter]);
-
-const handleClickNavs = (e: React.MouseEvent<HTMLLIElement>) => {
-    const value = e.currentTarget.getAttribute("data-value") as FilterType;
-    if (value) setFilter(value);
-};
-
-//=================== Xử lý pop-up detail
+    const handleChangePage = (e: React.MouseEvent<HTMLButtonElement>) => {
+        const page = parseInt(e.currentTarget.value);
+        setCurrentPage(page)
+    };
+    const filterListByPage = listNews.slice(
+        (currentPage - 1) * 9,
+        Math.min(currentPage * 9, listNews.length) 
+    );
+//=========================== View Detail ==================================================
     const [showDetail, setShowDetail] = useState(false);
     const handleCloseDetail = () => setShowDetail(false);
     const handleShow = () => setShowDetail(true);
-
-    // Xử lý click show pop up và set id
+        // Xử lý click show pop up và set id
         const handleNewsDetail = (e: React.MouseEvent<HTMLButtonElement>) => {
             const value = e.currentTarget.getAttribute("value-id");
-            if (value) {
-              console.log(value)
-              setId(value)
-            }
+            
         handleShow();
-      }
-    // Xử lý contentdatail 
-    const [id, setId] = useState("")
-    const [contentDetail, setContentDetail] =useState<ContentDetail>()
-    const regexParagraph = /<p>(.*?)<\/p>/g;
-    const regexImage = /<img>(.*?)<\/img>/g;
-
-    // Hàm này xử lý nội dung và thay thế thẻ <img> và <p>
-    const parseContent = (content: string) => {
-        // Thay thế các thẻ <img> thành thẻ <img src="URL" />
-        const replacedImages = content.replace(regexImage, (_match, url) => `<img src="${url}" alt="Image" style="width: 100%" class="img-content mb-3"/> `);
-        // Thay thế các thẻ <p> bằng các thẻ <p> HTML bình thường
-        const replacedParagraphs = replacedImages.replace(regexParagraph, (_match, text) => `<p>${text}</p>`);
-        return replacedParagraphs;
-        // Hàm xử lý click detail  
-    };
-
-    // Hàm lấy content id
-    useEffect(() => {
+        // Hàm call content by Id từ Firestore
         const getContentById = async (): Promise<void> => {
-            if (!id) return;
-    
-            const newRef = doc(db, "ContentNewDetail", id);
-            const newSnap = await getDoc(newRef);
-    
-            if (newSnap.exists()) {
-                const contentDetail = newSnap.data() as ContentDetail;
-                setContentDetail(contentDetail);
-            } else {
-                console.log("No such document!");
-            }
+            // if(filter == "News") setDbType("News")
+            // if(filter == "Press") setDbType("PressNews")
+            // if(filter == "Recruitment") setDbType("RecruitmentNews")
+            
+            const newRef = doc(db, `${dbType}`, `${value}`);
+            const newSnap = await getDoc(newRef); // Lấy document từ Firestore          
+            const newDetail: NewsItem = {
+                id: newSnap.id, // Lấy id của document
+                ...newSnap.data(), // Lấy dữ liệu khác
+            } as NewsItem;
+            setContentDetail(newDetail)
+            console.log(newDetail)
+            
         };
-        getContentById(); // Gọi lại mỗi khi `id` thay đổi
-    }, [id])
-
-
-// =======================Hàm xóa tài liệu theo id
-    const deleteContentById = async (id: string): Promise<void> => {
-    if (!id)  return;
-    console.log(id)
-    try {
-        // Tạo tham chiếu đến tài liệu cần xóa
-        const docRef = doc(db, "ContentNewDetail", "test");
-        
-        let docRef1 = doc(db, filter, "test")
-        if(filter == "Press") docRef1 = doc(db, "PressNews", "test")
-        if(filter == "Recruitment") docRef1 = doc(db, "RecruitmentNews", "test")
-        // Thực hiện xóa tài liệu
-        await deleteDoc(docRef);
-        await deleteDoc(docRef1)
-    } catch (error) {
-        // Log lỗi nếu có
-        console.error("Lỗi khi xóa tài liệu: ", error);
+        getContentById();
     }
-};
 
-// ==================== Xử lý add 
-    const [date, setDate] = useState("")
-    const [author, setAuthor] = useState("")
-    const [title, setTitle] = useState("")
-    const [idRs, setIdRs] = useState("")
-    const [imageSlideShow, setImageSlideShow] = useState("")
-    //state content
-    const [inputs, setInputs] = useState<InputItem[]>([]); // Quản lý mảng các URL
-    const [inputType, setInputType] = useState<'text' | 'img'>('text'); // Loại input đang chọn
-    const [contentResult, setContentResult] = useState<string>(""); // Mảng lưu trữ các giá trị đã xử lý
-    
+//===================== Xoa theo id =========================== 
+const handleDeleteById = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const value = e.currentTarget.getAttribute("value-id");
+    if (!value) {
+      console.error("value-id is missing");
+      return;
+    }
+    const deleteContentById = async (): Promise<void> => {
+      try {
+        const docRef = doc(db, `${dbType}`, `${value}`);
+        // Thực hiện xóa document
+        await deleteDoc(docRef);
+        setListNews((prev) => prev.filter((item) => item.id !== value));
+      } catch (err) {
+        console.error("Error deleting document:", err);
+      }
+    };
+    deleteContentById();
+  };
+// =======================Add 1 new ==========================
+    // biến luu thong tin
+    const [addNews, setAddNews] = useState({
+        title: "", 
+        img: "", 
+        content: "", 
+        date: "", 
+        author: "",
+      })
     // xử lý pop-up
     const [showAdd, setShowAdd] = useState(false);
+    const [idshowAdd, setIdShowAdd] = useState("")
     const handleCloseAdd = () => setShowAdd(false);
     const handleShowAdd = () => setShowAdd(true);
-
     //Xu ly click pop up 
     const handleAddNews = () =>{
         handleShowAdd()
     }
-    //Xu ly input add
-    const handleInputTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.target.value)
+    const handleInputAdd = (e: React.ChangeEvent<HTMLInputElement>) =>{
+        const {value, name} = e.target;
+        setAddNews({...addNews, [name] : value.toString()});    
     }
-    const handleInputDate = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setDate(e.target.value)
+    const handleSubmitAddNew = () =>{
+        console.log("addNew",addNews)
+        console.log("dbtype",dbType)
+        console.log("id0",idshowAdd)
+        let input = ""
+        let dbAdd = ""
+        const handleCreateId = () => {
+            let inputId = ""
+            if (dbType == "News"){
+                inputId = "newId"; 
+                dbAdd="News";
+            } 
+            if (dbType == "HotNews"){ 
+                inputId = "hnId"; 
+                dbAdd="HotNews";
+            }
+            if (dbType =="PressNews"){
+                 inputId = "pnId"; 
+                 dbAdd="PressNews";
+            }
+            if (dbType == "RecruitmentNews"){
+                 inputId = "rnId"; 
+                 dbAdd="RecruitmentNews";
+            }
+            const idNext = listNews.length + 1
+            input = inputId + idNext
+            console.log("id1",input)
+            setIdShowAdd(input)
+            console.log("id2",input)
+        }
+        const addToDb = async () =>{
+            try{
+                const newRef = collection(db, dbAdd);
+                await setDoc(doc(newRef, input), addNews); // Tạo document với ID cụ thể
+                console.log("success")
+            }catch(e) {
+                console.log(e)
+            }
+        }
+        handleCreateId()
+        addToDb();
+        listNews.unshift({...addNews, "id": input})
+        setAddNews({
+            title: "", 
+            img: "", 
+            content: "", 
+            date: "", 
+            author: "",
+          })
+          handleCloseAdd()
     }
-    const handleInputAuthor = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setAuthor(e.target.value)
-    }
-    const handleInputURLImageSlideShow =(e: React.ChangeEvent<HTMLInputElement>) => {
-        setImageSlideShow(e.target.value)
-    }
-    const handleInputId = () => {
-        let id = ""
-        if(filter == 'News') id = 'newId' + (listNews.length + 1)
-        if(filter == 'Press') id = 'pnId' + (listNews.length + 1)
-        if(filter == 'Recruitment') id = 'rnId' + (listNews.length + 1)   
-        setIdRs(id) 
-    }
-    
-    // Xu ly add Content
-    // Hàm xử lý khi nhấn nút Text
-    const handleAddTextInput = () => {
-        setInputs((prevInputs) => [...prevInputs, { type: 'text', value: '' }]); // Thêm một ô input text vào mảng
-        setInputType('text'); // Chọn loại input là Text
-    };
+//======================= Xử lý edit
+    // xử lý pop-up
+    const [updateNew, setUpdateNew] = useState({
+        title: "", 
+        img: "", 
+        content: "", 
+        date: "", 
+        author: "",
+      })
+      const [idUpdate, setIdUpdate] = useState<string | null>("") // id - for news item id
+    const [showEdit, setShowEdit] = useState(false);
+    const handleCloseEdit = () => setShowEdit(false);
+    const handleShowEdit = () => setShowEdit(true);
 
-    // Hàm xử lý khi nhấn nút Image
-    const handleAddImgInput = () => {
-        setInputs((prevInputs) => [...prevInputs, { type: 'img', value: '' }]); // Thêm một ô input img vào mảng
-        setInputType('img'); // Chọn loại input là Image
-    };
-    // Hàm thay đổi giá trị input
-    const handleChange = (index: number, value: string) => {
-        const updatedInputs = [...inputs];
-        updatedInputs[index].value = value; // Cập nhật giá trị của input tại vị trí index
-        setInputs(updatedInputs);
-    };
-    // Hàm xử lý nối các giá trị thành mảng và thêm <p>, <img> nếu cần
-    const handleProcessInputs = () => {
-        const processedInputs = inputs.map((input) => {
-            if (input.type === 'text') {
-                return `<p>${input.value}</p>`; // Nếu type là text, thêm <p> vào đầu và </p> vào cuối
-            } else if (input.type === 'img') {
-                return `<img>${input.value}</img>`; // Nếu type là img, thêm <img> vào đầu và </img> vào cuối
-            }
-            return '';
-        });
-        setContentResult(processedInputs.join(''))// Lưu kết quả vào state result
-    };
-    const handleAddNewsToDb = () => {
-        handleInputId();
-        handleProcessInputs();
-    
-        // Tạo biến lưu trữ
-        const newNewsItem = {
-            id: idRs,
-            content: contentResult,
-            img: imageSlideShow,
-            title: title,
+    //Xy lý edit 
+    const handleInputEdit = (e: React.ChangeEvent<HTMLInputElement>) =>{
+        const {value, name} = e.target;
+        setUpdateNew({...updateNew, [name] : value.toString()});    
+    }
+    //Xu ly click pop up 
+    const handleEditNews = (e: React.MouseEvent<HTMLButtonElement>) =>{
+        handleShowEdit()
+        const value = e.currentTarget.getAttribute("value-id");
+        setIdUpdate(value)
+        // Hàm call content by Id từ Firestore
+        const getContentById = async (): Promise<void> => {
+            
+            const newRef = doc(db, `${dbType}`, `${value}`);
+            const newSnap = await getDoc(newRef); // Lấy document từ Firestore          
+            const newDetail: NewsItem = {            
+                ...newSnap.data(), // Lấy dữ liệu khác
+            } as NewsItem;          
+            setUpdateNew(newDetail)
+            console.log(newDetail)        
         };
-        const newsItemDetail = {
-            id: idRs,
-            title: title,
-            author: author,
-            date: date,
-            content: contentResult,
-        };
-    
-        // Thêm vào db
-        const addNewsItem = async (): Promise<void> => {
-            try {
-                // Tham chiếu đến collection
-                const newsCollectionRef = collection(db, "News"); // Đảm bảo `filter` được định nghĩa
-                const newsDetailCollectionRef = collection(db, "ContentNewDetail");
-    
-                // 1. Thêm document với ID mặc định (Firebase tự tạo)
-                await addDoc(newsCollectionRef, newNewsItem);
-                await addDoc(newsDetailCollectionRef, newsItemDetail);
-                // 2. Thêm document với ID tùy chỉnh trong collection khác
-                const customDocRef = doc(newsCollectionRef, idRs); // Tạo tham chiếu với ID tùy chỉnh
-                const customDocRef1 = doc(newsDetailCollectionRef, idRs);
-    
-                await setDoc(customDocRef, newNewsItem);
-                await setDoc(customDocRef1, newsItemDetail);
-    
-                console.log("News item added successfully!");
-            } catch (error) {
-                console.error("Error adding news item:", error);
-            }
-        };
-    
-        // Gọi hàm thêm dữ liệu
-        addNewsItem().catch((err) => console.error("Unhandled error:", err));
-    };
+        getContentById()
+    }
+        // update to bd
+        const updateSubmit = () =>{
+            const upDateNewToDb = async () =>{
+                const newsDoc = doc(db, `${dbType}`, `${idUpdate}`);
+                await updateDoc(newsDoc, updateNew)
+                setListNews( listNews.map((news) => 
+                    news.id === idUpdate ? { ...news, ...updateNew } : news
+            )) 
+        }
+        upDateNewToDb();
+        setUpdateNew({
+            title: "", 
+            img: "", 
+            content: "", 
+            date: "", 
+            author: "",
+          })
+        handleCloseEdit()
+    }
+
+
     return (
         <>
+            <p className='h3'>Danh sách tin tức</p>
             <div className='navs d-flex justify-content-between'>
                 <Nav variant="tabs" defaultActiveKey="link-0">
                     <Nav.Item>
@@ -247,35 +248,49 @@ const handleClickNavs = (e: React.MouseEvent<HTMLLIElement>) => {
                         <Nav.Link eventKey="link-3" data-value="Recruitment" onClick={handleClickNavs}>Tin tuyển dụng</Nav.Link>
                     </Nav.Item>
                 </Nav>
-                <Button variant="outline-danger" onClick={handleAddNews}>Add</Button>
+                <Button variant="outline-success" onClick={handleAddNews}>Tạo tin tức</Button>
             </div>
             <div className='display-content mt-3'>
                 <Table striped bordered hover>
                     <thead>
                         <tr>
                             <th>#id</th>
-                            <th>Img</th>
-                            <th>Title</th>
-                            <th>Content (Shortent)</th>
-                            <th>Action</th>
+                            <th>Tiêu đề </th>
+                            <th>Nội dung</th>
+                            <th>Ngày</th>
+                            <th>Hình ảnh</th>
+                            <th>Công cụ</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {listNews.map((item, key) => (
+                        {filterListByPage.map((item, key) => (
                             <tr>
                                 <td>{item.id}</td>
-                                <td><img src={item.img} alt="" height={'auto'} width={'200px'}></img></td>
-                                <td className='fw-bold' style={{ width: '200px' }}>{item.title}</td>
-                                <td className='content-customer' style={{ width: '300px' }}>{item.content}</td>
+                                <td>{item.title}</td>
                                 <td>
-                                    <div className='d-flex align-items-center' style={{ height: '112px' }}>
-                                        <i className="fa-solid fa-eye px-2 fa-lg" value-id={item.id} onClick={handleNewsDetail}></i>
-                                        <i className="fa-solid fa-pen-to-square fa-lg px-2"></i>
-                                        <i className="fa-solid fa-trash-can fa-lg px-2" value-id={item.id} onClick={(e) =>{
-                                            const id = e.currentTarget.getAttribute("value-id");
-                                            if(id) deleteContentById(id)
-                                            console.log(id)
-                                        }}></i>
+                                    <div className='content-item-detail'>
+                                        <p>{item.content}</p>
+                                    </div>
+                                </td>
+                                <td>{item.date}</td>
+                                <td><div style={{ width: "100px", aspectRatio: "4 / 3", overflow: "hidden" }}>
+                                    <img
+                                        src={item.img}
+                                        alt=""
+                                        style={{
+                                            width: "100%",
+                                            height: "100%",
+                                            objectFit: "cover",
+                                        }}
+                                    />
+                                </div></td>
+                                <td>
+                                    <div className='container-item'>
+                                        <div className='d-flex justify-content-center align-items-center' style={{ height: '80px' }}>
+                                            <i className="fa-solid fa-eye px-2 fa-lg" value-id={item.id} onClick={handleNewsDetail}></i>
+                                            <i className="fa-solid fa-pen-to-square fa-lg px-2" value-id={item.id} onClick={handleEditNews}></i>
+                                            <i className="fa-solid fa-trash-can fa-lg px-2" value-id={item.id} onClick={handleDeleteById}></i>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
@@ -283,102 +298,179 @@ const handleClickNavs = (e: React.MouseEvent<HTMLLIElement>) => {
                     </tbody>
                 </Table>
             </div>
-                        {/* Modal show detai */}
+            <div className="Pagination-news">
+                <div className="pagenav">
+                    <ul className="pagination-custom list-unstyled">
+                        <li className="page-item">
+                            <button className="page-link mx-auto" disabled>
+                                <i className="fa-solid fa-angle-left"></i>
+                            </button>
+                        </li>
+                        {Array.from({ length: totalPage }, (_, i) => (
+                            i == 3 ? (
+                                <li className="page-item">
+                                    <button className="page-link mx-auto" disabled>
+                                        ...
+                                    </button>
+                                </li>
+                            ) : (
+                                <li key={i} className={`page-item ${currentPage == (i + 1) ? 'actived' : ''}`} >
+                                    <button className="page-link mx-auto" value={i + 1} onClick={(e) => handleChangePage(e)}>{i + 1}</button>
+                                </li>
+                            )))}
+                        <li className="page-item">
+                            <button className="page-link mx-auto">
+                                <i className="fa-solid fa-angle-right"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            {/* Modal show detai */}
             <Modal show={showDetail} onHide={handleCloseDetail} fullscreen={true}>
                 <Modal.Header closeButton>
                 <Modal.Title>News Detail</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                 {contentDetail ? (
-                            <Container>
+                            <div className='container'>
                                 <p className='title-content-custom fw-bold h3 mt-3 text-black'>{contentDetail.title}</p>
                                 <div className='info d-flex justify-content-between'>
                                 <p><i className="fa-solid fa-clock ms-1"></i> Ngày đăng: {contentDetail.date}</p>
                                     <p><i className="fa-solid fa-user"></i> Viết Bởi: {contentDetail.author}</p>       
                                 </div>
                                 <div
-                                    dangerouslySetInnerHTML={{
-                                        __html: parseContent(contentDetail.content),
-                                    }}
-                                ></div>
-                            </Container>
+                                    
+                                ><p className='content-detail-text'>{contentDetail.content}</p>
+                                <img src={contentDetail.img} width={'100%'} className='mt-2'></img></div>
+                            </div>
                         ) : (
+                            <div className='container'>
                             <p>Đang tải nội dung...</p>
+                            </div>
+                            
                         )}
                 </Modal.Body>
                 <Modal.Footer>                   
                 </Modal.Footer>
             </Modal>
-                            {/* Modal add */}
+                        {/* Modal add */}
+                                        {/* Modal add */}
             <Modal show={showAdd} onHide={handleCloseAdd} className='modal-add' dialogClassName="modal-90w">
                 <Modal.Header closeButton>
-                <Modal.Title>Add News Detail</Modal.Title>
+                <Modal.Title>Thêm tin tức mới</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                <Form.Label>Image Slide Show</Form.Label>
-                <Form.Control
-                    required
-                    type="text"
-                    placeholder="Paste link url"
-                    value={imageSlideShow}                   
-                    onChange={handleInputURLImageSlideShow}
-                />
-                <Form.Label>Title</Form.Label>
+                <Form.Label className='mb-0 mt-2'>Tiêu đề</Form.Label>
                 <Form.Control
                     required
                     type="text"
                     placeholder="Title"
-                    value={title}                   
-                    onChange={handleInputTitle}
+                    value={addNews.title} 
+                    name= "title"                  
+                    onChange={handleInputAdd}
                 />
-                <Form.Label>Date</Form.Label>
+                <Form.Label className='mb-0 mt-3'>Ngày tạo</Form.Label>
                 <Form.Control
                     required
                     type="text"
                     placeholder="Date"
-                    value={date}
-                    onChange={handleInputDate}
-                    
+                    value={addNews.date} 
+                    name= "date"                  
+                    onChange={handleInputAdd}
                 />
-                <Form.Label>Author</Form.Label>
+                <Form.Label className='mb-0 mt-3'>Tác giả</Form.Label>
                 <Form.Control
                     required
                     type="text"
                     placeholder="Author"
-                    value={author}
-                    onChange={handleInputAuthor}
-                    
+                    value={addNews.author} 
+                    name= "author"                  
+                    onChange={handleInputAdd}
                 />
-                {/* Content */}
-                <hr></hr>
-                <Button variant="outline-success" size="sm" className='me-1 mb-1' onClick={handleAddTextInput}>Content</Button>
-                <Button variant="outline-warning" size="sm" className='me-1 mb-1' onClick={handleAddImgInput}>Image</Button>
-                    {inputs.map((input, index) => (
-                        <div key={index}>
-                            {input.type === 'text' ? (
-                                <Form.Control
-                                    type="text"
-                                    as="textarea"
-                                    value={input.value}
-                                    onChange={(e) => handleChange(index, e.target.value)}
-                                    placeholder="Content"
-                                />
-                            ) : (
-                                <Form.Control
-                                    type="text"
-                                    value={input.value}
-                                    onChange={(e) => handleChange(index, e.target.value)}
-                                    placeholder="Link Url"
-                                />
-                            )}
-                        </div>
-                    ))}
+                <Form.Label className='mb-0 mt-3'>Ảnh minh họa</Form.Label>
+                <Form.Control
+                    required
+                    type="text"
+                    placeholder="Image Slide Show"
+                    value={addNews.img} 
+                    name= "img"                  
+                    onChange={handleInputAdd}
+                />
+                <Form.Label className='mb-0 mt-3'>Nội dung</Form.Label>
+                <Form.Control
+                    required
+                    type="text"
+                    as="textarea"
+                    placeholder="Content"
+                    value={addNews.content} 
+                    name= "content"                  
+                    onChange={handleInputAdd}
+                />
                 </Modal.Body>
                 <Modal.Footer> 
-                <Button variant="success" onClick={handleAddNewsToDb}>Submit</Button>                 
+                <Button variant="success" onClick={handleSubmitAddNew}>Submit</Button>                 
                 </Modal.Footer>
             </Modal>
-            
+
+            {/* Modal edit */}
+            <Modal show={showEdit} onHide={handleCloseEdit} className='modal-add' dialogClassName="modal-90w">
+                <Modal.Header closeButton>
+                <Modal.Title>Chỉnh sửa tin tức</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                <Form.Label className='mb-0 mt-2'>Tiêu đề</Form.Label>
+                <Form.Control
+                    required
+                    type="text"
+                    placeholder="Title"
+                    value={updateNew.title} 
+                    name= "title"                  
+                    onChange={handleInputEdit}
+                />
+                <Form.Label className='mb-0 mt-3'>Ngày tạo</Form.Label>
+                <Form.Control
+                    required
+                    type="text"
+                    placeholder="Date"
+                    value={updateNew.date} 
+                    name= "date"                  
+                    onChange={handleInputEdit}
+                />
+                <Form.Label className='mb-0 mt-3'>Tác giả</Form.Label>
+                <Form.Control
+                    required
+                    type="text"
+                    placeholder="Author"
+                    value={updateNew.author} 
+                    name= "author"                  
+                    onChange={handleInputEdit}
+                />
+                <Form.Label className='mb-0 mt-3'>Ảnh minh họa</Form.Label>
+                <Form.Control
+                    required
+                    type="text"
+                    placeholder="Image Slide Show"
+                    value={updateNew.img} 
+                    name= "img"                  
+                    onChange={handleInputEdit}
+                />
+                <Form.Label className='mb-0 mt-3'>Nội dung</Form.Label>
+                <Form.Control
+                    required
+                    type="text"
+                    as="textarea"
+                    placeholder="Content"
+                    value={updateNew.content} 
+                    name= "content"                  
+                    onChange={handleInputEdit}
+                />
+                </Modal.Body>
+                <Modal.Footer> 
+                <Button variant="success" onClick={updateSubmit}>Submit</Button>
+                <Button variant="danger" onClick={handleCloseEdit}>Exit</Button>                 
+                </Modal.Footer>
+            </Modal>
         </>
     );
 }
