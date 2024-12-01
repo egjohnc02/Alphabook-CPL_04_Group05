@@ -6,11 +6,47 @@ type PaginationProps = {
   onPageChange: (page: number) => void;
 };
 
+const getVisiblePages = (totalPages: number, currentPage: number): (number | string)[] => {
+  const visiblePages: (number | string)[] = [];
+  const maxVisiblePages = 5;
+
+  if (totalPages <= maxVisiblePages) {
+    // Hiển thị toàn bộ các trang nếu số trang <= 5
+    for (let i = 1; i <= totalPages; i++) {
+      visiblePages.push(i);
+    }
+  } else {
+    // Trang đầu
+    visiblePages.push(1);
+
+    if (currentPage > 3) {
+      visiblePages.push("...");
+    }
+
+    // Các trang xung quanh trang hiện tại
+    const startPage = Math.max(2, currentPage - 1);
+    const endPage = Math.min(totalPages - 1, currentPage + 1);
+
+    for (let i = startPage; i <= endPage; i++) {
+      visiblePages.push(i);
+    }
+
+    if (currentPage < totalPages - 2) {
+      visiblePages.push("...");
+    }
+
+    // Trang cuối
+    visiblePages.push(totalPages);
+  }
+
+  return visiblePages;
+};
+
 const Pagination: React.FC<PaginationProps> = ({ totalPages, currentPage, onPageChange }) => {
-  const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
+  const visiblePages = getVisiblePages(totalPages, currentPage);
 
   return (
-    <div className="section pagenav" style={{ textAlign: "center" ,display :"flex",justifyContent:"center"}}>
+    <div className="section pagenav" style={{ textAlign: "center", display: "flex", justifyContent: "center" }}>
       <nav className="clearfix relative nav_pagi w_100">
         <ul className="pagination clearfix" style={{ listStyleType: "none", padding: 0 }}>
           {/* Previous Page Button */}
@@ -28,21 +64,35 @@ const Pagination: React.FC<PaginationProps> = ({ totalPages, currentPage, onPage
           </li>
 
           {/* Page Numbers */}
-          {pageNumbers.map((number) => (
-            <li key={number} className={`page-item ${currentPage === number ? "active" : ""}`}>
-              <button
-                className="page-link"
-                onClick={() => onPageChange(number)}
-                style={{
-                  margin: "0 5px",
-                  fontWeight: currentPage === number ? "bold" : "normal",
-                  border: currentPage === number ? "1px solid #000" : "1px solid #ccc", // Thêm đường viền
-                  backgroundColor: currentPage === number ? "#f0f0f0" : "none", // Thêm màu nền
-                  color: "#f47920", // Thêm màu cho văn bản
-                }}
-              >
-                {number}
-              </button>
+          {visiblePages.map((page, index) => (
+            <li key={index} className={`page-item ${currentPage === page ? "active" : ""}`}>
+              {typeof page === "number" ? (
+                <button
+                  className="page-link"
+                  onClick={() => onPageChange(page)}
+                  style={{
+                    margin: "0 5px",
+                    fontWeight: currentPage === page ? "bold" : "normal",
+                    border: currentPage === page ? "1px solid #000" : "1px solid #ccc",
+                    backgroundColor: currentPage === page ? "#f0f0f0" : "none",
+                    color: "#f47920",
+                  }}
+                >
+                  {page}
+                </button>
+              ) : (
+                <span
+                  key={index}
+                  className="page-link disabled"
+                  style={{
+                    margin: "0 5px",
+                    color: "#f47920",
+                    cursor: "default",
+                  }}
+                >
+                  {page}
+                </span>
+              )}
             </li>
           ))}
 

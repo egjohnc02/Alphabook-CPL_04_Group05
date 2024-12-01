@@ -9,7 +9,7 @@ import AutoScrollToTop from "../../../utils/AutoScrollToTop";
 import HTXBManagement from "../../../components/Account/Admin/HTXBManagement.tsx";
 import SubManagement from "../../../components/Account/Admin/SubManagement.tsx";
 
-import BookManagement from "../../../components/Account/Admin/BookManagement.tsx";
+import BookManagement from "../../../components/Account/Admin/BookManagement/BookManagement.tsx";
 import EventManagement from "../../../components/Account/Admin/EventManagement";
 
 const Admin: React.FC = () => {
