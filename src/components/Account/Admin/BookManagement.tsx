@@ -1,11 +1,8 @@
 
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from 'react-router-dom';
-
-import { arrayRemove, arrayUnion, collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where, deleteDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, updateDoc, deleteDoc } from "firebase/firestore";
 
 import { db } from "../../../firebase/firebase";
-import { auto } from "@popperjs/core";
 interface Book {
     id: string;
     author: string;

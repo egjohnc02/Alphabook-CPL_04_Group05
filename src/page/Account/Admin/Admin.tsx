@@ -14,7 +14,7 @@ import NewsManagement from "../../../components/Account/Admin/NewsManagement.tsx
 
 const Admin: React.FC = () => {
   const navigate = useNavigate();
-  const [currentView, setCurrentView] = useState<"UserManagement" | "OrderManagement" | "DoiMatKhau" | "HTXBManagement" | "SubManagement" | "BookManagement" | "EventManagement" | "NewsManagement">("UserManagement");
+  const [currentView, setCurrentView] = useState<"UserManagement" | "OrderManagement" | "HTXBManagement" | "SubManagement" | "BookManagement" | "EventManagement" | "NewsManagement" | "DoiMatKhau">("UserManagement");
   const [userName, setUserName] = useState("");
 
   useEffect(() => {
@@ -60,9 +60,9 @@ const Admin: React.FC = () => {
   };
 
   return (
-    <div className="pb-5 d-flex container gap-5">
+    <div className="pb-5 d-flex container">
       <AutoScrollToTop />
-      <div>
+      <div className="w-25">
         <nav className="fs-4">Trang quản trị</nav>
         <nav className="fw-bolder">
           Xin chào, <span className="text-orange">{userName}</span>!
@@ -103,13 +103,7 @@ const Admin: React.FC = () => {
         >
           Quản lý Sach
         </p>
-        <p
-          className="text-dark hover-text-orange text-decoration-none"
-          onClick={() => setCurrentView("DoiMatKhau")}
-          style={{ cursor: "pointer" }}
-        >
-          Đổi mật khẩu
-        </p>
+        
         <p
           className="text-dark hover-text-orange text-decoration-none"
           onClick={() => setCurrentView("NewsManagement")}
@@ -124,6 +118,15 @@ const Admin: React.FC = () => {
         >
           Quản lý sự kiện
         </p>
+
+        <p
+          className="text-dark hover-text-orange text-decoration-none"
+          onClick={() => setCurrentView("DoiMatKhau")}
+          style={{ cursor: "pointer" }}
+        >
+          Đổi mật khẩu
+        </p>
+
         <p
           className="text-dark hover-text-orange text-decoration-none"
           onClick={logout}
@@ -132,7 +135,7 @@ const Admin: React.FC = () => {
           Đăng xuất
         </p>
       </div>
-      <div>{renderView()}</div>
+      <div className="w-75">{renderView()}</div>
     </div>
   );
 };

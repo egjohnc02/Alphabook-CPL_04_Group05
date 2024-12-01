@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Container, Modal, Nav, Table, Form } from 'react-bootstrap';
+import { Button, Modal, Nav, Table, Form } from 'react-bootstrap';
 import "./NewsManagement.css"
-import { getAllNews, NewsItem, getAllPressNews, getAllRecruitmentNews, getAllInternalNews } from "../../../page/News/NewsData";
+import { getAllNews, NewsItem, getAllPressNews, getAllRecruitmentNews } from "../../../page/News/NewsData";
 
 import { db } from "../../../firebase/firebase"
-import { addDoc, collection, deleteDoc, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 
 const NewsManagement = () => {
     type FilterType = "News" | "Press" | "Internal" | "Recruitment" | "Event";
@@ -234,8 +234,8 @@ const handleDeleteById = (e: React.MouseEvent<HTMLButtonElement>) => {
 
 
     return (
-        <>
-            <p className='h3'>Danh sách tin tức</p>
+        <div className='container my-4'>
+            <h2>Danh sách tin tức</h2>
             <div className='navs d-flex justify-content-between'>
                 <Nav variant="tabs" defaultActiveKey="link-0">
                     <Nav.Item>
@@ -263,7 +263,7 @@ const handleDeleteById = (e: React.MouseEvent<HTMLButtonElement>) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {filterListByPage.map((item, key) => (
+                        {filterListByPage.map((item) => (
                             <tr>
                                 <td>{item.id}</td>
                                 <td>{item.title}</td>
@@ -471,7 +471,7 @@ const handleDeleteById = (e: React.MouseEvent<HTMLButtonElement>) => {
                 <Button variant="danger" onClick={handleCloseEdit}>Exit</Button>                 
                 </Modal.Footer>
             </Modal>
-        </>
+        </div>
     );
 }
 
