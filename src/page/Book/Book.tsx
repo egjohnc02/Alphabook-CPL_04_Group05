@@ -167,7 +167,7 @@ function Book() {
   };
 
   const totalPages = Math.ceil(
-    filterBooksBySearch( // Add search filter to totalPages calculation
+    filterBooksBySearch( 
       filterBooksByPriceRange(
         filterBooksByCategory(sortedBooks(book, sortOption), selectedCategory),
         selectedPriceRange

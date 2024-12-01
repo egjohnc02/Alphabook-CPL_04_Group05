@@ -8,7 +8,7 @@ import DoiMatKhau from "../../../components/Account/DoiMatKhau/DoiMatKhau";
 import AutoScrollToTop from "../../../utils/AutoScrollToTop";
 import HTXBManagement from "../../../components/Account/Admin/HTXBManagement.tsx";
 import SubManagement from "../../../components/Account/Admin/SubManagement.tsx";
-import BookManagement from "../../../components/Account/Admin/BookManagement.tsx";
+import BookManagement from "../../../components/Account/Admin/BookManagement/BookManagement.tsx";
 import EventManagement from "../../../components/Account/Admin/EventManagement";
 import NewsManagement from "../../../components/Account/Admin/NewsManagement.tsx";
 
@@ -60,9 +60,9 @@ const Admin: React.FC = () => {
   };
 
   return (
-    <div className="pb-5 d-flex container">
+    <div className="pb-5 d-flex container gap-3">
       <AutoScrollToTop />
-      <div className="w-25">
+      <div>
         <nav className="fs-4">Trang quản trị</nav>
         <nav className="fw-bolder">
           Xin chào, <span className="text-orange">{userName}</span>!

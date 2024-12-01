@@ -145,8 +145,8 @@ const SoDiaChi: React.FC = () => {
   };
 
   return (
-    <div>
-      <p className="fs-4">Địa chỉ của bạn</p>
+    <div className="container my-4">
+      <h2>Địa chỉ của bạn</h2>
       <p className="text-danger small fst-italic">* Hãy để địa chỉ là mặc định nếu bạn muốn ship đến đó!</p>
       <button
         type="button"
