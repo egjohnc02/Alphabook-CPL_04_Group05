@@ -5,38 +5,18 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import introduceImg from '../../assets/introduce/sidebar_image_blog.webp';
 import AutoScrollToTop from '../../utils/AutoScrollToTop';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { getAllHotNews, HotNewsItem } from "./NewsData";  // Import các hàm và kiểu dữ liệu
+import { getAllHotNews, NewsItem } from "./NewsData";  // Import các hàm và kiểu dữ liệu
 import { db } from "../../firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
-
-interface ContentDetail {
-id: string;
-title: string;
-author:string;
-date:string;
-content:string;
-}
-
 const NewsDetail: React.FC = () => {
     const navigate = useNavigate();
-    const { id } = useParams<{ id: string }>();
-    const [listHotNews, setListHotNews] = useState<HotNewsItem[]>([]);
-    const [contentDetail, setContentDetail] =useState<ContentDetail>()
-    const regexParagraph = /<p>(.*?)<\/p>/g;
-    const regexImage = /<img>(.*?)<\/img>/g;
+    const { filter, id } = useParams<{ filter: string; id: string }>();
+    const [stateChange, setStateChange] = useState<string>("")
+    const [listHotNews, setListHotNews] = useState<NewsItem[]>([]);
+    const [contentDetail, setContentDetail] = useState<NewsItem>()
+    const [dbType, setDbType] = useState <"News" | "PressNews" | "RecruitmentNews" | "HotNews">()
+    console.log(filter, id)
 
-
-
-// Hàm này xử lý nội dung và thay thế thẻ <img> và <p>
-    const parseContent = (content: string) => {
-      // Thay thế các thẻ <img> thành thẻ <img src="URL" />
-      const replacedImages = content.replace(regexImage, (_match, url) => `<img src="${url}" alt="Image" style="width: 100%" class="img-content mb-3"/> `);
-      // Thay thế các thẻ <p> bằng các thẻ <p> HTML bình thường
-      const replacedParagraphs = replacedImages.replace(regexParagraph, (_match, text) => `<p>${text}</p>`);
-      return replacedParagraphs;
-    };
-  
-    // Gọi hàm getAllNews khi component render
     useEffect(() => {
         const fetchNews = async () => {
             const hotNews = await getAllHotNews()
@@ -45,22 +25,23 @@ const NewsDetail: React.FC = () => {
         // Hàm call content by Id từ Firestore
         const getContentById = async (): Promise<void> => {
             if (!id) return;
-
-            const newRef = doc(db, "ContentNewDetail", id);
-            const newSnap = await getDoc(newRef);
-
-            if (newSnap.exists()) {
-                const contentDetail = newSnap.data() as ContentDetail;
-                setContentDetail(contentDetail);
-                // Kiểm tra và cập nhật contentText sau khi đã lấy dữ liệu
-                console.log(contentDetail.content); // Hoặc sử dụng contentText ở đâu đó trong mã của bạn
-            } else {
-                console.log("No such document!");
-            }
+            if(filter == "news") setDbType("News")
+            if(filter == "press") setDbType("PressNews")
+            if(filter == "recruitment") setDbType("RecruitmentNews")
+            
+            const newRef = doc(db, `${dbType}`, id);
+            const newSnap = await getDoc(newRef); // Lấy document từ Firestore          
+            const newDetail: NewsItem = {
+                id: newSnap.id, // Lấy id của document
+                ...newSnap.data(), // Lấy dữ liệu khác
+            } as NewsItem;
+            setContentDetail(newDetail)
+            
         };
         getContentById();
         fetchNews(); // Gọi hàm fetchNews
-    }, [id]);
+        setStateChange("id")
+    }, [stateChange]);
     
     const handleClick = () => {
         navigate("/news")
@@ -122,7 +103,7 @@ const NewsDetail: React.FC = () => {
                 {/* Main Content News */}
                 <Col sm={12} md={12} lg={9}>
                     <div className='text-muted'>
-                        {contentDetail ? (
+                         {contentDetail ? (
                             <>
                                 <p className='title-content-custom fw-bold h3 mt-3 text-black'>{contentDetail.title}</p>
                                 <div className='info d-flex justify-content-between'>
@@ -130,10 +111,9 @@ const NewsDetail: React.FC = () => {
                                     <p><i className="fa-solid fa-user"></i> Viết Bởi: {contentDetail.author}</p>       
                                 </div>
                                 <div
-                                    dangerouslySetInnerHTML={{
-                                        __html: parseContent(contentDetail.content),
-                                    }}
-                                ></div>
+                                    
+                                ><p className='content-detail-text'>{contentDetail.content}</p>
+                                <img src={contentDetail.img} width={'100%'} className='mt-2'></img></div>
                             </>
                         ) : (
                             <p>Đang tải nội dung...</p>

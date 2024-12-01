@@ -51,7 +51,7 @@ const Home: React.FC = () => {
         const value = e.currentTarget.getAttribute("value-card");
         if (value) {
             // Điều hướng đến trang chi tiết
-            navigate(`/news/detail/${value}`);
+            navigate(`/news-detail/news/${value}`);
         }
     }
     const handleEventDetail = (e: React.MouseEvent<HTMLButtonElement>) => {

@@ -10,10 +10,11 @@ import HTXBManagement from "../../../components/Account/Admin/HTXBManagement.tsx
 import SubManagement from "../../../components/Account/Admin/SubManagement.tsx";
 import BookManagement from "../../../components/Account/Admin/BookManagement.tsx";
 import EventManagement from "../../../components/Account/Admin/EventManagement";
+import NewsManagement from "../../../components/Account/Admin/NewsManagement.tsx";
 
 const Admin: React.FC = () => {
   const navigate = useNavigate();
-  const [currentView, setCurrentView] = useState<"UserManagement" | "OrderManagement" | "DoiMatKhau" | "HTXBManagement" | "SubManagement" | "BookManagement" | "EventManagement">("UserManagement");
+  const [currentView, setCurrentView] = useState<"UserManagement" | "OrderManagement" | "DoiMatKhau" | "HTXBManagement" | "SubManagement" | "BookManagement" | "EventManagement" | "NewsManagement">("UserManagement");
   const [userName, setUserName] = useState("");
 
   useEffect(() => {
@@ -51,6 +52,8 @@ const Admin: React.FC = () => {
         return <BookManagement />
       case "EventManagement":
         return <EventManagement />;
+      case "NewsManagement":
+        return <NewsManagement />
       default:
         return <UserManagement />;
     }
@@ -106,6 +109,13 @@ const Admin: React.FC = () => {
           style={{ cursor: "pointer" }}
         >
           Đổi mật khẩu
+        </p>
+        <p
+          className="text-dark hover-text-orange text-decoration-none"
+          onClick={() => setCurrentView("NewsManagement")}
+          style={{ cursor: "pointer" }}
+        >
+          Quản lý tin tức
         </p>
         <p
           className="text-dark hover-text-orange text-decoration-none"
