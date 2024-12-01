@@ -1,7 +1,7 @@
 import './styleBookDetail.css'
 import { useState, useEffect } from "react";
 
-import { useNavigate, useParams } from 'react-router-dom';  // Import useParams để lấy id từ URL
+import { useNavigate, useParams } from 'react-router-dom';  
 import { arrayRemove, arrayUnion, collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore";
 import { db } from "../../firebase/firebase.tsx";
 import Comment from './BookComment.tsx';
@@ -264,6 +264,7 @@ function BookDetail() {
         localStorage.getItem("isLoggedIn") == "true" ? handleAddToCart(e) : navigate(`/login`);
     }
 
+
     const handlePopUp = () =>{
             setIsActive(true); 
             console.log("pop-up")
@@ -345,20 +346,11 @@ function BookDetail() {
                 </div>
 
                 <div key={book.id} className="col-12 col-md-12 col-lg-6 details-pro">
-                    {/* Tên sách */}
                     <h1 className="title-head">{book.title}</h1>
                     <div className="flex-vd">
-                        {/* Tên tác giả */}
                         <div className="vendor">
                             <span>Tác giả:</span> {book.author || 'Chưa cập nhật'}
-                        </div>
-
-                        {/* Mã sản phẩm (có thể lấy từ bookDetails nếu có) */}
-                        {/* <div className="skuuu sku-product d-none">
-                            <span className="variant-sku" itemProp="sku" content={book.sku || 'Chưa có SKU'}>
-                                Mã sản phẩm: <strong>{book.sku}</strong>
-                            </span>
-                        </div> */}
+                        </div>   
                     </div>
 
                     <div className="group-action-button">

@@ -122,3 +122,16 @@
     color: white;
     background-color: rgba(253, 166, 4, 0.877);
 }
+
+/* quản lý new */
+.content-detail-text{
+    text-align: justify;
+}
+.content-item-detail {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Số dòng tối đa */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 200px;
+  }
