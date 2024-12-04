@@ -56,8 +56,8 @@ const DoiMatKhau: React.FC = () => {
   };
 
   return (
-    <div>
-      <nav className="fs-4">Đổi mật khẩu</nav>
+    <div className="container my-4">
+      <h2>Đổi mật khẩu</h2>
       <nav>Để đảm bảo tính bảo mật, bạn vui lòng đặt lại mật khẩu với ít nhất 6 kí tự.</nav>
       {message && <p className={`text-${message.includes("thành công") ? "success" : "danger"}`}>{message}</p>}
       <div>
@@ -66,7 +66,7 @@ const DoiMatKhau: React.FC = () => {
         <input
           type="password"
           id="old-password"
-          className="w-75"
+          className="w-50"
           value={oldPassword}
           onChange={(e) => setOldPassword(e.target.value)}
         />
@@ -79,7 +79,7 @@ const DoiMatKhau: React.FC = () => {
         <input
           type="password"
           id="new-password"
-          className="w-75"
+          className="w-50"
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
         />
@@ -92,7 +92,7 @@ const DoiMatKhau: React.FC = () => {
         <input
           type="password"
           id="confirm-password"
-          className="w-75"
+          className="w-50"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
         />

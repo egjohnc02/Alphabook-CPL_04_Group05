@@ -12,6 +12,7 @@ interface Order {
   items: { bookTitle: string; quantity: string; bookPrice: string }[];
   address: string,
   phoneNumber: string,
+  fullName: string
 }
 
 const OrderManagement: React.FC = () => {
@@ -57,8 +58,8 @@ const OrderManagement: React.FC = () => {
         <table className="table table-striped">
           <thead className="thead-dark">
             <tr>
-              <th scope="col" className="bg-orange text-white">#</th>
-              <th scope="col" className="bg-orange text-white">Tên Người Dùng</th>
+              <th scope="col" className="bg-orange text-white ">#</th>
+              <th scope="col" className="bg-orange text-white">Người đặt</th>
               <th scope="col" className="bg-orange text-white">Email</th>
               <th scope="col" className="bg-orange text-white">Mã đơn hàng</th>
               <th scope="col" className="bg-orange text-white">Ngày Đặt Hàng</th>

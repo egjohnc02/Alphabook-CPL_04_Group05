@@ -40,8 +40,8 @@ const DonHang: React.FC = () => {
     
 
     return (
-      <div className="container">
-      <p className="fs-4">Danh sách đơn hàng</p>
+      <div className="container my-4">
+      <h2>Danh sách đơn hàng</h2>
       {orders.length > 0 ? (
         <div className="overflow-y-scroll" style={{maxHeight: 500}}>
             <table className="table table-striped">

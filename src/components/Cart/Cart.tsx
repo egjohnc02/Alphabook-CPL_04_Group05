@@ -13,6 +13,7 @@ interface CartItem {
 }
 
 type Address = {
+    name?: string,
     phone?: string;
     address?: string;
     email?: string;
@@ -47,13 +48,11 @@ const Cart: React.FC = () => {
     
               if (userDoc.exists()) {
                 const data = userDoc.data();
-                setUserName(`${data.FirstName || ""} ${data.LastName || ""}`.trim());
-    
                 const defaultAddress = (data.addresses as Address[] || []).find((addr) => addr.isDefault);
     
                 if (defaultAddress) {
+                  setUserName(defaultAddress.name || "")
                   setPhoneNumber(defaultAddress.phone || null);
-    
                   const fullAddress = [
                     defaultAddress.address,
                     defaultAddress.ward,
