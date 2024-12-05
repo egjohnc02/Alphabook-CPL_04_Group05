@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { collection, doc, getDoc, getDocs, updateDoc} from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, updateDoc, addDoc, setDoc, deleteDoc } from "firebase/firestore";
+
 import { db } from "../../../../firebase/firebase";
 
 
@@ -30,7 +31,8 @@ const EditBook: React.FC<EditBookProps> = ({ bookId, onSave, onClose }) => {
 
     const [editBook, setEditBook] = useState<Book | null>(null); 
     const [editBookDetail, setEditBookDetail] = useState<BookDetail | null>(null); 
-    const [isModalOpen] = useState(false); 
+    const [isModalOpen, setIsModalOpen] = useState(false); 
+
     const [isAddingCategory, setIsAddingCategory] = useState<boolean>(false); 
     const [uniqueCategories, setUniqueCategories] = useState<string[]>([]);
     const [newCategory, setNewCategory] = useState<string>("");
@@ -361,3 +363,4 @@ const EditBook: React.FC<EditBookProps> = ({ bookId, onSave, onClose }) => {
 };
 
 export default EditBook;
+

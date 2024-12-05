@@ -8,6 +8,7 @@ import DoiMatKhau from "../../../components/Account/DoiMatKhau/DoiMatKhau";
 import AutoScrollToTop from "../../../utils/AutoScrollToTop";
 import HTXBManagement from "../../../components/Account/Admin/HTXBManagement.tsx";
 import SubManagement from "../../../components/Account/Admin/SubManagement.tsx";
+
 import BookManagement from "../../../components/Account/Admin/BookManagement/BookManagement.tsx";
 import EventManagement from "../../../components/Account/Admin/EventManagement";
 import NewsManagement from "../../../components/Account/Admin/NewsManagement.tsx";
@@ -101,7 +102,7 @@ const Admin: React.FC = () => {
           onClick={() => setCurrentView("BookManagement")}
           style={{ cursor: "pointer" }}
         >
-          Quản lý Sach
+          Quản lý Sách
         </p>
         
         <p

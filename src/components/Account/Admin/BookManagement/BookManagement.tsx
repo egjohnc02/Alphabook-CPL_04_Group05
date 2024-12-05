@@ -1,4 +1,5 @@
-import AddBook from "./AddBook.tsx";
+
+import AddBook from "./AddBook";
 import BookList from "./BookList";
 
 const BookManagement: React.FC = () => {

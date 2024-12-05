@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
-import { collection, doc, getDocs, deleteDoc } from "firebase/firestore";
+import React, { useState, useEffect } from "react";
+import { collection, doc, getDoc, getDocs, updateDoc, addDoc, setDoc, deleteDoc } from "firebase/firestore";
+
 import { db } from "../../../../firebase/firebase";
 import Pagination from "../../../../page/Book/Pagination";
 import EditBook from "./EditBook";
@@ -186,3 +187,4 @@ const BookList = () => {
 };
 
 export default BookList;
+
