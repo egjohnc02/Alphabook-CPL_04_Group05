@@ -32,7 +32,6 @@ import Event from './page/News/Event';
 import EventDetail from './page/News/EventDetail';
 import Rob from './page/Book/Rob';
 import NewsDetail from './page/News/NewsDetail';
-
 import EventLayout from './page/News/EventLayout';
 import Admin from './page/Account/Admin/Admin';
 import Subscribe from './page/subscribe/Subscribe';
@@ -41,7 +40,6 @@ function AppContent() {
   const location = useLocation();
 
   const headerExclusionPaths = ['/home', '/', '/htxb'];
-
   return (
     <>
       <Navbar />
@@ -66,7 +64,6 @@ function AppContent() {
         <Route path="/news" element={<New />} />
 
         <Route path="/news-detail/:filter/:id" element={<NewsDetail />} />
-        
 
         <Route path="/event" element={<EventLayout />}>
           <Route index element={<Event />} />

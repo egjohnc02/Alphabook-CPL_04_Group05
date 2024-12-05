@@ -159,7 +159,7 @@ const EditBook: React.FC<EditBookProps> = ({ bookId, onSave, onClose }) => {
     return (
         <div>
             <div className="modal fade show" style={{ display: 'block' }} tabIndex={-1} aria-hidden={!isModalOpen}>
-                <div className="modal-dialog">
+                <div className="modal-dialog modal-dialog-scrollable">
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title">Chỉnh sửa Sách</h5>

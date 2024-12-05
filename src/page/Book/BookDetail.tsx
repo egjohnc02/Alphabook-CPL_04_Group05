@@ -482,7 +482,7 @@ function BookDetail() {
                             <li className="social-media__item social-media__item--facebook">
                                 <a
                                     title="Chia sẻ lên Facebook"
-                                    // href={`https://www.facebook.com/sharer.php?u=https://www.alphabooks.vn/${book.slug}`}
+                                    href={`https://www.facebook.com/sharer.php?u=https://www.alphabooks.vn/${book.title.toLowerCase().replace(/\s+/g, "-")}`}
                                     target="_blank"
                                     rel="noopener"
                                     aria-label="Chia sẻ lên Facebook"
@@ -496,7 +496,7 @@ function BookDetail() {
                             <li className="social-media__item social-media__item--pinterest">
                                 <a
                                     title="Chia sẻ lên Pinterest"
-                                    href="https://pinterest.com/pin/create/button/?url=https://www.alphabooks.vn/donald-trump-chien-luoc-dau-tu-bat-dong-san-tai-ban"
+                                    href={`https://pinterest.com/pin/create/button/?url=https://www.alphabooks.vn/${book.title.toLowerCase().replace(/\s+/g, "-")}`}
                                     target="_blank"
                                     rel="noopener"
                                     aria-label="Pinterest"
@@ -510,7 +510,7 @@ function BookDetail() {
                             <li className="social-media__item social-media__item--twitter">
                                 <a
                                     title="Chia sẻ lên Twitter"
-                                    href="https://twitter.com/share?url=https://www.alphabooks.vn/donald-trump-chien-luoc-dau-tu-bat-dong-san-tai-ban"
+                                    href={`https://twitter.com/share?url=https://www.alphabooks.vn/${book.title.toLowerCase().replace(/\s+/g, "-")}`}
                                     target="_blank"
                                     rel="noopener"
                                     aria-label="Tweet on Twitter"
