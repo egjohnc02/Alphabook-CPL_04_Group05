@@ -160,13 +160,11 @@ const ThongTinTaiKhoan: React.FC = () => {
   };
 
   return (
-    <div className="container">
-      <p className="fs-4">Thông tin tài khoản</p>
-
+    <div className="container my-4">
+      <h2>Thông tin tài khoản</h2>
       <p>
         <span className="fw-bolder">Họ tên:</span> {userName || "Chưa cập nhật"}
       </p>
-
       <p>
         <span className="fw-bolder">Email:</span> {auth.currentUser?.email || "Chưa cập nhật"}
         {isEmailVerified ? (

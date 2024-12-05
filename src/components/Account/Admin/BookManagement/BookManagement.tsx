@@ -1,9 +1,6 @@
 
-
-
 import AddBook from "./AddBook";
 import BookList from "./BookList";
-
 
 const BookManagement: React.FC = () => {
     return (
@@ -19,4 +16,3 @@ const BookManagement: React.FC = () => {
 };
 
 export default BookManagement;
-
