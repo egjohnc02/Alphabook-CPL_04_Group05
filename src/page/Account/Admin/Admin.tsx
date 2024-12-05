@@ -11,10 +11,11 @@ import SubManagement from "../../../components/Account/Admin/SubManagement.tsx";
 
 import BookManagement from "../../../components/Account/Admin/BookManagement/BookManagement.tsx";
 import EventManagement from "../../../components/Account/Admin/EventManagement";
+import NewsManagement from "../../../components/Account/Admin/NewsManagement.tsx";
 
 const Admin: React.FC = () => {
   const navigate = useNavigate();
-  const [currentView, setCurrentView] = useState<"UserManagement" | "OrderManagement" | "DoiMatKhau" | "HTXBManagement" | "SubManagement" | "BookManagement" | "EventManagement">("UserManagement");
+  const [currentView, setCurrentView] = useState<"UserManagement" | "OrderManagement" | "HTXBManagement" | "SubManagement" | "BookManagement" | "EventManagement" | "NewsManagement" | "DoiMatKhau">("UserManagement");
   const [userName, setUserName] = useState("");
 
   useEffect(() => {
@@ -52,15 +53,17 @@ const Admin: React.FC = () => {
         return <BookManagement />
       case "EventManagement":
         return <EventManagement />;
+      case "NewsManagement":
+        return <NewsManagement />
       default:
         return <UserManagement />;
     }
   };
 
   return (
-    <div className="pb-5 d-flex container gap-5">
+    <div className="pb-5 d-flex container">
       <AutoScrollToTop />
-      <div>
+      <div className="w-25">
         <nav className="fs-4">Trang quản trị</nav>
         <nav className="fw-bolder">
           Xin chào, <span className="text-orange">{userName}</span>!
@@ -101,12 +104,13 @@ const Admin: React.FC = () => {
         >
           Quản lý Sách
         </p>
+        
         <p
           className="text-dark hover-text-orange text-decoration-none"
-          onClick={() => setCurrentView("DoiMatKhau")}
+          onClick={() => setCurrentView("NewsManagement")}
           style={{ cursor: "pointer" }}
         >
-          Đổi mật khẩu
+          Quản lý tin tức
         </p>
         <p
           className="text-dark hover-text-orange text-decoration-none"
@@ -115,6 +119,15 @@ const Admin: React.FC = () => {
         >
           Quản lý sự kiện
         </p>
+
+        <p
+          className="text-dark hover-text-orange text-decoration-none"
+          onClick={() => setCurrentView("DoiMatKhau")}
+          style={{ cursor: "pointer" }}
+        >
+          Đổi mật khẩu
+        </p>
+
         <p
           className="text-dark hover-text-orange text-decoration-none"
           onClick={logout}
@@ -123,7 +136,7 @@ const Admin: React.FC = () => {
           Đăng xuất
         </p>
       </div>
-      <div>{renderView()}</div>
+      <div className="w-75">{renderView()}</div>
     </div>
   );
 };

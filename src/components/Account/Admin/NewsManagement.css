@@ -1,0 +1,14 @@
+.nav-link.active {
+    color: orange !important; /* Đổi màu chữ sang màu cam */
+    font-weight: 600;
+}
+td i{
+    color: orange
+}
+td i:hover{
+    transform: scale(2);
+    filter: drop-shadow(1px 1px 1px orangered) drop-shadow(-1px -1px 1px orangered);
+}
+.modal-add {
+    width: 100%;
+}

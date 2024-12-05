@@ -167,9 +167,9 @@ const EventManagement: React.FC = () => {
     return text.length > maxLength ? `${text.substring(0, maxLength)}...` : text;
   };
   return (
-    <div className="container mt-5">
+    <div className="container my-4">
       <div className="d-flex justify-content-between align-items-center">
-        <h1 className="mb-4">Danh sách sự kiện</h1>
+        <h2>Danh sách sự kiện</h2>
         <Button variant="success" onClick={handleCreate}>
           Tạo sự kiện
         </Button>
