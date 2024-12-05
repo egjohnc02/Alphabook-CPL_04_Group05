@@ -61,9 +61,9 @@ const Admin: React.FC = () => {
   };
 
   return (
-    <div className="pb-5 d-flex container">
+    <div className="pb-5 d-flex container gap-3">
       <AutoScrollToTop />
-      <div className="w-25">
+      <div>
         <nav className="fs-4">Trang quản trị</nav>
         <nav className="fw-bolder">
           Xin chào, <span className="text-orange">{userName}</span>!

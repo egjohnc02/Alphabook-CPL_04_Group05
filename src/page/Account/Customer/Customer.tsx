@@ -92,7 +92,7 @@ const Customer: React.FC = () => {
             Đăng xuất
           </p>
         </div>
-      <div>{renderView()}</div>
+      <div className="w-75">{renderView()}</div>
     </div>
   );
 };
